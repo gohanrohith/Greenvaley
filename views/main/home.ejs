@@ -1,0 +1,186 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">TSBIE Affiliated &nbsp;·&nbsp; Yellapur, Hanamkonda</div>
+    <h1>Two years that decide <span class="accent">the next twenty.</span></h1>
+    <p class="hero-sub">Focused coaching for IIT-JEE and NEET, wrapped around a full intermediate curriculum — so the board exam and the entrance exam pull in the same direction.</p>
+    <div class="hero-actions">
+      <a href="/scholarship/apply" class="btn btn-primary btn-lg">Apply for up to 90% scholarship</a>
+      <a href="tel:+91<%= college.phone %>" class="btn btn-ghost btn-lg">Call <%= college.phone %></a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-label">Our Programmes</div>
+    <div class="stream-card">
+      <div class="stream-code">JEE</div>
+      <div class="stream-full">IIT-JEE Main &amp; Advanced</div>
+      <div class="stream-pills">
+        <span class="stream-pill">IITs</span>
+        <span class="stream-pill">NITs</span>
+        <span class="stream-pill gold">Class 11 &amp; 12</span>
+      </div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-code">NEET</div>
+      <div class="stream-full">NEET UG — Medical Entrance</div>
+      <div class="stream-pills">
+        <span class="stream-pill">MBBS</span>
+        <span class="stream-pill">BDS</span>
+        <span class="stream-pill gold">Class 11 &amp; 12</span>
+      </div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-code">EAPCET</div>
+      <div class="stream-full">JEE Main &amp; EAPCET Combined</div>
+      <div class="stream-pills">
+        <span class="stream-pill">Engineering</span>
+        <span class="stream-pill gold">Telangana</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<div class="stats-strip">
+  <div class="stat-item">
+    <div class="stat-n">3</div>
+    <div class="stat-l">Preparation Streams</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-n">90%</div>
+    <div class="stat-l">Max Tuition Scholarship</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-n">TSBIE</div>
+    <div class="stat-l">Affiliated &amp; Recognised</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-n">1</div>
+    <div class="stat-l">Campus &mdash; Hanamkonda</div>
+  </div>
+</div>
+
+<!-- Features bento -->
+<section class="section">
+  <div class="container">
+    <div class="bento-head">
+      <h2>Everything in one place</h2>
+      <a href="/about">About the college →</a>
+    </div>
+    <div class="bento-grid">
+      <div class="b-card b-card-wide">
+        <div class="b-card-icon green">📊</div>
+        <div>
+          <h3>Exam Results — instant lookup</h3>
+          <p>Enter your roll number and get your marks sheet instantly. Results are published as soon as TSBIE releases them.</p>
+          <a href="/results" class="btn btn-outline btn-sm mt-1">Check Results</a>
+        </div>
+      </div>
+      <div class="b-card">
+        <div class="b-card-big-num">PDF</div>
+        <div class="b-card-num-label">Question Papers</div>
+        <p style="margin-top:8px">Download previous year papers filtered by stream, subject, and year.</p>
+        <a href="/question-papers" class="btn btn-ghost btn-sm mt-1">Browse Papers</a>
+      </div>
+      <div class="b-card b-card-wide">
+        <div class="b-card-icon gold">🏛️</div>
+        <div>
+          <h3>Mandatory Disclosure</h3>
+          <p>Complete TSBIE-required institutional disclosure — fees, infrastructure, faculty details, and recognition documents — published transparently.</p>
+          <a href="/mandatory-disclosure" class="btn btn-ghost btn-sm mt-1">View Disclosure</a>
+        </div>
+      </div>
+      <div class="b-card">
+        <div class="b-card-icon green">👨‍🏫</div>
+        <h3>Qualified Faculty</h3>
+        <p>Experienced teachers dedicated to IIT-JEE and NEET, with personalised guidance for every student.</p>
+        <a href="/faculty" class="btn btn-ghost btn-sm mt-1">Meet Faculty</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Scholarship strip -->
+<section class="section-sm">
+  <div class="container">
+    <div class="schol-strip">
+      <div>
+        <h2>Up to 90% tuition scholarship — merit based</h2>
+        <p>Awarded on performance in our scholarship test. SC / ST · BC · EBC · NTR Vidyonnathi government scholarships are also available. Send your details and we'll tell you which slab you qualify for.</p>
+      </div>
+      <div class="schol-actions">
+        <a href="/scholarship/apply" class="btn btn-gold">Apply Now</a>
+        <a href="/scholarship/status" class="btn btn-white btn-outline" style="color:#fff;border-color:rgba(255,255,255,.3)">Track Status</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- News -->
+<% if (news && news.length) { %>
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-head">
+      <h2>Latest News</h2>
+      <p>Updates from the college</p>
+    </div>
+    <div class="news-grid">
+      <% news.forEach(n => { %>
+      <article class="news-card">
+        <% if (n.image) { %>
+          <img src="<%= n.image %>" alt="<%= n.title %>" class="news-card-img">
+        <% } else { %>
+          <div class="news-card-img-placeholder">📰</div>
+        <% } %>
+        <div class="news-card-body">
+          <h4><a href="/news/<%= n.slug %>"><%= n.title %></a></h4>
+          <time><%= new Date(n.created_at).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) %></time>
+        </div>
+      </article>
+      <% }); %>
+    </div>
+    <div class="text-center mt-2">
+      <a href="/news" class="btn btn-outline">All News</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<!-- Events -->
+<% if (events && events.length) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Upcoming Events</h2>
+    </div>
+    <div class="event-list">
+      <% events.forEach(e => { %>
+      <%
+        const d = new Date(e.event_date);
+        const day = d.toLocaleDateString('en-IN', {day:'2-digit'});
+        const mon = d.toLocaleDateString('en-IN', {month:'short'});
+      %>
+      <div class="event-item">
+        <div class="event-date-box">
+          <div class="event-date-day"><%= day %></div>
+          <div class="event-date-mon"><%= mon %></div>
+        </div>
+        <div class="event-info">
+          <h4><%= e.title %></h4>
+          <% if (e.venue) { %><p><%= e.venue %></p><% } %>
+          <% if (e.description) { %><p class="text-muted"><%= e.description %></p><% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+    <div class="text-center mt-2">
+      <a href="/events" class="btn btn-outline">All Events</a>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<%- include('../partials/footer') %>

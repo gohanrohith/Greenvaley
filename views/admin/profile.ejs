@@ -1,0 +1,15 @@
+<%- include('../partials/admin-nav') %>
+<div class="page-header"><h2>My Profile</h2></div>
+<%- include('../partials/flash') %>
+<form method="POST" action="/admin/profile" enctype="multipart/form-data" class="admin-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="form-group"><label>Full Name *</label><input type="text" name="name" value="<%= admin.name %>" required></div>
+  <div class="form-group">
+    <label>Avatar</label>
+    <input type="file" name="avatar" accept="image/*">
+    <% if (admin.avatar) { %><p class="text-muted mt-1"><img src="<%= admin.avatar %>" style="height:50px;border-radius:50%;vertical-align:middle"> Current avatar</p><% } %>
+  </div>
+  <p class="text-muted">Username: <strong><%= admin.username %></strong> (contact super admin to change)</p>
+  <button type="submit" class="btn btn-primary">Save Profile</button>
+</form>
+<%- include('../partials/admin-footer') %>

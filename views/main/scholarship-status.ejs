@@ -1,0 +1,53 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Check Scholarship Status</h1>
+    <p>Enter your Application ID and registered phone number</p>
+  </div>
+</div>
+
+<div class="container section">
+
+
+  <% if (applied) { %>
+  <div class="alert alert-success">
+    Application submitted! Your Application ID is <strong>#<%= app_id %></strong>.
+    Save this ID to check your status later.
+  </div>
+  <% } %>
+
+  <form method="POST" action="/scholarship/status" class="form-card">
+    <div class="form-group">
+      <label>Application ID *</label>
+      <input type="number" name="app_id" value="<%= app_id || '' %>" required>
+    </div>
+    <div class="form-group">
+      <label>Registered Phone Number *</label>
+      <input type="tel" name="phone" required pattern="[6-9][0-9]{9}" placeholder="10-digit mobile">
+    </div>
+    <button type="submit" class="btn btn-primary">Check Status</button>
+  </form>
+
+  <% if (searched && application) { %>
+  <div class="result-card mt-3">
+    <h2>Application #<%= application.id %></h2>
+    <div class="status-badge status-<%= application.status %>"><%= application.status.replace('_',' ').toUpperCase() %></div>
+    <table class="marks-table mt-2" style="max-width:500px">
+      <tr><th>Name</th><td><%= application.name %></td></tr>
+      <tr><th>Program</th><td><%= application.program %></td></tr>
+      <tr><th>Category</th><td><%= application.caste_category || '—' %></td></tr>
+      <tr><th>Applied On</th><td><%= new Date(application.created_at).toLocaleDateString('en-IN') %></td></tr>
+      <tr><th>Status</th><td><strong><%= application.status.replace('_',' ').toUpperCase() %></strong></td></tr>
+      <% if (application.admin_remarks) { %>
+      <tr><th>Remarks</th><td><%= application.admin_remarks %></td></tr>
+      <% } %>
+    </table>
+  </div>
+  <% } else if (searched && !application) { %>
+  <div class="alert alert-error mt-3">No application found. Please check your Application ID and phone number.</div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

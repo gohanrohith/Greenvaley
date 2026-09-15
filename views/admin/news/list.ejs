@@ -1,0 +1,32 @@
+<%- include('../../partials/admin-nav') %>
+
+<div class="page-header">
+  <h2>News Articles</h2>
+  <a href="/admin/news/new" class="btn btn-primary">+ New Article</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<table class="admin-table">
+  <thead><tr><th>Title</th><th>Published</th><th>Date</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% if (news.length === 0) { %>
+    <tr><td colspan="4" class="empty">No articles yet.</td></tr>
+    <% } %>
+    <% news.forEach(n => { %>
+    <tr>
+      <td><a href="/news/<%= n.slug %>" target="_blank"><%= n.title %></a></td>
+      <td><span class="badge <%= n.published ? 'badge-success' : 'badge-muted' %>"><%= n.published ? 'Yes' : 'Draft' %></span></td>
+      <td><%= new Date(n.created_at).toLocaleDateString('en-IN') %></td>
+      <td>
+        <a href="/admin/news/<%= n.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+        <form method="POST" action="/admin/news/<%= n.id %>/delete" style="display:inline" onsubmit="return confirm('Delete this article?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('../../partials/admin-footer') %>

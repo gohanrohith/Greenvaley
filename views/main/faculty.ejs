@@ -1,0 +1,37 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Our Faculty</h1>
+    <p>Experienced teachers dedicated to IIT-JEE, NEET, and EAPCET preparation</p>
+  </div>
+</div>
+
+<div class="container section">
+  <% if (faculty.length === 0) { %>
+    <div class="empty-box">
+      <div class="empty-box-icon">👨‍🏫</div>
+      <h3>Faculty details coming soon</h3>
+      <p>We're updating this section. Check back shortly.</p>
+    </div>
+  <% } else { %>
+    <div class="faculty-grid">
+      <% faculty.forEach(f => { %>
+      <div class="faculty-card">
+        <% if (f.photo) { %>
+          <img src="<%= f.photo %>" alt="<%= f.name %>" class="faculty-avatar">
+        <% } else { %>
+          <div class="faculty-avatar-placeholder"><%= f.name[0].toUpperCase() %></div>
+        <% } %>
+        <h4><%= f.name %></h4>
+        <% if (f.designation) { %><p class="faculty-designation"><%= f.designation %></p><% } %>
+        <% if (f.department)  { %><p class="faculty-dept"><%= f.department %></p><% } %>
+        <% if (f.qualification) { %><p class="faculty-dept text-muted" style="font-size:.75rem;margin-top:4px"><%= f.qualification %></p><% } %>
+      </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+<aside class="sidebar">
+  <div class="sidebar-brand"><%= college.shortName %> <span>Admin</span></div>
+  <nav class="sidebar-nav">
+    <a href="/admin">Dashboard</a>
+    <div class="nav-section">Content</div>
+    <a href="/admin/news">News</a>
+    <a href="/admin/events">Events</a>
+    <a href="/admin/gallery">Gallery</a>
+    <div class="nav-section">Academic</div>
+    <a href="/admin/question-papers">Question Papers</a>
+    <a href="/admin/results">Exam Results</a>
+    <div class="nav-section">Students</div>
+    <a href="/admin/scholarship">Scholarships</a>
+    <div class="nav-section">Admin</div>
+    <a href="/admin/disclosure">Mandatory Disclosure</a>
+    <a href="/admin/settings">Settings</a>
+    <% if (adminRole === 'super') { %>
+    <a href="/admin/users">Users</a>
+    <% } %>
+    <a href="/admin/profile">My Profile</a>
+    <a href="/admin/logout" class="logout-link">Logout</a>
+  </nav>
+</aside>
+<main class="admin-main">
+<header class="admin-header">
+  <span class="admin-user">👤 <%= adminName %></span>
+</header>
+<div class="admin-content">

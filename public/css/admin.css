@@ -1,0 +1,121 @@
+/* ── Admin Panel Styles ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --green:      #4d7034;
+  --green-dark: #3a5427;
+  --green-light:#eef3e9;
+  --gold:       #b78d49;
+  --sidebar-w:  220px;
+  --text:       #1a1a1a;
+  --muted:      #6b7280;
+  --border:     #e0e0e0;
+  --bg:         #f4f6f9;
+  --white:      #ffffff;
+  --radius:     6px;
+  --shadow:     0 1px 4px rgba(0,0,0,.08);
+}
+body { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--text); background: var(--bg); line-height: 1.5; }
+
+/* ── Login ────────────────────────────────────────────────────────────────── */
+.admin-login-body { display: flex; align-items: center; justify-content: center; min-height: 100vh; }
+.login-card { background: var(--white); padding: 2.5rem; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.1); width: 100%; max-width: 380px; }
+.login-card h1 { color: var(--green); font-size: 1.75rem; margin-bottom: .25rem; }
+.login-card h2 { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
+.btn-block { width: 100%; text-align: center; }
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.admin-body { display: flex; min-height: 100vh; }
+.sidebar { width: var(--sidebar-w); background: var(--green-dark); color: #fff; display: flex; flex-direction: column; flex-shrink: 0; position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.sidebar-brand { padding: 1.25rem 1rem; font-size: 1.1rem; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,.15); }
+.sidebar-brand span { font-size: .75rem; font-weight: 400; opacity: .7; margin-left: .5rem; }
+.sidebar-nav { display: flex; flex-direction: column; padding: .75rem 0; flex: 1; }
+.sidebar-nav a { color: rgba(255,255,255,.85); padding: .5rem 1rem; font-size: .9rem; transition: background .15s; }
+.sidebar-nav a:hover { background: rgba(255,255,255,.12); color: #fff; text-decoration: none; }
+.nav-section { padding: .75rem 1rem .25rem; font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; opacity: .5; }
+.logout-link { color: rgba(255,100,100,.9) !important; margin-top: auto; }
+.admin-main { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.admin-header { background: var(--white); padding: .75rem 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: flex-end; align-items: center; }
+.admin-user { font-size: .9rem; color: var(--muted); }
+.admin-content { padding: 1.5rem; flex: 1; }
+
+/* ── Page header ──────────────────────────────────────────────────────────── */
+.page-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+.page-header h2 { font-size: 1.4rem; }
+
+/* ── Stat cards ───────────────────────────────────────────────────────────── */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; }
+.stat-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.25rem; text-align: center; border-top: 3px solid var(--green); }
+.stat-card.highlight { border-top-color: #ff6f00; }
+.stat-num { font-size: 2.5rem; font-weight: 800; color: var(--green); }
+.stat-card.highlight .stat-num { color: #ff6f00; }
+.stat-label { font-size: .85rem; color: var(--muted); margin: .25rem 0; }
+.stat-link { font-size: .85rem; color: var(--green); }
+
+/* ── Quick actions ────────────────────────────────────────────────────────── */
+.quick-actions h3 { margin-bottom: .75rem; }
+.action-row { display: flex; gap: .75rem; flex-wrap: wrap; }
+.mt-2 { margin-top: 1.5rem; }
+.mt-3 { margin-top: 2rem; }
+
+/* ── Buttons ──────────────────────────────────────────────────────────────── */
+.btn { display: inline-block; padding: .5rem 1rem; border-radius: var(--radius); font-size: .9rem; cursor: pointer; border: 2px solid transparent; transition: all .15s; font-weight: 500; text-align: center; }
+.btn-primary { background: var(--green); color: #fff; border-color: var(--green); }
+.btn-primary:hover { background: var(--green-dark); border-color: var(--green-dark); text-decoration: none; color: #fff; }
+.btn-outline { background: transparent; color: var(--green); border-color: var(--green); }
+.btn-outline:hover { background: var(--green-light); text-decoration: none; }
+.btn-danger { background: #c62828; color: #fff; border-color: #c62828; }
+.btn-danger:hover { background: #b71c1c; text-decoration: none; color: #fff; }
+.btn-sm { padding: .3rem .65rem; font-size: .8rem; }
+.btn-xs { padding: .15rem .45rem; font-size: .75rem; }
+.btn-block { width: 100%; }
+
+/* ── Table ────────────────────────────────────────────────────────────────── */
+.admin-table { width: 100%; border-collapse: collapse; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+.admin-table th, .admin-table td { padding: .65rem 1rem; border-bottom: 1px solid var(--border); text-align: left; font-size: .9rem; }
+.admin-table th { background: #f0f4f0; font-weight: 700; }
+.admin-table tr:hover td { background: #f9fbe7; }
+.admin-table .empty { text-align: center; color: var(--muted); padding: 2rem; }
+.info-table { width: 100%; border-collapse: collapse; }
+.info-table th, .info-table td { padding: .4rem .75rem; border-bottom: 1px solid var(--border); font-size: .9rem; }
+.info-table th { width: 40%; color: var(--muted); font-weight: 600; }
+
+/* ── Forms ────────────────────────────────────────────────────────────────── */
+.admin-form { max-width: 760px; }
+.form-group { margin-bottom: 1rem; }
+.form-group label { display: block; font-weight: 600; margin-bottom: .3rem; font-size: .875rem; }
+.form-group input, .form-group select, .form-group textarea { width: 100%; padding: .55rem .8rem; border: 1px solid var(--border); border-radius: var(--radius); font-size: .9rem; }
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(46,125,50,.1); }
+.form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+.checkbox-label { display: flex; align-items: center; gap: .5rem; font-weight: 400; cursor: pointer; }
+.inline-form { display: flex; gap: .75rem; flex-wrap: wrap; align-items: center; margin-bottom: 1rem; }
+.inline-form select { padding: .45rem .75rem; border: 1px solid var(--border); border-radius: var(--radius); }
+
+/* ── Alerts ───────────────────────────────────────────────────────────────── */
+.alert { padding: .75rem 1rem; border-radius: var(--radius); margin-bottom: 1rem; font-size: .9rem; }
+.alert-success { background: #e8f5e9; color: #1b5e20; border-left: 3px solid var(--green); }
+.alert-error   { background: #ffebee; color: #b71c1c; border-left: 3px solid #c62828; }
+
+/* ── Detail view ──────────────────────────────────────────────────────────── */
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+.detail-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.25rem; }
+.detail-card h3 { margin-bottom: .75rem; color: var(--green); }
+@media (max-width: 768px) { .detail-grid { grid-template-columns: 1fr; } }
+
+/* ── Badges ───────────────────────────────────────────────────────────────── */
+.badge { display: inline-block; padding: .2rem .6rem; border-radius: 12px; font-size: .8rem; font-weight: 600; }
+.badge-success, .badge-approved, .badge-sanctioned { background: #e8f5e9; color: #2e7d32; }
+.badge-muted   { background: #f5f5f5; color: #666; }
+.badge-danger, .badge-rejected { background: #ffebee; color: #c62828; }
+.badge-pending { background: #f5f5f5; color: #555; }
+.badge-under_review { background: #fff3e0; color: #e65100; }
+.badge-super   { background: #e3f2fd; color: #1565c0; }
+.badge-editor  { background: #f3e5f5; color: #6a1b9a; }
+
+/* ── Photo grid ───────────────────────────────────────────────────────────── */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: .75rem; margin-top: 1rem; }
+.photo-thumb { position: relative; }
+.photo-thumb img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
+.photo-thumb button { position: absolute; top: 4px; right: 4px; }
+
+.text-muted { color: var(--muted); font-size: .85rem; }
+.mt-1 { margin-top: .75rem; }

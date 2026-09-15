@@ -1,0 +1,64 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Exam Results</h1>
+    <p>Enter your roll number to view your result instantly</p>
+  </div>
+</div>
+
+<div class="container section">
+
+  <form method="POST" action="/results/check" class="form-card">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+    <div class="form-row">
+      <div class="form-group">
+        <label>Roll Number *</label>
+        <input type="text" name="roll_number" value="<%= locals.roll_number || '' %>" required placeholder="e.g. 123456789012">
+      </div>
+      <div class="form-group">
+        <label>Exam Type *</label>
+        <select name="exam_type" required>
+          <option value="">— Select —</option>
+          <option value="IPE March"   <%= locals.exam_type === 'IPE March'   ? 'selected' : '' %>>IPE March</option>
+          <option value="IPE May"     <%= locals.exam_type === 'IPE May'     ? 'selected' : '' %>>IPE May (Supplementary)</option>
+          <option value="Model"       <%= locals.exam_type === 'Model'       ? 'selected' : '' %>>Model Exam</option>
+          <option value="Quarterly"   <%= locals.exam_type === 'Quarterly'   ? 'selected' : '' %>>Quarterly</option>
+          <option value="Half-Yearly" <%= locals.exam_type === 'Half-Yearly' ? 'selected' : '' %>>Half-Yearly</option>
+        </select>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Check Result</button>
+  </form>
+
+  <% if (searched && result) { %>
+  <div class="result-card mt-3">
+    <h2>Result — <%= result.name %></h2>
+    <p class="roll">Roll No. <%= result.roll_number %> &nbsp;&bull;&nbsp; <%= result.program %> &nbsp;&bull;&nbsp; <%= result.exam_type %> <%= result.year %></p>
+    <table class="marks-table">
+      <thead><tr><th>Subject</th><th>Marks</th></tr></thead>
+      <tbody>
+        <tr><td>English</td><td><%= result.marks_english ?? '—' %></td></tr>
+        <tr><td>Second Language</td><td><%= result.marks_second_lang ?? '—' %></td></tr>
+        <tr><td>Physics</td><td><%= result.marks_physics ?? '—' %></td></tr>
+        <tr><td>Chemistry</td><td><%= result.marks_chemistry ?? '—' %></td></tr>
+        <% if (result.program === 'MPC') { %>
+        <tr><td>Mathematics</td><td><%= result.marks_maths ?? '—' %></td></tr>
+        <% } else { %>
+        <tr><td>Biology</td><td><%= result.marks_biology ?? '—' %></td></tr>
+        <% } %>
+        <tr class="total"><th>Total</th><th><%= result.total_marks ?? '—' %> / <%= result.max_marks ?? '—' %></th></tr>
+        <% if (result.grade) { %>
+        <tr class="total"><th>Grade</th><th><span class="grade-badge"><%= result.grade %></span></th></tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+  <% } else if (searched && !result) { %>
+  <div class="alert alert-error mt-3">No result found for the given roll number and exam type. Please verify and try again.</div>
+  <% } %>
+
+</div>
+
+<%- include('../partials/footer') %>

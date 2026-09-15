@@ -1,0 +1,17 @@
+<%- include('../../partials/admin-nav') %>
+<div class="page-header"><h2><%= item ? 'Edit User' : 'New User' %></h2><a href="/admin/users" class="btn btn-outline">← Back</a></div>
+<form method="POST" action="<%= item ? `/admin/users/${item.id}/edit` : '/admin/users/new' %>" class="admin-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="form-group"><label>Full Name *</label><input type="text" name="name" value="<%= item?.name || '' %>" required></div>
+  <div class="form-group"><label>Username *</label><input type="text" name="username" value="<%= item?.username || '' %>" required></div>
+  <div class="form-group"><label>Password <%= item ? '(leave blank to keep current)' : '*' %></label><input type="password" name="password" <%= item ? '' : 'required' %> minlength="8"></div>
+  <div class="form-group">
+    <label>Role *</label>
+    <select name="role" required>
+      <option value="editor" <%= item?.role === 'editor' ? 'selected' : '' %>>Editor</option>
+      <option value="super"  <%= item?.role === 'super'  ? 'selected' : '' %>>Super Admin</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<%- include('../../partials/admin-footer') %>

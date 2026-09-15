@@ -1,0 +1,26 @@
+<%- include('../../partials/admin-nav') %>
+<div class="page-header"><h2>Admin Users</h2><a href="/admin/users/new" class="btn btn-primary">+ New User</a></div>
+<%- include('../../partials/flash') %>
+<table class="admin-table">
+  <thead><tr><th>Name</th><th>Username</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% users.forEach(u => { %>
+    <tr>
+      <td><%= u.name %></td>
+      <td><%= u.username %></td>
+      <td><span class="badge badge-<%= u.role %>"><%= u.role %></span></td>
+      <td><%= new Date(u.created_at).toLocaleDateString('en-IN') %></td>
+      <td>
+        <a href="/admin/users/<%= u.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+        <% if (u.id !== adminId) { %>
+        <form method="POST" action="/admin/users/<%= u.id %>/delete" style="display:inline" onsubmit="return confirm('Delete user?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+        <% } %>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<%- include('../../partials/admin-footer') %>

@@ -1,0 +1,11 @@
+<% if (success) { %>
+  <div class="alert alert-success">Action completed successfully.</div>
+<% } %>
+<% if (error) { %>
+  <div class="alert alert-error">Something went wrong. Please try again.</div>
+<% } %>
+<% if (locals.errors && errors) { %>
+  <ul class="alert alert-error">
+    <% errors.forEach(e => { %><li><%= e.msg %></li><% }); %>
+  </ul>
+<% } %>

@@ -1,0 +1,29 @@
+{
+  "name": "greenvaley",
+  "version": "1.0.0",
+  "description": "Greenvaley Junior College — TSBIE-affiliated MPC & BiPC college website",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "compression": "^1.7.4",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "express-mysql-session": "^3.0.0",
+    "express-rate-limit": "^8.5.2",
+    "express-session": "^1.18.0",
+    "express-validator": "^7.1.0",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "multer": "^2.1.1",
+    "mysql2": "^3.9.7",
+    "nodemailer": "^8.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}

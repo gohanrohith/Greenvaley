@@ -1,0 +1,42 @@
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="/images/logo.png" alt="Greenvaley" class="footer-logo">
+      <div>
+        <div class="footer-name">Greenvaley Junior College</div>
+        <div class="footer-board"><%= college.board %> &middot; <%= college.address %></div>
+      </div>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <h4>Programmes</h4>
+        <a href="/programs">IIT-JEE Main &amp; Advanced</a>
+        <a href="/programs">IIT-JEE Main &amp; EAPCET</a>
+        <a href="/programs">NEET UG</a>
+        <a href="/admissions">Admissions 2025–26</a>
+      </div>
+      <div class="footer-col">
+        <h4>Students</h4>
+        <a href="/results">Exam Results</a>
+        <a href="/question-papers">Question Papers</a>
+        <a href="/scholarship">Scholarship Portal</a>
+        <a href="/faculty">Faculty</a>
+      </div>
+      <div class="footer-col">
+        <h4>Reach Us</h4>
+        <a href="tel:+91<%= college.phone %>"><%= college.phone %></a>
+        <% if (college.phone2) { %><a href="tel:+91<%= college.phone2 %>"><%= college.phone2 %></a><% } %>
+        <a href="mailto:<%= college.email %>"><%= college.email %></a>
+        <% if (college.whatsapp) { %><a href="https://wa.me/<%= college.whatsapp %>" target="_blank" rel="noopener">WhatsApp</a><% } %>
+        <a href="/contact">Contact Us</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; <%= currentYear %> Greenvaley Junior College &nbsp;&middot;&nbsp; <%= college.address %>, Telangana</p>
+    <a href="/admin/login">Admin</a>
+  </div>
+</footer>
+<script src="/js/main.js"></script>
+</body>
+</html>

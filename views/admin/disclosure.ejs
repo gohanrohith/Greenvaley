@@ -1,0 +1,41 @@
+<%- include('../partials/admin-nav') %>
+<div class="page-header"><h2>Mandatory Disclosure</h2></div>
+<%- include('../partials/flash') %>
+<p class="text-muted">Fill in the details required by TSBIE for mandatory public disclosure.</p>
+<form method="POST" action="/admin/disclosure" class="admin-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="form-row">
+    <div class="form-group"><label>Institution Name</label><input type="text" name="institution_name" value="<%= d.institution_name || '' %>"></div>
+    <div class="form-group"><label>Management Name</label><input type="text" name="management_name" value="<%= d.management_name || '' %>"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Type of Management</label><input type="text" name="management_type" value="<%= d.management_type || '' %>" placeholder="e.g. Private Unaided"></div>
+    <div class="form-group"><label>Year of Establishment</label><input type="text" name="est_year" value="<%= d.est_year || '' %>"></div>
+  </div>
+  <div class="form-group"><label>Address</label><textarea name="address" rows="2"><%= d.address || '' %></textarea></div>
+  <div class="form-row">
+    <div class="form-group"><label>Phone</label><input type="text" name="phone" value="<%= d.phone || '' %>"></div>
+    <div class="form-group"><label>Email</label><input type="email" name="email" value="<%= d.email || '' %>"></div>
+    <div class="form-group"><label>Website</label><input type="url" name="website" value="<%= d.website || '' %>"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Intake (MPC)</label><input type="number" name="intake_mpc" value="<%= d.intake_mpc || '' %>"></div>
+    <div class="form-group"><label>Intake (BiPC)</label><input type="number" name="intake_bipc" value="<%= d.intake_bipc || '' %>"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Principal Name</label><input type="text" name="principal_name" value="<%= d.principal_name || '' %>"></div>
+    <div class="form-group"><label>Teaching Staff Count</label><input type="number" name="teaching_staff" value="<%= d.teaching_staff || '' %>"></div>
+    <div class="form-group"><label>Non-Teaching Staff</label><input type="number" name="non_teaching_staff" value="<%= d.non_teaching_staff || '' %>"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Fee MPC (₹/year)</label><input type="number" name="fee_mpc" value="<%= d.fee_mpc || '' %>"></div>
+    <div class="form-group"><label>Fee BiPC (₹/year)</label><input type="number" name="fee_bipc" value="<%= d.fee_bipc || '' %>"></div>
+  </div>
+  <div class="form-row">
+    <div class="form-group"><label>Library Books</label><input type="text" name="library_books" value="<%= d.library_books || '' %>" placeholder="e.g. 2000+ volumes"></div>
+    <div class="form-group"><label>Laboratory Facilities</label><input type="text" name="labs" value="<%= d.labs || '' %>" placeholder="Physics, Chemistry, Biology labs"></div>
+  </div>
+  <div class="form-group"><label>Other Facilities</label><textarea name="facilities" rows="3"><%= d.facilities || '' %></textarea></div>
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+<%- include('../partials/admin-footer') %>

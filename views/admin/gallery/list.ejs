@@ -1,0 +1,23 @@
+<%- include('../../partials/admin-nav') %>
+<div class="page-header"><h2>Gallery</h2><a href="/admin/gallery/new" class="btn btn-primary">+ New Album</a></div>
+<%- include('../../partials/flash') %>
+<table class="admin-table">
+  <thead><tr><th>Album</th><th>Photos</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% if (!albums.length) { %><tr><td colspan="3" class="empty">No albums.</td></tr><% } %>
+    <% albums.forEach(a => { %>
+    <tr>
+      <td><%= a.title %></td>
+      <td><%= a.photo_count %></td>
+      <td>
+        <a href="/admin/gallery/<%= a.id %>/upload" class="btn btn-sm btn-outline">Upload</a>
+        <form method="POST" action="/admin/gallery/<%= a.id %>/delete" style="display:inline" onsubmit="return confirm('Delete album and all photos?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<%- include('../../partials/admin-footer') %>

@@ -1,0 +1,42 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Events</h1>
+    <p>Upcoming events, seminars, and activities at the college</p>
+  </div>
+</div>
+
+<div class="container section">
+  <% if (events.length === 0) { %>
+    <div class="empty-box">
+      <div class="empty-box-icon">📅</div>
+      <h3>No upcoming events</h3>
+      <p>Check back soon — events will be listed here when scheduled.</p>
+    </div>
+  <% } else { %>
+    <div class="event-list">
+      <% events.forEach(e => { %>
+      <%
+        const d = new Date(e.event_date);
+        const day = d.toLocaleDateString('en-IN', {day:'2-digit'});
+        const mon = d.toLocaleDateString('en-IN', {month:'short'});
+      %>
+      <div class="event-item">
+        <div class="event-date-box">
+          <div class="event-date-day"><%= day %></div>
+          <div class="event-date-mon"><%= mon %></div>
+        </div>
+        <div class="event-info">
+          <h4><%= e.title %></h4>
+          <% if (e.venue) { %><p>📍 <%= e.venue %></p><% } %>
+          <% if (e.description) { %><p class="text-muted"><%= e.description %></p><% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

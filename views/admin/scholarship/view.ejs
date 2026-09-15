@@ -1,0 +1,93 @@
+<%- include('../../partials/admin-nav') %>
+
+<div class="page-header">
+  <h2>Application #<%= application.id %></h2>
+  <a href="/admin/scholarship" class="btn btn-outline">← Back</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<div class="detail-grid">
+  <div class="detail-card">
+    <h3>Personal Details</h3>
+    <table class="info-table">
+      <tr><th>Name</th><td><%= application.name %></td></tr>
+      <tr><th>DOB</th><td><%= new Date(application.dob).toLocaleDateString('en-IN') %></td></tr>
+      <tr><th>Program</th><td><%= application.program %></td></tr>
+      <tr><th>Roll No.</th><td><%= application.roll_number || '—' %></td></tr>
+      <tr><th>Category</th><td><%= application.caste_category || '—' %></td></tr>
+      <tr><th>Annual Income</th><td><%= application.annual_income ? `₹ ${application.annual_income}` : '—' %></td></tr>
+    </table>
+    <h3 class="mt-2">Guardian</h3>
+    <table class="info-table">
+      <tr><th>Father</th><td><%= application.father_name %></td></tr>
+      <tr><th>Mother</th><td><%= application.mother_name || '—' %></td></tr>
+    </table>
+    <h3 class="mt-2">Contact</h3>
+    <table class="info-table">
+      <tr><th>Phone</th><td><%= application.phone %></td></tr>
+      <tr><th>Email</th><td><%= application.email || '—' %></td></tr>
+      <tr><th>Address</th><td><%= application.address %></td></tr>
+    </table>
+    <h3 class="mt-2">Bank Details</h3>
+    <table class="info-table">
+      <tr><th>Account No.</th><td><%= application.bank_account || '—' %></td></tr>
+      <tr><th>IFSC</th><td><%= application.bank_ifsc || '—' %></td></tr>
+      <tr><th>Bank</th><td><%= application.bank_name || '—' %></td></tr>
+    </table>
+  </div>
+
+  <div>
+    <div class="detail-card">
+      <h3>Update Status</h3>
+      <form method="POST" action="/admin/scholarship/<%= application.id %>/status">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="form-group">
+          <label>Status</label>
+          <select name="status" required>
+            <% ['pending','under_review','approved','sanctioned','rejected'].forEach(s => { %>
+              <option value="<%= s %>" <%= application.status === s ? 'selected' : '' %>><%= s.replace('_',' ').toUpperCase() %></option>
+            <% }); %>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Remarks (shown to student)</label>
+          <textarea name="remarks" rows="3"><%= application.admin_remarks || '' %></textarea>
+        </div>
+        <button class="btn btn-primary">Update Status</button>
+      </form>
+    </div>
+
+    <div class="detail-card mt-2">
+      <h3>Sanction Details</h3>
+      <form method="POST" action="/admin/scholarship/<%= application.id %>/result">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <div class="form-group">
+          <label>Scholarship Type</label>
+          <input type="text" name="scholarship_type" placeholder="e.g. SC Post-Matric, EBC, NTR Vidyonnathi">
+        </div>
+        <div class="form-group">
+          <label>Amount (₹)</label>
+          <input type="number" name="amount" min="0">
+        </div>
+        <div class="form-group">
+          <label>Disbursement Date</label>
+          <input type="date" name="disbursement_date">
+        </div>
+        <div class="form-group">
+          <label>Remarks</label>
+          <textarea name="result_remarks" rows="2"></textarea>
+        </div>
+        <button class="btn btn-primary">Save Sanction</button>
+      </form>
+    </div>
+
+    <div class="detail-card mt-2">
+      <form method="POST" action="/admin/scholarship/<%= application.id %>/delete" onsubmit="return confirm('Delete this application permanently?')">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn btn-danger">Delete Application</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include('../../partials/admin-footer') %>

@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>About <%= college.shortName %></h1>
+    <p><%= college.board %> &nbsp;&middot;&nbsp; Established <%= college.estYear %></p>
+  </div>
+</div>
+
+<div class="container section">
+  <div class="grid-2">
+    <div>
+      <p style="font-size:1rem;line-height:1.8;color:#444;margin-bottom:24px"><%= college.name %> is a TSBIE-affiliated junior college in <%= college.address %>, offering MPC and BiPC programmes designed for students aiming for IIT-JEE, NEET, and EAPCET. We combine rigorous entrance-exam coaching with the full intermediate curriculum so students excel in both.</p>
+      <h3 style="margin-bottom:8px">Our Vision</h3>
+      <p class="text-muted" style="margin-bottom:20px">To be a centre of excellence in science education in Telangana — where every student is prepared for the nation's most competitive entrance examinations.</p>
+      <h3 style="margin-bottom:8px">Our Mission</h3>
+      <p class="text-muted">Quality intermediate education through dedicated faculty, modern infrastructure, and student-centric teaching — so the board exam and the entrance exam pull in the same direction.</p>
+    </div>
+    <div>
+      <h3 style="margin-bottom:16px">Key Facts</h3>
+      <ul class="fact-list">
+        <li><strong>Affiliation</strong> &nbsp; <%= college.board %></li>
+        <li><strong>Programmes</strong> &nbsp; <%= college.programs.join(' &amp; ') %></li>
+        <li><strong>Established</strong> &nbsp; <%= college.estYear %></li>
+        <li><strong>Location</strong> &nbsp; <%= college.address %>, Telangana</li>
+        <li><strong>Phone</strong> &nbsp; <%= college.phone %></li>
+        <li><strong>Email</strong> &nbsp; <%= college.email %></li>
+      </ul>
+      <div class="mt-2" style="display:flex;gap:10px;flex-wrap:wrap">
+        <a href="/admissions" class="btn btn-primary">Apply Now</a>
+        <a href="/mandatory-disclosure" class="btn btn-ghost">Mandatory Disclosure</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

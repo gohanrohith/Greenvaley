@@ -1,0 +1,129 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Scholarship Application</h1>
+    <p>Fill in all details carefully — fields marked * are required</p>
+  </div>
+</div>
+
+<div class="container section">
+
+  <%- include('../partials/flash') %>
+
+  <form method="POST" action="/scholarship/apply" class="form-card form-card-wide">
+    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+    <fieldset>
+      <legend>Personal Details</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name *</label>
+          <input type="text" name="name" required>
+        </div>
+        <div class="form-group">
+          <label>Date of Birth *</label>
+          <input type="date" name="dob" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Program *</label>
+          <select name="program" required>
+            <option value="">— Select —</option>
+            <option value="MPC">MPC (Math, Physics, Chemistry)</option>
+            <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Roll Number</label>
+          <input type="text" name="roll_number" placeholder="If assigned">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Caste Category</label>
+          <select name="caste_category">
+            <option value="">— Select —</option>
+            <option value="OC">OC (Open Category)</option>
+            <option value="BC-A">BC-A</option>
+            <option value="BC-B">BC-B</option>
+            <option value="BC-C">BC-C</option>
+            <option value="BC-D">BC-D</option>
+            <option value="BC-E">BC-E</option>
+            <option value="SC">SC</option>
+            <option value="ST">ST</option>
+            <option value="EWS">EWS</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Annual Family Income (₹)</label>
+          <input type="number" name="annual_income" min="0" placeholder="e.g. 150000">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Guardian Details</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Father's Name *</label>
+          <input type="text" name="father_name" required>
+        </div>
+        <div class="form-group">
+          <label>Mother's Name</label>
+          <input type="text" name="mother_name">
+        </div>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Contact Details</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Phone Number *</label>
+          <input type="tel" name="phone" required pattern="[6-9][0-9]{9}" placeholder="10-digit mobile">
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" name="email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Residential Address *</label>
+        <textarea name="address" rows="3" required></textarea>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Bank Details (for disbursement)</legend>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Account Number</label>
+          <input type="text" name="bank_account">
+        </div>
+        <div class="form-group">
+          <label>IFSC Code</label>
+          <input type="text" name="bank_ifsc" placeholder="e.g. SBIN0001234">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Bank Name & Branch</label>
+        <input type="text" name="bank_name" placeholder="e.g. State Bank of India, Warangal">
+      </div>
+    </fieldset>
+
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" required>
+        I declare that all information provided is true and correct.
+      </label>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+    <a href="/scholarship" class="btn btn-outline ml-1">Cancel</a>
+  </form>
+</div>
+
+<%- include('../partials/footer') %>

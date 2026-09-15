@@ -1,0 +1,12 @@
+<%- include('../partials/admin-nav') %>
+<div class="page-header"><h2>Settings</h2></div>
+<%- include('../partials/flash') %>
+<form method="POST" action="/admin/settings" class="admin-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <div class="form-group"><label>College Tagline</label><input type="text" name="tagline" value="<%= settings.tagline || '' %>"></div>
+  <div class="form-group"><label>Address</label><textarea name="address" rows="2"><%= settings.address || '' %></textarea></div>
+  <div class="form-group"><label>Phone</label><input type="text" name="phone" value="<%= settings.phone || '' %>"></div>
+  <div class="form-group"><label>Admissions Open Message</label><input type="text" name="admissions_msg" value="<%= settings.admissions_msg || '' %>" placeholder="e.g. Admissions open for 2026–27"></div>
+  <button type="submit" class="btn btn-primary">Save Settings</button>
+</form>
+<%- include('../partials/admin-footer') %>

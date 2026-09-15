@@ -1,0 +1,97 @@
+<%- include('../../partials/admin-nav') %>
+
+<div class="page-header">
+  <h2><%= item ? 'Edit Result' : 'Add Result' %></h2>
+  <a href="/admin/results" class="btn btn-outline">← Back</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<form method="POST" action="<%= item ? `/admin/results/${item.id}/edit` : '/admin/results/new' %>" class="admin-form">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Roll Number *</label>
+      <input type="text" name="roll_number" value="<%= item?.roll_number || '' %>" required <%= item ? 'readonly' : '' %>>
+    </div>
+    <div class="form-group">
+      <label>Student Name *</label>
+      <input type="text" name="name" value="<%= item?.name || '' %>" required>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Program *</label>
+      <select name="program" required <%= item ? 'disabled' : '' %>>
+        <option value="">— Select —</option>
+        <option value="MPC"  <%= item?.program === 'MPC'  ? 'selected' : '' %>>MPC</option>
+        <option value="BiPC" <%= item?.program === 'BiPC' ? 'selected' : '' %>>BiPC</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Exam Type *</label>
+      <select name="exam_type" required <%= item ? 'disabled' : '' %>>
+        <option value="">— Select —</option>
+        <% ['IPE March','IPE May','Model','Quarterly','Half-Yearly'].forEach(t => { %>
+          <option value="<%= t %>" <%= item?.exam_type === t ? 'selected' : '' %>><%= t %></option>
+        <% }); %>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Year *</label>
+      <input type="number" name="year" value="<%= item?.year || new Date().getFullYear() %>" min="2020" max="2035" required <%= item ? 'readonly' : '' %>>
+    </div>
+  </div>
+
+  <h4>Subject Marks</h4>
+  <div class="form-row">
+    <div class="form-group">
+      <label>English</label>
+      <input type="number" name="marks_english" value="<%= item?.marks_english ?? '' %>" min="0" max="100">
+    </div>
+    <div class="form-group">
+      <label>Second Language</label>
+      <input type="number" name="marks_second_lang" value="<%= item?.marks_second_lang ?? '' %>" min="0" max="100">
+    </div>
+    <div class="form-group">
+      <label>Physics</label>
+      <input type="number" name="marks_physics" value="<%= item?.marks_physics ?? '' %>" min="0" max="100">
+    </div>
+    <div class="form-group">
+      <label>Chemistry</label>
+      <input type="number" name="marks_chemistry" value="<%= item?.marks_chemistry ?? '' %>" min="0" max="100">
+    </div>
+    <div class="form-group">
+      <label>Maths (MPC)</label>
+      <input type="number" name="marks_maths" value="<%= item?.marks_maths ?? '' %>" min="0" max="100">
+    </div>
+    <div class="form-group">
+      <label>Biology (BiPC)</label>
+      <input type="number" name="marks_biology" value="<%= item?.marks_biology ?? '' %>" min="0" max="100">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group">
+      <label>Total Marks</label>
+      <input type="number" name="total_marks" value="<%= item?.total_marks ?? '' %>">
+    </div>
+    <div class="form-group">
+      <label>Max Marks</label>
+      <input type="number" name="max_marks" value="<%= item?.max_marks ?? 600 %>">
+    </div>
+    <div class="form-group">
+      <label>Grade</label>
+      <input type="text" name="grade" value="<%= item?.grade || '' %>" placeholder="A, B, Pass, Fail...">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox-label">
+      <input type="checkbox" name="published" value="1" <%= item?.published ? 'checked' : '' %>> Publish (visible to students)
+    </label>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Save Result</button>
+</form>
+
+<%- include('../../partials/admin-footer') %>

@@ -1,0 +1,96 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Contact Us</h1>
+    <p>We're here to help — reach us by phone, email, or the form below</p>
+  </div>
+</div>
+
+<div class="container section">
+
+  <%- include('../partials/flash') %>
+
+  <div class="contact-layout">
+
+    <div class="contact-info-col">
+      <h2 style="font-size:1.5rem;margin-bottom:8px">Get in Touch</h2>
+      <p class="text-muted" style="margin-bottom:32px">For admissions, scholarships, or general enquiries — our staff are available Monday to Saturday.</p>
+
+      <div class="cinfo-list">
+        <div class="cinfo-item">
+          <div class="cinfo-icon-box">📧</div>
+          <div>
+            <div class="cinfo-label">Email</div>
+            <a href="mailto:<%= college.email %>" class="cinfo-value"><%= college.email %></a>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon-box">📞</div>
+          <div>
+            <div class="cinfo-label">Phone</div>
+            <a href="tel:+91<%= college.phone %>" class="cinfo-value"><%= college.phone %></a>
+            <% if (college.phone2) { %>
+            <a href="tel:+91<%= college.phone2 %>" class="cinfo-value" style="display:block"><%= college.phone2 %></a>
+            <% } %>
+          </div>
+        </div>
+        <% if (college.whatsapp) { %>
+        <div class="cinfo-item">
+          <div class="cinfo-icon-box">💬</div>
+          <div>
+            <div class="cinfo-label">WhatsApp</div>
+            <a href="https://wa.me/<%= college.whatsapp %>" target="_blank" rel="noopener" class="cinfo-value">Chat with us</a>
+          </div>
+        </div>
+        <% } %>
+        <div class="cinfo-item">
+          <div class="cinfo-icon-box">📍</div>
+          <div>
+            <div class="cinfo-label">Address</div>
+            <div class="cinfo-value"><%= college.address %>, Telangana</div>
+          </div>
+        </div>
+        <div class="cinfo-item">
+          <div class="cinfo-icon-box">🕐</div>
+          <div>
+            <div class="cinfo-label">Office Hours</div>
+            <div class="cinfo-value">Mon – Sat &nbsp;·&nbsp; 9:00 AM – 5:00 PM</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form method="POST" action="/contact" class="contact-form-card">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <h3 style="margin-bottom:20px">Send a Message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Name *</label>
+          <input type="text" name="name" required placeholder="Your full name">
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="tel" name="phone" placeholder="10-digit mobile number">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email *</label>
+        <input type="email" name="email" required placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label>Subject</label>
+        <input type="text" name="subject" placeholder="Admissions, scholarship, etc.">
+      </div>
+      <div class="form-group">
+        <label>Message *</label>
+        <textarea name="message" rows="5" required placeholder="Write your message here…"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Send Message</button>
+    </form>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

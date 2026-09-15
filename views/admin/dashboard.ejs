@@ -1,0 +1,45 @@
+<%- include('../partials/admin-nav') %>
+
+<h2>Dashboard</h2>
+<%- include('../partials/flash') %>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-num"><%= stats.news || 0 %></div>
+    <div class="stat-label">News Articles</div>
+    <a href="/admin/news" class="stat-link">Manage →</a>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num"><%= stats.events || 0 %></div>
+    <div class="stat-label">Events</div>
+    <a href="/admin/events" class="stat-link">Manage →</a>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num"><%= stats.papers || 0 %></div>
+    <div class="stat-label">Question Papers</div>
+    <a href="/admin/question-papers" class="stat-link">Manage →</a>
+  </div>
+  <div class="stat-card highlight">
+    <div class="stat-num"><%= stats.scholarships || 0 %></div>
+    <div class="stat-label">Pending Scholarships</div>
+    <a href="/admin/scholarship?status=pending" class="stat-link">Review →</a>
+  </div>
+  <div class="stat-card highlight">
+    <div class="stat-num"><%= stats.enquiries || 0 %></div>
+    <div class="stat-label">New Enquiries</div>
+    <a href="/admin/settings" class="stat-link">View →</a>
+  </div>
+</div>
+
+<div class="quick-actions mt-3">
+  <h3>Quick Actions</h3>
+  <div class="action-row">
+    <a href="/admin/results/new" class="btn btn-primary">+ Add Result</a>
+    <a href="/admin/question-papers/new" class="btn btn-outline">+ Upload Paper</a>
+    <a href="/admin/news/new" class="btn btn-outline">+ News Article</a>
+    <a href="/admin/events/new" class="btn btn-outline">+ Event</a>
+    <a href="/admin/scholarship" class="btn btn-outline">Scholarship Apps</a>
+  </div>
+</div>
+
+<%- include('../partials/admin-footer') %>

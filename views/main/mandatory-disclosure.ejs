@@ -1,0 +1,41 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Mandatory Disclosure</h1>
+    <p>As required by the Telangana Board of Intermediate Education (TSBIE)</p>
+  </div>
+</div>
+
+<div class="container section">
+  <div class="disclosure-table">
+    <table>
+      <thead><tr><th>Sl. No.</th><th>Item</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Name of the Institution</td><td><%= disclosure.institution_name || college.name %></td></tr>
+        <tr><td>2</td><td>Name of the Management</td><td><%= disclosure.management_name || '—' %></td></tr>
+        <tr><td>3</td><td>Type of Management</td><td><%= disclosure.management_type || '—' %></td></tr>
+        <tr><td>4</td><td>Year of Establishment</td><td><%= disclosure.est_year || college.estYear %></td></tr>
+        <tr><td>5</td><td>Address</td><td><%= disclosure.address || college.address %>, Telangana</td></tr>
+        <tr><td>6</td><td>Phone</td><td><%= disclosure.phone || college.phone %></td></tr>
+        <tr><td>7</td><td>Email</td><td><%= disclosure.email || college.email %></td></tr>
+        <tr><td>8</td><td>Website</td><td><%= disclosure.website || college.website %></td></tr>
+        <tr><td>9</td><td>Affiliation / Recognition</td><td><%= college.board %></td></tr>
+        <tr><td>10</td><td>Courses / Programmes Offered</td><td><%= college.programs.join(', ') %></td></tr>
+        <tr><td>11</td><td>Sanctioned Intake — MPC</td><td><%= disclosure.intake_mpc || '—' %></td></tr>
+        <tr><td>12</td><td>Sanctioned Intake — BiPC</td><td><%= disclosure.intake_bipc || '—' %></td></tr>
+        <tr><td>13</td><td>Principal / Head of Institution</td><td><%= disclosure.principal_name || '—' %></td></tr>
+        <tr><td>14</td><td>Total Teaching Staff</td><td><%= disclosure.teaching_staff || '—' %></td></tr>
+        <tr><td>15</td><td>Total Non-Teaching Staff</td><td><%= disclosure.non_teaching_staff || '—' %></td></tr>
+        <tr><td>16</td><td>Tuition Fee — MPC</td><td><%= disclosure.fee_mpc ? `₹ ${Number(disclosure.fee_mpc).toLocaleString('en-IN')}` : '—' %></td></tr>
+        <tr><td>17</td><td>Tuition Fee — BiPC</td><td><%= disclosure.fee_bipc ? `₹ ${Number(disclosure.fee_bipc).toLocaleString('en-IN')}` : '—' %></td></tr>
+        <tr><td>18</td><td>Library Books</td><td><%= disclosure.library_books || '—' %></td></tr>
+        <tr><td>19</td><td>Laboratory Facilities</td><td><%= disclosure.labs || '—' %></td></tr>
+        <tr><td>20</td><td>Other Facilities</td><td><%= disclosure.facilities || '—' %></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

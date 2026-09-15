@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="<%= article.title %>">
+  <% if (article.excerpt) { %><meta property="og:description" content="<%= article.excerpt %>"><% } %>
+  <% if (article.image) { %><meta property="og:image" content="<%= article.image %>"><% } %>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="icon" href="/images/logo.png">
+</head>
+<body>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1><%= article.title %></h1>
+    <p><%= new Date(article.created_at).toLocaleDateString('en-IN', {day:'2-digit',month:'long',year:'numeric'}) %></p>
+  </div>
+</div>
+
+<div class="container section">
+  <div class="article-layout">
+    <article class="article-body-card">
+      <% if (article.image) { %>
+        <img src="<%= article.image %>" alt="<%= article.title %>" class="article-hero-img">
+      <% } %>
+      <div class="article-content"><%- article.content %></div>
+    </article>
+    <div class="mt-3">
+      <a href="/news" class="btn btn-outline">← Back to News</a>
+    </div>
+  </div>
+</div>
+
+<%- include('../partials/footer') %>
+</body>
+</html>

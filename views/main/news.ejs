@@ -1,0 +1,38 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>News &amp; Announcements</h1>
+    <p>Updates, notices, and announcements from the college</p>
+  </div>
+</div>
+
+<div class="container section">
+  <% if (news.length === 0) { %>
+    <div class="empty-box">
+      <div class="empty-box-icon">📰</div>
+      <h3>No news yet</h3>
+      <p>Check back soon for announcements and updates.</p>
+    </div>
+  <% } else { %>
+    <div class="news-grid">
+      <% news.forEach(n => { %>
+      <article class="news-card">
+        <% if (n.image) { %>
+          <img src="<%= n.image %>" alt="<%= n.title %>" class="news-card-img">
+        <% } else { %>
+          <div class="news-card-img-placeholder">📰</div>
+        <% } %>
+        <div class="news-card-body">
+          <h4><a href="/news/<%= n.slug %>"><%= n.title %></a></h4>
+          <% if (n.excerpt) { %><p class="news-card-excerpt"><%= n.excerpt %></p><% } %>
+          <time><%= new Date(n.created_at).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) %></time>
+        </div>
+      </article>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>

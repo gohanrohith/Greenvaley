@@ -1,0 +1,33 @@
+<%- include('../../partials/admin-nav') %>
+
+<div class="page-header">
+  <h2>Question Papers</h2>
+  <a href="/admin/question-papers/new" class="btn btn-primary">+ Upload Paper</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<table class="admin-table">
+  <thead><tr><th>Title</th><th>Subject</th><th>Program</th><th>Year</th><th>Exam</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% if (papers.length === 0) { %>
+    <tr><td colspan="6" class="empty">No papers uploaded.</td></tr>
+    <% } %>
+    <% papers.forEach(p => { %>
+    <tr>
+      <td><a href="/uploads/papers/<%= p.filename %>" target="_blank"><%= p.title %></a></td>
+      <td><%= p.subject %></td>
+      <td><%= p.program %></td>
+      <td><%= p.year %></td>
+      <td><%= p.exam_type || '—' %></td>
+      <td>
+        <form method="POST" action="/admin/question-papers/<%= p.id %>/delete" style="display:inline" onsubmit="return confirm('Delete this paper?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('../../partials/admin-footer') %>

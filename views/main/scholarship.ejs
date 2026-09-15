@@ -1,0 +1,40 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Scholarship Portal</h1>
+    <p>Apply for government scholarships or track your existing application</p>
+  </div>
+</div>
+
+<div class="container section">
+
+  <div class="portal-cards">
+    <div class="portal-card">
+      <div class="portal-card-icon">📝</div>
+      <h3>Apply for Scholarship</h3>
+      <p>Fill in your details to apply for eligible government scholarships — SC/ST, BC, EBC, NTR Vidyonnathi, and merit-based schemes.</p>
+      <a href="/scholarship/apply" class="btn btn-primary">Apply Now</a>
+    </div>
+    <div class="portal-card">
+      <div class="portal-card-icon">🔍</div>
+      <h3>Track Your Application</h3>
+      <p>Already applied? Enter your application ID and registered phone number to check the current status of your application.</p>
+      <a href="/scholarship/status" class="btn btn-outline">Check Status</a>
+    </div>
+  </div>
+
+  <div class="info-box mt-3">
+    <h4>Important Notes</h4>
+    <ul>
+      <li>Applications are reviewed by the college and forwarded to the relevant government department.</li>
+      <li>Keep your application ID safe — you will need it to check status.</li>
+      <li>Ensure your bank account details are correct for scholarship disbursement.</li>
+      <li>For queries, contact the college office: <a href="mailto:<%= college.email %>"><%= college.email %></a></li>
+    </ul>
+  </div>
+
+</div>
+
+<%- include('../partials/footer') %>

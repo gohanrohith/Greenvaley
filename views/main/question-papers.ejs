@@ -1,0 +1,61 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Question Papers</h1>
+    <p>Previous year papers for MPC and BiPC — filter by program, subject, or year</p>
+  </div>
+</div>
+
+<div class="container section">
+
+  <form method="GET" class="filter-bar">
+    <select name="program">
+      <option value="">All Programs</option>
+      <option value="MPC"  <%= program === 'MPC'  ? 'selected' : '' %>>MPC</option>
+      <option value="BiPC" <%= program === 'BiPC' ? 'selected' : '' %>>BiPC</option>
+    </select>
+    <select name="subject">
+      <option value="">All Subjects</option>
+      <option value="Physics"   <%= subject === 'Physics'   ? 'selected' : '' %>>Physics</option>
+      <option value="Chemistry" <%= subject === 'Chemistry' ? 'selected' : '' %>>Chemistry</option>
+      <option value="Maths"     <%= subject === 'Maths'     ? 'selected' : '' %>>Mathematics</option>
+      <option value="Biology"   <%= subject === 'Biology'   ? 'selected' : '' %>>Biology</option>
+      <option value="English"   <%= subject === 'English'   ? 'selected' : '' %>>English</option>
+    </select>
+    <select name="year">
+      <option value="">All Years</option>
+      <% for (let y = new Date().getFullYear(); y >= 2018; y--) { %>
+        <option value="<%= y %>" <%= year == y ? 'selected' : '' %>><%= y %></option>
+      <% } %>
+    </select>
+    <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+    <a href="/question-papers" class="btn btn-ghost btn-sm">Clear</a>
+  </form>
+
+  <% if (papers.length === 0) { %>
+    <div class="empty-box">
+      <div class="empty-box-icon">📂</div>
+      <h3>No papers found</h3>
+      <p>Try a different filter combination, or check back after papers are uploaded.</p>
+      <a href="/question-papers" class="btn btn-outline btn-sm mt-1">Clear Filters</a>
+    </div>
+  <% } else { %>
+    <div class="papers-grid">
+      <% papers.forEach(p => { %>
+      <div class="paper-row">
+        <div class="paper-icon">📄</div>
+        <div class="paper-info">
+          <h4><%= p.title %></h4>
+          <p><span class="badge badge-green"><%= p.program %></span>&nbsp;<%= p.subject %>&nbsp;&bull;&nbsp;<%= p.year %><%= p.exam_type ? ` &bull; ${p.exam_type}` : '' %></p>
+        </div>
+        <a href="/uploads/papers/<%= p.filename %>" target="_blank" class="btn btn-sm btn-primary">Download</a>
+      </div>
+      <% }); %>
+    </div>
+  <% } %>
+
+</div>
+
+<%- include('../partials/footer') %>

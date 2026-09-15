@@ -1,0 +1,24 @@
+<%- include('../../partials/admin-nav') %>
+<div class="page-header"><h2>Events</h2><a href="/admin/events/new" class="btn btn-primary">+ New Event</a></div>
+<%- include('../../partials/flash') %>
+<table class="admin-table">
+  <thead><tr><th>Title</th><th>Date</th><th>Venue</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% if (!events.length) { %><tr><td colspan="4" class="empty">No events.</td></tr><% } %>
+    <% events.forEach(e => { %>
+    <tr>
+      <td><%= e.title %></td>
+      <td><%= new Date(e.event_date).toLocaleDateString('en-IN') %></td>
+      <td><%= e.venue || '—' %></td>
+      <td>
+        <a href="/admin/events/<%= e.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+        <form method="POST" action="/admin/events/<%= e.id %>/delete" style="display:inline" onsubmit="return confirm('Delete?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<%- include('../../partials/admin-footer') %>

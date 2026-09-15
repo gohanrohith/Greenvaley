@@ -1,0 +1,44 @@
+<%- include('../../partials/admin-nav') %>
+
+<div class="page-header">
+  <h2>Scholarship Applications</h2>
+</div>
+<%- include('../../partials/flash') %>
+
+<form method="GET" class="filter-form inline-form">
+  <select name="status">
+    <option value="">All Status</option>
+    <% ['pending','under_review','approved','sanctioned','rejected'].forEach(s => { %>
+      <option value="<%= s %>" <%= status === s ? 'selected' : '' %>><%= s.replace('_',' ').toUpperCase() %></option>
+    <% }); %>
+  </select>
+  <select name="program">
+    <option value="">All Programs</option>
+    <option value="MPC"  <%= program === 'MPC'  ? 'selected' : '' %>>MPC</option>
+    <option value="BiPC" <%= program === 'BiPC' ? 'selected' : '' %>>BiPC</option>
+  </select>
+  <button type="submit" class="btn btn-sm btn-outline">Filter</button>
+</form>
+
+<table class="admin-table">
+  <thead><tr><th>#</th><th>Name</th><th>Program</th><th>Category</th><th>Phone</th><th>Status</th><th>Date</th><th>View</th></tr></thead>
+  <tbody>
+    <% if (applications.length === 0) { %>
+    <tr><td colspan="8" class="empty">No applications.</td></tr>
+    <% } %>
+    <% applications.forEach(a => { %>
+    <tr>
+      <td><%= a.id %></td>
+      <td><%= a.name %></td>
+      <td><%= a.program %></td>
+      <td><%= a.caste_category || '—' %></td>
+      <td><%= a.phone %></td>
+      <td><span class="badge badge-<%= a.status %>"><%= a.status.replace('_',' ').toUpperCase() %></span></td>
+      <td><%= new Date(a.created_at).toLocaleDateString('en-IN') %></td>
+      <td><a href="/admin/scholarship/<%= a.id %>" class="btn btn-sm btn-outline">View</a></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+<%- include('../../partials/admin-footer') %>

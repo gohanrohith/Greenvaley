@@ -1,0 +1,40 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Gallery</h1>
+    <p>Photos from events, activities, and campus life at Greenvaley</p>
+  </div>
+</div>
+
+<div class="container section">
+  <% if (albums.length === 0) { %>
+    <div class="empty-box">
+      <div class="empty-box-icon">📷</div>
+      <h3>No albums yet</h3>
+      <p>Gallery photos will appear here when they are uploaded.</p>
+    </div>
+  <% } else { %>
+    <div class="gallery-grid">
+      <% albums.forEach(a => { %>
+      <div class="album-card">
+        <div class="album-thumb">
+          <% if (a.cover_photo) { %>
+            <img src="/uploads/gallery/<%= a.cover_photo %>" alt="<%= a.title %>">
+          <% } else { %>
+            <div class="album-thumb-placeholder">📷</div>
+          <% } %>
+          <div class="album-count"><%= a.photo_count %> photo<%= a.photo_count != 1 ? 's' : '' %></div>
+        </div>
+        <div class="album-card-body">
+          <h4><%= a.title %></h4>
+          <% if (a.description) { %><p><%= a.description %></p><% } %>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  <% } %>
+</div>
+
+<%- include('../partials/footer') %>
