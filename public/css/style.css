@@ -577,3 +577,57 @@ html { scroll-behavior: smooth; }
 .nav-scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.1); }
 .nav-inner { transition: height .25s; }
 .nav-scrolled .nav-inner { height: 58px; }
+
+/* ── Achievements / Toppers ───────────────────────────────────────────────────── */
+
+/* Stats row on home page */
+.achieve-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 32px; }
+.achieve-stat { display: flex; flex-direction: column; }
+.achieve-n { font-size: 2.25rem; font-weight: 800; color: var(--green); line-height: 1; letter-spacing: -.03em; }
+.achieve-l { font-size: .8rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 2px; }
+
+/* Horizontal scroll on home page */
+.toppers-scroll { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 12px; scrollbar-width: thin; }
+.toppers-scroll::-webkit-scrollbar { height: 4px; }
+.toppers-scroll::-webkit-scrollbar-track { background: transparent; }
+.toppers-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+/* Grid on achievements page */
+.toppers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 20px; }
+
+/* Individual topper card */
+.topper-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 16px 16px; display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 168px; transition: box-shadow .25s, transform .25s; }
+.topper-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+
+/* Exam badge */
+.topper-exam { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 100px; margin-bottom: 14px; }
+.topper-exam-jee-main    { background: #e8f0fe; color: #1a56db; }
+.topper-exam-jee-advanced { background: #fde8ff; color: #7c3aed; }
+.topper-exam-neet        { background: #fde8e8; color: #c81e1e; }
+.topper-exam-eapcet      { background: #e8f5e9; color: #2e7d32; }
+.topper-exam-board       { background: #fef3e2; color: #b45309; }
+
+/* Photo circle */
+.topper-photo { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 3px solid var(--border); margin-bottom: 12px; }
+.topper-photo-placeholder { width: 80px; height: 80px; border-radius: 50%; background: var(--green); color: var(--white); font-size: 1.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+
+/* Card text */
+.topper-rank { font-size: 1.05rem; font-weight: 800; color: var(--green-dark); margin-bottom: 4px; letter-spacing: -.01em; }
+.topper-name { font-size: .9rem; font-weight: 600; color: var(--black); }
+.topper-score { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+.topper-highlight { font-size: .7rem; background: var(--gold-light); color: var(--gold); font-weight: 600; padding: 2px 8px; border-radius: 100px; margin-top: 6px; }
+.topper-meta { font-size: .72rem; color: var(--muted-light); margin-top: 6px; }
+
+/* Filter bar on achievements page */
+.achieve-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; align-items: center; }
+.achieve-filter-btn { padding: 6px 16px; border-radius: 100px; border: 1.5px solid var(--border); font-size: .85rem; font-weight: 500; color: var(--muted); background: var(--white); cursor: pointer; transition: all .2s; }
+.achieve-filter-btn:hover { border-color: var(--green); color: var(--green); }
+.achieve-filter-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
+.achieve-filter-year { font-size: .78rem; }
+.achieve-filter-sep { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
+
+/* Empty state */
+.achieve-empty { text-align: center; padding: 80px 20px; }
+.achieve-empty-icon { font-size: 3rem; margin-bottom: 16px; }
+.achieve-empty h3 { margin-bottom: 8px; }
+.achieve-empty p { color: var(--muted); max-width: 400px; margin: 0 auto; font-size: .95rem; }

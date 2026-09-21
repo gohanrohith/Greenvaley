@@ -531,3 +531,73 @@ exports.saveProfile = [
     }
   },
 ];
+
+// ── Toppers ───────────────────────────────────────────────────────────────────
+
+const uploadTopper = multer({ storage: diskStorage('toppers'), limits: { fileSize: 4 * 1024 * 1024 } });
+
+exports.toppersList = async (req, res) => {
+  const [toppers] = await db.query('SELECT * FROM toppers ORDER BY sort_order ASC, created_at DESC');
+  res.render('admin/toppers/list', { title: 'Toppers | Admin', college, toppers });
+};
+
+exports.topperForm = (req, res) => {
+  res.render('admin/toppers/form', { title: 'New Topper | Admin', college, item: null });
+};
+
+exports.createTopper = [
+  uploadTopper.single('photo'),
+  async (req, res) => {
+    const { name, exam, rank_label, score, highlight, year, program, published, sort_order } = req.body;
+    const photo = req.file ? `/uploads/toppers/${req.file.filename}` : null;
+    try {
+      await db.query(
+        'INSERT INTO toppers (name, photo, exam, rank_label, score, highlight, year, program, published, sort_order) VALUES (?,?,?,?,?,?,?,?,?,?)',
+        [name, photo, exam, rank_label, score || null, highlight || null, year, program, published === '1' ? 1 : 0, sort_order || 0]
+      );
+      res.redirect('/admin/toppers?success=1');
+    } catch (e) {
+      console.error(e);
+      res.redirect('/admin/toppers/new?error=1');
+    }
+  },
+];
+
+exports.editTopperForm = async (req, res) => {
+  const [[item]] = await db.query('SELECT * FROM toppers WHERE id=?', [req.params.id]);
+  if (!item) return res.redirect('/admin/toppers');
+  res.render('admin/toppers/form', { title: 'Edit Topper | Admin', college, item });
+};
+
+exports.updateTopper = [
+  uploadTopper.single('photo'),
+  async (req, res) => {
+    const { name, exam, rank_label, score, highlight, year, program, published, sort_order, remove_photo } = req.body;
+    const newPhoto = req.file ? `/uploads/toppers/${req.file.filename}` : null;
+    try {
+      let photo;
+      if (newPhoto) { photo = newPhoto; }
+      else if (remove_photo === '1') { photo = null; }
+      if (photo !== undefined) {
+        await db.query(
+          'UPDATE toppers SET name=?,photo=?,exam=?,rank_label=?,score=?,highlight=?,year=?,program=?,published=?,sort_order=? WHERE id=?',
+          [name, photo, exam, rank_label, score || null, highlight || null, year, program, published === '1' ? 1 : 0, sort_order || 0, req.params.id]
+        );
+      } else {
+        await db.query(
+          'UPDATE toppers SET name=?,exam=?,rank_label=?,score=?,highlight=?,year=?,program=?,published=?,sort_order=? WHERE id=?',
+          [name, exam, rank_label, score || null, highlight || null, year, program, published === '1' ? 1 : 0, sort_order || 0, req.params.id]
+        );
+      }
+      res.redirect('/admin/toppers?success=1');
+    } catch (e) {
+      console.error(e);
+      res.redirect(`/admin/toppers/${req.params.id}/edit?error=1`);
+    }
+  },
+];
+
+exports.deleteTopper = async (req, res) => {
+  await db.query('DELETE FROM toppers WHERE id=?', [req.params.id]);
+  res.redirect('/admin/toppers?success=1');
+};

@@ -1,0 +1,27 @@
+<%- include('../../partials/admin-nav') %>
+<div class="page-header"><h2>Student Toppers / Achievements</h2><a href="/admin/toppers/new" class="btn btn-primary">+ Add Topper</a></div>
+<%- include('../../partials/flash') %>
+<table class="admin-table">
+  <thead><tr><th>Name</th><th>Exam</th><th>Rank / Label</th><th>Year</th><th>Program</th><th>Published</th><th>Actions</th></tr></thead>
+  <tbody>
+    <% if (!toppers.length) { %><tr><td colspan="7" class="empty">No toppers added yet.</td></tr><% } %>
+    <% toppers.forEach(t => { %>
+    <tr>
+      <td><strong><%= t.name %></strong><% if (t.highlight) { %><br><small style="color:#888"><%= t.highlight %></small><% } %></td>
+      <td><%= t.exam %></td>
+      <td><%= t.rank_label %><% if (t.score) { %><br><small style="color:#888"><%= t.score %></small><% } %></td>
+      <td><%= t.year %></td>
+      <td><%= t.program %></td>
+      <td><%= t.published ? '✓' : '—' %></td>
+      <td>
+        <a href="/admin/toppers/<%= t.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+        <form method="POST" action="/admin/toppers/<%= t.id %>/delete" style="display:inline" onsubmit="return confirm('Delete this topper entry?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<%- include('../../partials/admin-footer') %>

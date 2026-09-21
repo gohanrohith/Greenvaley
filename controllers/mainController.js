@@ -8,15 +8,16 @@ const V = {
 
 exports.home = async (req, res) => {
   try {
-    const [[news], [events], [papers]] = await Promise.all([
+    const [[news], [events], [papers], [toppers]] = await Promise.all([
       db.query('SELECT * FROM news WHERE published=1 ORDER BY created_at DESC LIMIT 4'),
       db.query('SELECT * FROM events ORDER BY event_date ASC LIMIT 3'),
       db.query('SELECT * FROM question_papers ORDER BY created_at DESC LIMIT 3'),
+      db.query('SELECT * FROM toppers WHERE published=1 ORDER BY sort_order ASC, created_at DESC LIMIT 8'),
     ]);
-    V.render(res, 'main/home', { title: college.name, news, events, papers });
+    V.render(res, 'main/home', { title: college.name, news, events, papers, toppers });
   } catch (e) {
     console.error(e);
-    V.render(res, 'main/home', { title: college.name, news: [], events: [], papers: [] });
+    V.render(res, 'main/home', { title: college.name, news: [], events: [], papers: [], toppers: [] });
   }
 };
 
@@ -84,6 +85,30 @@ exports.newsArticle = async (req, res) => {
 
 exports.scholarshipTerms = (req, res) => {
   V.render(res, 'main/scholarship-terms', { title: `Scholarship Terms | ${college.shortName}` });
+};
+
+exports.achievements = async (req, res) => {
+  try {
+    const exam = req.query.exam || '';
+    const year = req.query.year || '';
+    let sql = 'SELECT * FROM toppers WHERE published=1';
+    const params = [];
+    if (exam) { sql += ' AND exam=?'; params.push(exam); }
+    if (year) { sql += ' AND year=?'; params.push(year); }
+    sql += ' ORDER BY sort_order ASC, created_at DESC';
+    const [toppers] = await db.query(sql, params);
+    const [years] = await db.query('SELECT DISTINCT year FROM toppers WHERE published=1 ORDER BY year DESC');
+    V.render(res, 'main/achievements', {
+      title: `Student Achievements | ${college.shortName}`,
+      toppers, years, activeExam: exam, activeYear: year,
+    });
+  } catch (e) {
+    console.error(e);
+    V.render(res, 'main/achievements', {
+      title: `Student Achievements | ${college.shortName}`,
+      toppers: [], years: [], activeExam: '', activeYear: '',
+    });
+  }
 };
 
 exports.contact = (req, res) => {

@@ -64,6 +64,14 @@ router.post('/results/:id/edit',  ctrl.updateResult);
 router.post('/results/:id/delete',ctrl.deleteResult);
 router.post('/results/import',    ctrl.importResults);
 
+// Toppers / achievements
+router.get('/toppers',               ctrl.toppersList);
+router.get('/toppers/new',           ctrl.topperForm);
+router.post('/toppers/new',          ctrl.createTopper);
+router.get('/toppers/:id/edit',      ctrl.editTopperForm);
+router.post('/toppers/:id/edit',     ctrl.updateTopper);
+router.post('/toppers/:id/delete',   ctrl.deleteTopper);
+
 // Scholarship management
 router.get('/scholarship',                         schCtrl.adminList);
 router.get('/scholarship/:id',                     schCtrl.adminView);

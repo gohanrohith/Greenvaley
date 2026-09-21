@@ -25,6 +25,9 @@ router.get('/mandatory-disclosure', ctrl.mandatoryDisclosure);
 router.get('/results',        ctrl.resultsPage);
 router.post('/results/check', formLimiter, ctrl.checkResult);
 
+// Student achievements / toppers
+router.get('/achievements', ctrl.achievements);
+
 // Sample question papers
 router.get('/question-papers', ctrl.questionPapers);
 

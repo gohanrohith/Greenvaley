@@ -119,6 +119,51 @@
   </div>
 </section>
 
+<!-- Student Achievements -->
+<% if (toppers && toppers.length) { %>
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <h2>Student Achievements</h2>
+      <a href="/achievements">All achievements →</a>
+    </div>
+    <%
+      const jeeCount   = toppers.filter(t => t.exam === 'JEE Main' || t.exam === 'JEE Advanced').length;
+      const neetCount  = toppers.filter(t => t.exam === 'NEET').length;
+      const eapcetCount = toppers.filter(t => t.exam === 'EAPCET').length;
+    %>
+    <div class="achieve-stats" data-reveal>
+      <% if (jeeCount > 0) { %>
+      <div class="achieve-stat"><span class="achieve-n"><%= jeeCount %>+</span><span class="achieve-l">JEE Qualifiers</span></div>
+      <% } %>
+      <% if (neetCount > 0) { %>
+      <div class="achieve-stat"><span class="achieve-n"><%= neetCount %>+</span><span class="achieve-l">NEET Qualifiers</span></div>
+      <% } %>
+      <% if (eapcetCount > 0) { %>
+      <div class="achieve-stat"><span class="achieve-n"><%= eapcetCount %>+</span><span class="achieve-l">EAPCET Qualifiers</span></div>
+      <% } %>
+    </div>
+    <div class="toppers-scroll">
+      <% toppers.forEach(t => { %>
+      <div class="topper-card">
+        <div class="topper-exam topper-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></div>
+        <% if (t.photo) { %>
+          <img src="<%= t.photo %>" alt="<%= t.name %>" class="topper-photo"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="topper-photo-placeholder" style="display:none"><%= t.name.charAt(0).toUpperCase() %></div>
+        <% } else { %>
+          <div class="topper-photo-placeholder"><%= t.name.charAt(0).toUpperCase() %></div>
+        <% } %>
+        <div class="topper-rank"><%= t.rank_label %></div>
+        <div class="topper-name"><%= t.name %></div>
+        <% if (t.highlight) { %><div class="topper-highlight"><%= t.highlight %></div><% } %>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <!-- News -->
 <% if (news && news.length) { %>
 <section class="section bg-light">

@@ -145,6 +145,22 @@ CREATE TABLE IF NOT EXISTS scholarship_applications (
   created_at       DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Competitive exam / board toppers
+CREATE TABLE IF NOT EXISTS toppers (
+  id          INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  name        VARCHAR(100) NOT NULL,
+  photo       VARCHAR(255),
+  exam        ENUM('JEE Main','JEE Advanced','NEET','EAPCET','Board') NOT NULL,
+  rank_label  VARCHAR(60)  NOT NULL,   -- e.g. 'AIR 1543', 'State Rank 3', '99.8 Percentile'
+  score       VARCHAR(50),             -- e.g. '310/360', '98.7%'
+  highlight   VARCHAR(100),            -- e.g. 'Telangana State Topper'
+  year        YEAR         NOT NULL,
+  program     ENUM('MPC','BiPC')       NOT NULL,
+  published   TINYINT(1)   NOT NULL DEFAULT 1,
+  sort_order  INT          NOT NULL DEFAULT 0,
+  created_at  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 -- Scholarship results / sanction details
 CREATE TABLE IF NOT EXISTS scholarship_results (
   id                INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

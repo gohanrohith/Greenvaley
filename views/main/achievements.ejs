@@ -1,0 +1,61 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero">
+  <div class="container">
+    <h1>Student Achievements</h1>
+    <p>Our students earning ranks in JEE, NEET, EAPCET and excelling in board exams</p>
+  </div>
+</div>
+
+<div class="container section">
+
+  <!-- Filter bar -->
+  <div class="achieve-filters" data-reveal>
+    <a href="/achievements" class="achieve-filter-btn <%= !activeExam ? 'active' : '' %>">All</a>
+    <% ['JEE Main','JEE Advanced','NEET','EAPCET','Board'].forEach(e => { %>
+    <a href="/achievements?exam=<%= encodeURIComponent(e) %><%= activeYear ? '&year='+activeYear : '' %>"
+       class="achieve-filter-btn <%= activeExam === e ? 'active' : '' %>"><%= e %></a>
+    <% }); %>
+    <% if (years.length > 1) { %>
+    <div class="achieve-filter-sep"></div>
+    <% years.forEach(row => { %>
+    <a href="/achievements?year=<%= row.year %><%= activeExam ? '&exam='+encodeURIComponent(activeExam) : '' %>"
+       class="achieve-filter-btn achieve-filter-year <%= activeYear == row.year ? 'active' : '' %>"><%= row.year %>–<%= row.year + 1 %></a>
+    <% }); %>
+    <% } %>
+  </div>
+
+  <!-- Toppers grid -->
+  <% if (toppers.length === 0) { %>
+  <div class="achieve-empty" data-reveal>
+    <div class="achieve-empty-icon">🎓</div>
+    <h3>Results Coming Soon</h3>
+    <p>Our first batch graduates in 2026. We'll publish their JEE, NEET, EAPCET and board results here.</p>
+    <a href="/admissions" class="btn btn-primary mt-1">Admissions 2025–26</a>
+  </div>
+  <% } else { %>
+  <div class="toppers-grid">
+    <% toppers.forEach(t => { %>
+    <div class="topper-card" data-reveal>
+      <div class="topper-exam topper-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></div>
+      <% if (t.photo) { %>
+        <img src="<%= t.photo %>" alt="<%= t.name %>" class="topper-photo"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="topper-photo-placeholder" style="display:none"><%= t.name.charAt(0).toUpperCase() %></div>
+      <% } else { %>
+        <div class="topper-photo-placeholder"><%= t.name.charAt(0).toUpperCase() %></div>
+      <% } %>
+      <div class="topper-rank"><%= t.rank_label %></div>
+      <div class="topper-name"><%= t.name %></div>
+      <% if (t.score) { %><div class="topper-score"><%= t.score %></div><% } %>
+      <% if (t.highlight) { %><div class="topper-highlight"><%= t.highlight %></div><% } %>
+      <div class="topper-meta"><%= t.program %> &middot; <%= t.year %>–<%= t.year + 1 %></div>
+    </div>
+    <% }); %>
+  </div>
+  <% } %>
+
+</div>
+
+<%- include('../partials/footer') %>
