@@ -73,26 +73,63 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
 
 // Linear drag carousel
 (function () {
-  const wrap = document.querySelector('.lc-track-wrap');
+  const wrap = document.getElementById('lcWrap');
   if (!wrap) return;
-  let isDragging = false, startX = 0, scrollLeft = 0;
+
+  let isDragging = false, startX = 0, startScroll = 0;
 
   wrap.addEventListener('mousedown', e => {
     isDragging = true;
-    startX = e.pageX - wrap.offsetLeft;
-    scrollLeft = wrap.scrollLeft;
-    wrap.style.cursor = 'grabbing';
-  });
-  wrap.addEventListener('mouseleave', () => { isDragging = false; wrap.style.cursor = 'grab'; });
-  wrap.addEventListener('mouseup',    () => { isDragging = false; wrap.style.cursor = 'grab'; });
-  wrap.addEventListener('mousemove', e => {
-    if (!isDragging) return;
+    startX = e.clientX;
+    startScroll = wrap.scrollLeft;
+    wrap.classList.add('dragging');
     e.preventDefault();
-    const x = e.pageX - wrap.offsetLeft;
-    wrap.scrollLeft = scrollLeft - (x - startX) * 1.4;
   });
-  wrap.addEventListener('touchstart', e => { startX = e.touches[0].pageX; scrollLeft = wrap.scrollLeft; }, { passive: true });
-  wrap.addEventListener('touchmove',  e => { wrap.scrollLeft = scrollLeft - (e.touches[0].pageX - startX); }, { passive: true });
+  document.addEventListener('mouseup', () => {
+    isDragging = false;
+    wrap.classList.remove('dragging');
+  });
+  document.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    wrap.scrollLeft = startScroll - (e.clientX - startX);
+  });
+
+  let touchStartX = 0, touchStartScroll = 0;
+  wrap.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartScroll = wrap.scrollLeft;
+  }, { passive: true });
+  wrap.addEventListener('touchmove', e => {
+    wrap.scrollLeft = touchStartScroll - (e.touches[0].clientX - touchStartX);
+  }, { passive: true });
+})();
+
+// Year filter for achievements carousel
+(function () {
+  const filters = document.getElementById('lcFilters');
+  if (!filters) return;
+  const track = document.getElementById('lcTrack');
+  if (!track) return;
+
+  filters.addEventListener('click', e => {
+    const btn = e.target.closest('.lc-filter');
+    if (!btn) return;
+
+    filters.querySelectorAll('.lc-filter').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const year = btn.dataset.year;
+    Array.from(track.children).forEach(card => {
+      if (year === 'all' || !card.dataset.year) {
+        card.style.display = '';
+      } else {
+        card.style.display = card.dataset.year === year ? '' : 'none';
+      }
+    });
+
+    // Reset scroll to start when filter changes
+    document.getElementById('lcWrap').scrollLeft = 0;
+  });
 })();
 
 // Toppers carousel

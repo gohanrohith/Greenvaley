@@ -611,13 +611,20 @@ html { scroll-behavior: smooth; }
 
 /* ── Linear Carousel Achievement Section ─────────────────────────────────────── */
 .lc-section { background: #0b1a08; padding: 64px 0 0; }
-.lc-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; gap: 16px; flex-wrap: wrap; }
+.lc-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 24px; gap: 16px; flex-wrap: wrap; }
 .lc-label { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.4); margin-bottom: 6px; }
 .lc-title { font-size: 1.8rem; font-weight: 800; color: var(--white); letter-spacing: -.02em; }
-.lc-track-wrap { overflow-x: auto; scrollbar-width: none; cursor: grab; padding: 0 0 48px 24px; }
-.lc-track-wrap:active { cursor: grabbing; }
+
+/* Year filter bar */
+.lc-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; padding: 0 0 4px; }
+.lc-filter { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.55); font-size: .78rem; font-weight: 600; padding: 5px 16px; border-radius: 100px; cursor: pointer; transition: all .2s; font-family: inherit; }
+.lc-filter:hover { background: rgba(255,255,255,.12); color: rgba(255,255,255,.85); }
+.lc-filter.active { background: var(--green); border-color: var(--green); color: var(--white); }
+
+.lc-track-wrap { overflow-x: auto; scrollbar-width: none; cursor: grab; padding: 0 0 48px 24px; -webkit-overflow-scrolling: touch; }
+.lc-track-wrap.dragging { cursor: grabbing; user-select: none; }
 .lc-track-wrap::-webkit-scrollbar { display: none; }
-.lc-track { display: flex; gap: 16px; width: max-content; user-select: none; padding-right: 24px; }
+.lc-track { display: flex; gap: 16px; width: max-content; padding-right: 24px; }
 .lc-card { position: relative; width: 260px; height: 340px; border-radius: 18px; overflow: hidden; flex-shrink: 0; display: flex; flex-direction: column; justify-content: flex-end; transition: transform .25s, box-shadow .25s; }
 .lc-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,.5); }
 .lc-card-bg-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
@@ -627,6 +634,7 @@ html { scroll-behavior: smooth; }
 .lc-card-rank { font-size: 1.6rem; font-weight: 900; color: var(--white); letter-spacing: -.02em; line-height: 1.1; margin-bottom: 4px; }
 .lc-card-name { font-size: .82rem; color: rgba(255,255,255,.75); margin-bottom: 8px; }
 .lc-card-highlight { display: inline-block; font-size: .65rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,.15); color: rgba(255,255,255,.9); }
+.lc-card-yr { font-size: .62rem; color: rgba(255,255,255,.3); margin-top: 6px; letter-spacing: .06em; }
 /* Card colour themes */
 .lc-card-jee-main     { background: linear-gradient(160deg, #1a3a8f 0%, #0a1a4a 100%); }
 .lc-card-jee-main .lc-card-overlay { background: linear-gradient(to top, rgba(10,26,74,.85) 0%, rgba(10,26,74,.2) 100%); }

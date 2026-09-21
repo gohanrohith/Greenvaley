@@ -8,16 +8,17 @@ const V = {
 
 exports.home = async (req, res) => {
   try {
-    const [[news], [events], [papers], [toppers]] = await Promise.all([
+    const [[news], [events], [papers], [toppers], [topperYears]] = await Promise.all([
       db.query('SELECT * FROM news WHERE published=1 ORDER BY created_at DESC LIMIT 4'),
       db.query('SELECT * FROM events ORDER BY event_date ASC LIMIT 3'),
       db.query('SELECT * FROM question_papers ORDER BY created_at DESC LIMIT 3'),
-      db.query('SELECT * FROM toppers WHERE published=1 ORDER BY sort_order ASC, created_at DESC LIMIT 8'),
+      db.query('SELECT * FROM toppers WHERE published=1 ORDER BY year DESC, sort_order ASC, created_at DESC LIMIT 60'),
+      db.query('SELECT DISTINCT year FROM toppers WHERE published=1 ORDER BY year DESC'),
     ]);
-    V.render(res, 'main/home', { title: college.name, news, events, papers, toppers });
+    V.render(res, 'main/home', { title: college.name, news, events, papers, toppers, topperYears });
   } catch (e) {
     console.error(e);
-    V.render(res, 'main/home', { title: college.name, news: [], events: [], papers: [], toppers: [] });
+    V.render(res, 'main/home', { title: college.name, news: [], events: [], papers: [], toppers: [], topperYears: [] });
   }
 };
 

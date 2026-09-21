@@ -43,6 +43,97 @@
   </div>
 </section>
 
+<!-- Student Achievements — Linear Carousel (below hero) -->
+<section class="lc-section">
+  <div class="container">
+    <div class="lc-head" data-reveal>
+      <div>
+        <div class="lc-label">Student Achievements</div>
+        <h2 class="lc-title">Our students in JEE, NEET &amp; EAPCET</h2>
+      </div>
+      <a href="/achievements" class="btn btn-ghost-white btn-sm">View All →</a>
+    </div>
+    <% if (topperYears && topperYears.length > 1) { %>
+    <div class="lc-filters" id="lcFilters">
+      <button class="lc-filter active" data-year="all">All</button>
+      <% topperYears.forEach(row => { %>
+      <button class="lc-filter" data-year="<%= row.year %>"><%= row.year %></button>
+      <% }); %>
+    </div>
+    <% } %>
+  </div>
+  <div class="lc-track-wrap" id="lcWrap">
+    <div class="lc-track" id="lcTrack">
+
+      <% if (toppers && toppers.length) { %>
+        <% toppers.forEach(t => { %>
+        <div class="lc-card lc-card-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>" data-year="<%= t.year %>">
+          <% if (t.photo) { %>
+            <img src="<%= t.photo %>" alt="<%= t.name %>" class="lc-card-bg-img">
+          <% } %>
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat"><%= t.exam %></div>
+            <div class="lc-card-rank"><%= t.rank_label %></div>
+            <div class="lc-card-name"><%= t.name %></div>
+            <% if (t.highlight) { %><div class="lc-card-highlight"><%= t.highlight %></div><% } %>
+            <div class="lc-card-yr"><%= t.year %></div>
+          </div>
+        </div>
+        <% }); %>
+      <% } else { %>
+        <div class="lc-card lc-card-jee-main">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">MPC · JEE</div>
+            <div class="lc-card-rank">IIT-JEE Main &amp; Advanced</div>
+            <div class="lc-card-name">IITs &nbsp;·&nbsp; NITs &nbsp;·&nbsp; BITS</div>
+            <div class="lc-card-highlight">Admissions Open 2025–26</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-neet">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">BiPC · NEET</div>
+            <div class="lc-card-rank">NEET UG</div>
+            <div class="lc-card-name">MBBS &nbsp;·&nbsp; BDS &nbsp;·&nbsp; Veterinary</div>
+            <div class="lc-card-highlight">Girls only</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-eapcet">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">MPC · EAPCET</div>
+            <div class="lc-card-rank">JEE Main &amp; EAPCET</div>
+            <div class="lc-card-name">Engineering in Telangana</div>
+            <div class="lc-card-highlight">State quota advantage</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-board">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">Scholarship</div>
+            <div class="lc-card-rank">Up to 90%</div>
+            <div class="lc-card-name">Tuition fee waiver</div>
+            <div class="lc-card-highlight">Merit based · Apply now</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-coming">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">First Batch</div>
+            <div class="lc-card-rank">2026</div>
+            <div class="lc-card-name">Results coming soon</div>
+            <div class="lc-card-highlight">JEE · NEET · EAPCET · Board</div>
+          </div>
+        </div>
+      <% } %>
+
+    </div>
+  </div>
+  <div class="lc-drag-hint">← drag to explore →</div>
+</section>
+
 <!-- Scale Stats (item 2) -->
 <div class="scale-strip">
   <div class="container">
@@ -244,87 +335,6 @@
   </div>
 </section>
 
-<!-- Student Achievements — Linear Carousel -->
-<section class="lc-section">
-  <div class="container">
-    <div class="lc-head" data-reveal>
-      <div>
-        <div class="lc-label">Student Achievements</div>
-        <h2 class="lc-title">Our students in JEE, NEET &amp; EAPCET</h2>
-      </div>
-      <a href="/achievements" class="btn btn-ghost-white btn-sm">View All →</a>
-    </div>
-  </div>
-  <div class="lc-track-wrap">
-    <div class="lc-track" id="lcTrack">
-
-      <% if (toppers && toppers.length) { %>
-        <% toppers.forEach(t => { %>
-        <div class="lc-card lc-card-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>">
-          <% if (t.photo) { %>
-            <img src="<%= t.photo %>" alt="<%= t.name %>" class="lc-card-bg-img">
-          <% } %>
-          <div class="lc-card-overlay"></div>
-          <div class="lc-card-body">
-            <div class="lc-card-cat"><%= t.exam %></div>
-            <div class="lc-card-rank"><%= t.rank_label %></div>
-            <div class="lc-card-name"><%= t.name %></div>
-            <% if (t.highlight) { %><div class="lc-card-highlight"><%= t.highlight %></div><% } %>
-          </div>
-        </div>
-        <% }); %>
-      <% } else { %>
-        <div class="lc-card lc-card-jee-main">
-          <div class="lc-card-overlay"></div>
-          <div class="lc-card-body">
-            <div class="lc-card-cat">MPC · JEE</div>
-            <div class="lc-card-rank">IIT-JEE Main &amp; Advanced</div>
-            <div class="lc-card-name">IITs &nbsp;·&nbsp; NITs &nbsp;·&nbsp; BITS</div>
-            <div class="lc-card-highlight">Admissions Open 2025–26</div>
-          </div>
-        </div>
-        <div class="lc-card lc-card-neet">
-          <div class="lc-card-overlay"></div>
-          <div class="lc-card-body">
-            <div class="lc-card-cat">BiPC · NEET</div>
-            <div class="lc-card-rank">NEET UG</div>
-            <div class="lc-card-name">MBBS &nbsp;·&nbsp; BDS &nbsp;·&nbsp; Veterinary</div>
-            <div class="lc-card-highlight">Girls only</div>
-          </div>
-        </div>
-        <div class="lc-card lc-card-eapcet">
-          <div class="lc-card-overlay"></div>
-          <div class="lc-card-body">
-            <div class="lc-card-cat">MPC · EAPCET</div>
-            <div class="lc-card-rank">JEE Main &amp; EAPCET</div>
-            <div class="lc-card-name">Engineering in Telangana</div>
-            <div class="lc-card-highlight">State quota advantage</div>
-          </div>
-        </div>
-        <div class="lc-card lc-card-board">
-          <div class="lc-card-overlay"></div>
-          <div class="lc-card-body">
-            <div class="lc-card-cat">Scholarship</div>
-            <div class="lc-card-rank">Up to 90%</div>
-            <div class="lc-card-name">Tuition fee waiver</div>
-            <div class="lc-card-highlight">Merit based · Apply now</div>
-          </div>
-        </div>
-        <div class="lc-card lc-card-coming">
-          <div class="lc-card-overlay"></div>
-          <div class="lc-card-body">
-            <div class="lc-card-cat">First Batch</div>
-            <div class="lc-card-rank">2026</div>
-            <div class="lc-card-name">Results coming soon</div>
-            <div class="lc-card-highlight">JEE · NEET · EAPCET · Board</div>
-          </div>
-        </div>
-      <% } %>
-
-    </div>
-  </div>
-  <div class="lc-drag-hint">← drag to explore →</div>
-</section>
 
 <!-- Leadership (item 5) -->
 <section class="section leadership-home-section">
