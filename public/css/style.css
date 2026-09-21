@@ -123,7 +123,7 @@ h4 { font-size: 1rem; font-weight: 600; }
   position: relative;
   padding: 80px 56px 72px 40px;
   display: flex; flex-direction: column; justify-content: center;
-  background-image: url('/images/campus.jpg');
+  background-image: url('/images/campus.png');
   background-size: cover;
   background-position: center;
   background-color: var(--green-dark);

@@ -78,6 +78,10 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
 
   let isDragging = false, startX = 0, startScroll = 0;
 
+  // Block native image drag — prevents browser's ghost-image drag from
+  // intercepting mousemove and killing the scroll gesture
+  wrap.addEventListener('dragstart', e => e.preventDefault());
+
   wrap.addEventListener('mousedown', e => {
     isDragging = true;
     startX = e.clientX;
