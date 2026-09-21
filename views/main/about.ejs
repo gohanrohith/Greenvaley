@@ -74,9 +74,14 @@
     <p>Part of the Akarshahlad Educational Society — quality education from nursery to intermediate</p>
   </div>
   <div class="sister-grid">
+    <% const sisterLogos = ['greenwood','abhyaas','pinegrove']; %>
     <% college.sisterBranches.forEach((b, i) => { %>
     <a href="<%= b.url %>" class="sister-card" data-reveal style="--delay:<%=i*80%>ms" <% if(b.url==='#'){%>onclick="return false"<%}%>>
-      <div class="sister-icon">🏫</div>
+      <div class="sister-logo-wrap">
+        <img src="/images/institutions/<%= sisterLogos[i] || 'greenwood' %>.png" alt="<%= b.name %>"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="sister-logo-placeholder" style="display:none">🏫</div>
+      </div>
       <div class="sister-info">
         <div class="sister-name"><%= b.name %></div>
         <div class="sister-type"><%= b.type %></div>

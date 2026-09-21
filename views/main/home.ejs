@@ -51,16 +51,22 @@
         <div class="lc-label">Student Achievements</div>
         <h2 class="lc-title">Our students in JEE, NEET &amp; EAPCET</h2>
       </div>
-      <a href="/achievements" class="btn btn-ghost-white btn-sm">View All →</a>
+      <div class="lc-head-actions">
+        <% if (topperYears && topperYears.length > 1) { %>
+        <div class="lc-filters" id="lcFilters">
+          <button class="lc-filter active" data-year="all">All</button>
+          <% topperYears.forEach(row => { %>
+          <button class="lc-filter" data-year="<%= row.year %>"><%= row.year %></button>
+          <% }); %>
+        </div>
+        <% } %>
+        <div class="lc-nav-row">
+          <button class="lc-arr" id="lcPrev" aria-label="Previous">&#8249;</button>
+          <button class="lc-arr" id="lcNext" aria-label="Next">&#8250;</button>
+          <a href="/achievements" class="btn btn-ghost-white btn-sm">View All →</a>
+        </div>
+      </div>
     </div>
-    <% if (topperYears && topperYears.length > 1) { %>
-    <div class="lc-filters" id="lcFilters">
-      <button class="lc-filter active" data-year="all">All</button>
-      <% topperYears.forEach(row => { %>
-      <button class="lc-filter" data-year="<%= row.year %>"><%= row.year %></button>
-      <% }); %>
-    </div>
-    <% } %>
   </div>
   <div class="lc-track-wrap" id="lcWrap">
     <div class="lc-track" id="lcTrack">
@@ -131,7 +137,6 @@
 
     </div>
   </div>
-  <div class="lc-drag-hint">← drag to explore →</div>
 </section>
 
 <!-- Scale Stats (item 2) -->
@@ -181,6 +186,10 @@
           </div>
           <div class="tl2-card">
             <div class="tl2-num">01</div>
+            <div class="tl2-logo">
+              <img src="/images/institutions/greenwood.png" alt="Greenwood" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="tl2-logo-abbr" style="display:none">Green<br>wood</span>
+            </div>
             <div class="tl2-name">Greenwood High School</div>
             <div class="tl2-loc">Hanamkonda, Telangana</div>
             <div class="tl2-type">CBSE · Nursery – Class X</div>
@@ -195,6 +204,10 @@
           </div>
           <div class="tl2-card">
             <div class="tl2-num">02</div>
+            <div class="tl2-logo">
+              <img src="/images/institutions/abhyaas.png" alt="Abhyaas" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="tl2-logo-abbr" style="display:none">Abhy<br>aas</span>
+            </div>
             <div class="tl2-name">Abhyaas The Global School</div>
             <div class="tl2-loc">Bhimavaram, Andhra Pradesh</div>
             <div class="tl2-type">CBSE · Nursery – Class X</div>
@@ -209,6 +222,10 @@
           </div>
           <div class="tl2-card">
             <div class="tl2-num">03</div>
+            <div class="tl2-logo">
+              <img src="/images/institutions/pinegrove.png" alt="Pinegrove" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="tl2-logo-abbr" style="display:none">Pine<br>grove</span>
+            </div>
             <div class="tl2-name">Pinegrove Junior College</div>
             <div class="tl2-loc">Hyderabad, Telangana</div>
             <div class="tl2-type">Intermediate College</div>
@@ -223,6 +240,10 @@
           </div>
           <div class="tl2-card">
             <div class="tl2-num">04</div>
+            <div class="tl2-logo">
+              <img src="/images/institutions/greenwood-mancherial.png" alt="Greenwood Mancherial" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="tl2-logo-abbr" style="display:none">Green<br>wood</span>
+            </div>
             <div class="tl2-name">Greenwood Mancherial</div>
             <div class="tl2-loc">Mancherial, Telangana</div>
             <div class="tl2-type">High School</div>
@@ -239,6 +260,10 @@
           <div class="tl2-card tl2-card-current">
             <div class="tl2-now-badge">You are here</div>
             <div class="tl2-num">05</div>
+            <div class="tl2-logo">
+              <img src="/images/logo.png" alt="Greenvaley" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <span class="tl2-logo-abbr" style="display:none">GVJC</span>
+            </div>
             <div class="tl2-name">Greenvaley Junior College</div>
             <div class="tl2-loc">Hanamkonda, Telangana</div>
             <div class="tl2-type">Intermediate · JEE · NEET · EAPCET</div>
@@ -265,7 +290,7 @@
       </div>
       <div class="why-card" data-reveal>
         <div class="why-icon why-icon-gold">🏅</div>
-        <h3>Merit Scholarship<span class="req">*</span></h3>
+        <h3>Merit Scholarship</h3>
         <p>Up to 90% tuition fee waiver awarded purely on academic merit. Government schemes for SC / ST, BC, EBC and NTR Vidyonnathi also assisted.</p>
       </div>
       <div class="why-card" data-reveal>
@@ -325,7 +350,7 @@
     <div class="schol-strip">
       <div>
         <h2>Up to 90% tuition scholarship<span class="req">*</span> — merit based</h2>
-        <p>Awarded on performance in our scholarship<span class="req">*</span> test. SC / ST · BC · EBC · NTR Vidyonnathi government scholarships<span class="req">*</span> are also available. Send your details and we'll tell you which slab you qualify for. <a href="/scholarship/terms" style="color:rgba(255,255,255,.55);font-size:.8rem">Terms &amp; Conditions <span class="req">*</span></a></p>
+        <p>Awarded on performance in our scholarship test. SC / ST · BC · EBC · NTR Vidyonnathi government scholarships are also available. Send your details and we'll tell you which slab you qualify for. <a href="/scholarship/terms" style="color:rgba(255,255,255,.55);font-size:.8rem">Terms &amp; Conditions <span class="req">*</span></a></p>
       </div>
       <div class="schol-actions">
         <a href="/scholarship/apply" class="btn btn-gold">Apply Now <span class="req">*</span></a>

@@ -71,33 +71,21 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
   });
 })();
 
-// Linear drag carousel
+// Achievements carousel — arrow navigation + touch swipe
 (function () {
   const wrap = document.getElementById('lcWrap');
   if (!wrap) return;
 
-  let isDragging = false, startX = 0, startScroll = 0;
+  const SCROLL_STEP = 290;
 
-  // Block native image drag — prevents browser's ghost-image drag from
-  // intercepting mousemove and killing the scroll gesture
-  wrap.addEventListener('dragstart', e => e.preventDefault());
-
-  wrap.addEventListener('mousedown', e => {
-    isDragging = true;
-    startX = e.clientX;
-    startScroll = wrap.scrollLeft;
-    wrap.classList.add('dragging');
-    e.preventDefault();
+  document.getElementById('lcPrev')?.addEventListener('click', () => {
+    wrap.scrollBy({ left: -SCROLL_STEP, behavior: 'smooth' });
   });
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-    wrap.classList.remove('dragging');
-  });
-  document.addEventListener('mousemove', e => {
-    if (!isDragging) return;
-    wrap.scrollLeft = startScroll - (e.clientX - startX);
+  document.getElementById('lcNext')?.addEventListener('click', () => {
+    wrap.scrollBy({ left: SCROLL_STEP, behavior: 'smooth' });
   });
 
+  // Touch swipe still works for mobile
   let touchStartX = 0, touchStartScroll = 0;
   wrap.addEventListener('touchstart', e => {
     touchStartX = e.touches[0].clientX;

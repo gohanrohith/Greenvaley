@@ -11,18 +11,23 @@
 <div class="container section">
 
   <!-- Filter bar -->
-  <div class="achieve-filters" data-reveal>
-    <a href="/achievements" class="achieve-filter-btn <%= !activeExam ? 'active' : '' %>">All</a>
-    <% ['JEE Main','JEE Advanced','NEET','EAPCET','Board'].forEach(e => { %>
-    <a href="/achievements?exam=<%= encodeURIComponent(e) %><%= activeYear ? '&year='+activeYear : '' %>"
-       class="achieve-filter-btn <%= activeExam === e ? 'active' : '' %>"><%= e %></a>
-    <% }); %>
+  <div class="achieve-filter-row" data-reveal>
+    <div class="achieve-filters">
+      <a href="/achievements" class="achieve-filter-btn <%= !activeExam ? 'active' : '' %>">All</a>
+      <% ['JEE Main','JEE Advanced','NEET','EAPCET','Board'].forEach(e => { %>
+      <a href="/achievements?exam=<%= encodeURIComponent(e) %><%= activeYear ? '&year='+activeYear : '' %>"
+         class="achieve-filter-btn <%= activeExam === e ? 'active' : '' %>"><%= e %></a>
+      <% }); %>
+    </div>
     <% if (years.length > 1) { %>
-    <div class="achieve-filter-sep"></div>
-    <% years.forEach(row => { %>
-    <a href="/achievements?year=<%= row.year %><%= activeExam ? '&exam='+encodeURIComponent(activeExam) : '' %>"
-       class="achieve-filter-btn achieve-filter-year <%= activeYear == row.year ? 'active' : '' %>"><%= row.year %>–<%= row.year + 1 %></a>
-    <% }); %>
+    <div class="achieve-year-filters">
+      <a href="/achievements<%= activeExam ? '?exam='+encodeURIComponent(activeExam) : '' %>"
+         class="achieve-filter-btn achieve-filter-year <%= !activeYear ? 'active' : '' %>">All Years</a>
+      <% years.forEach(row => { %>
+      <a href="/achievements?year=<%= row.year %><%= activeExam ? '&exam='+encodeURIComponent(activeExam) : '' %>"
+         class="achieve-filter-btn achieve-filter-year <%= activeYear == row.year ? 'active' : '' %>"><%= row.year %></a>
+      <% }); %>
+    </div>
     <% } %>
   </div>
 

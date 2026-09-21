@@ -61,7 +61,7 @@ h4 { font-size: 1rem; font-weight: 600; }
   padding: 0 24px; height: 68px; gap: 16px;
 }
 .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-.nav-logo { height: 44px; width: auto; object-fit: contain; }
+.nav-logo { height: 60px; width: auto; object-fit: contain; }
 .nav-brand-text { display: flex; flex-direction: column; line-height: 1.2; }
 .nav-brand-name { font-size: 1.1rem; font-weight: 800; color: var(--green); letter-spacing: -.02em; }
 .nav-brand-sub { font-size: .65rem; color: var(--muted); font-weight: 400; letter-spacing: .04em; text-transform: uppercase; }
@@ -345,7 +345,7 @@ fieldset legend { font-weight: 700; padding: 0 8px; color: var(--green); font-si
 .site-footer { background: var(--black); padding: 56px 0 0; margin-top: 80px; }
 .footer-inner { max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: start; }
 .footer-brand { display: flex; align-items: center; gap: 12px; }
-.footer-logo { height: 52px; width: auto; }
+.footer-logo { height: 64px; width: auto; }
 .footer-name { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
 .footer-board { font-size: .75rem; color: rgba(255,255,255,.4); max-width: 200px; line-height: 1.4; }
 .footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -514,6 +514,9 @@ a.cinfo-value:hover { color: var(--green); }
 .sister-card { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; text-decoration: none; transition: box-shadow .2s, transform .2s; color: inherit; }
 .sister-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); color: inherit; }
 .sister-icon { font-size: 2rem; flex-shrink: 0; }
+.sister-logo-wrap { width: 56px; height: 56px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; flex-shrink: 0; background: var(--white); display: flex; align-items: center; justify-content: center; }
+.sister-logo-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.sister-logo-placeholder { font-size: 1.5rem; width: 100%; height: 100%; align-items: center; justify-content: center; }
 .sister-info { flex: 1; }
 .sister-name { font-size: .975rem; font-weight: 800; color: var(--black); margin-bottom: 3px; letter-spacing: -.01em; }
 .sister-type { font-size: .8rem; color: var(--green); font-weight: 600; margin-bottom: 4px; }
@@ -651,7 +654,7 @@ html { scroll-behavior: smooth; }
 .lc-drag-hint { text-align: center; font-size: .72rem; color: rgba(255,255,255,.2); padding-bottom: 24px; letter-spacing: .06em; }
 
 /* ── Our Journey Timeline v2 ──────────────────────────────────────────────────── */
-.tl2-section { background: var(--white); padding: 64px 0; }
+.tl2-section { background: var(--green-xlight); padding: 64px 0; }
 .tl2-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
 .tl2-sup { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
 .tl2-scroll { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; padding-bottom: 20px; }
@@ -773,7 +776,9 @@ html { scroll-behavior: smooth; }
 .topper-meta { font-size: .72rem; color: var(--muted-light); margin-top: 6px; }
 
 /* Filter bar on achievements page */
-.achieve-filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; align-items: center; }
+.achieve-filter-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-bottom: 36px; }
+.achieve-filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.achieve-year-filters { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: flex-end; }
 .achieve-filter-btn { padding: 6px 16px; border-radius: 100px; border: 1.5px solid var(--border); font-size: .85rem; font-weight: 500; color: var(--muted); background: var(--white); cursor: pointer; transition: all .2s; }
 .achieve-filter-btn:hover { border-color: var(--green); color: var(--green); }
 .achieve-filter-btn.active { background: var(--green); border-color: var(--green); color: var(--white); }
@@ -874,3 +879,31 @@ html { scroll-behavior: smooth; }
   .lc-card-rank { font-size: 1.3rem; }
   .container { padding-left: 14px; padding-right: 14px; }
 }
+
+/* ── Carousel arrow navigation ─────────────────────────────────────────────────── */
+.lc-head-actions { display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
+.lc-nav-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.lc-arr { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.18); color: var(--white); font-size: 1.3rem; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .2s; line-height: 1; padding: 0; font-family: inherit; flex-shrink: 0; }
+.lc-arr:hover { background: rgba(255,255,255,.18); }
+
+/* ── Timeline institution logo slot ───────────────────────────────────────────── */
+.tl2-logo { width: 48px; height: 48px; border-radius: 10px; overflow: hidden; margin: 6px auto 10px; background: var(--white); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; }
+.tl2-logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.tl2-logo-abbr { font-size: .65rem; font-weight: 800; color: var(--green); letter-spacing: .04em; text-align: center; line-height: 1.2; }
+.tl2-card-current .tl2-logo { border-color: rgba(77,112,52,.3); background: rgba(255,255,255,.8); }
+
+/* ── Custom styled checkbox ───────────────────────────────────────────────────── */
+.checkbox-custom { appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 2px solid var(--border); border-radius: 5px; flex-shrink: 0; margin-top: 2px; cursor: pointer; transition: all .15s; background: var(--white); position: relative; }
+.checkbox-custom:checked { background: var(--green); border-color: var(--green); }
+.checkbox-custom:checked::after { content: ''; position: absolute; top: 3px; left: 6px; width: 5px; height: 9px; border: 2px solid #fff; border-top: none; border-left: none; transform: rotate(45deg); }
+.checkbox-custom:focus { outline: 2px solid rgba(77,112,52,.4); outline-offset: 2px; }
+.checkbox-label { gap: 12px; }
+.checkbox-label a { color: var(--green); }
+
+/* ── WhatsApp button ──────────────────────────────────────────────────────────── */
+.btn-whatsapp { background: #25d366; border-color: #25d366; color: #fff; }
+.btn-whatsapp:hover { background: #1da851; border-color: #1da851; color: #fff; }
+.wa-icon { display: inline-flex; align-items: center; gap: 6px; }
+.footer-wa { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.6); font-size: .9rem; text-decoration: none; margin-top: 4px; }
+.footer-wa:hover { color: #25d366; }
+.footer-wa svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }

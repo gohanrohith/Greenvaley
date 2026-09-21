@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Greenvaley Design Options</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap">
+</head>
+<body>
+
+<style>
+/* ── Picker ────────────────────────────────────────────────────────────────── */
+:root { color-scheme: light; }
+body { margin: 0; background: #111; }
+
+.picker {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  background: #111; display: flex; padding: 10px 20px; gap: 10px;
+  align-items: center; border-bottom: 1px solid #222;
+}
+.picker-label { color: #555; font: 500 12px/1 Inter, sans-serif; margin-right: 4px; white-space: nowrap; }
+.pick-btn {
+  padding: 7px 18px; border: 1px solid #333; border-radius: 5px;
+  background: none; color: #666; font: 500 12px/1 Inter, sans-serif;
+  cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.pick-btn:hover { border-color: #555; color: #aaa; }
+.pick-btn.active { background: #fff; color: #111; border-color: #fff; }
+.pick-divider { width: 1px; height: 20px; background: #2a2a2a; margin: 0 4px; }
+
+.design { display: none; }
+.design.visible { display: block; }
+</style>
+
+<!-- ── Picker bar ─────────────────────────────────────────────────────────── -->
+<div class="picker">
+  <span class="picker-label">Pick a design →</span>
+  <button class="pick-btn active" onclick="show('a')">A · Deep Academic</button>
+  <div class="pick-divider"></div>
+  <button class="pick-btn" onclick="show('b')">B · Saffron Forward</button>
+  <div class="pick-divider"></div>
+  <button class="pick-btn" onclick="show('c')">C · Chalk &amp; Science</button>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     DESIGN A — Deep Academic
+     Palette: #0B2318 forest · #C9A227 gold · #E8DFC8 cream · #F7F4EE off-white
+     Type:    Playfair Display (display) + Inter (body)
+     Feel:    Prestigious, serious, elite science institution
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="da" class="design visible">
+<style>
+#da { font-family: 'Inter', sans-serif; background: #F7F4EE; color: #1a1a1a; padding-top: 44px; }
+
+.da-nav { background: #0B2318; height: 64px; display: flex; align-items: center; padding: 0 48px; gap: 0; }
+.da-brand { font-family: 'Playfair Display', serif; color: #E8DFC8; font-size: 1.25rem; font-weight: 700; letter-spacing: -0.01em; margin-right: auto; }
+.da-brand span { color: #C9A227; }
+.da-nav-links { display: flex; gap: 28px; align-items: center; }
+.da-nav-links a { color: rgba(232,223,200,.65); font-size: .85rem; font-weight: 400; text-decoration: none; letter-spacing: .02em; transition: color .15s; }
+.da-nav-links a:hover { color: #E8DFC8; }
+.da-nav-cta { background: #C9A227 !important; color: #0B2318 !important; padding: 9px 22px; border-radius: 3px; font-weight: 600 !important; font-size: .85rem !important; margin-left: 12px; }
+
+.da-hero { background: #0B2318; padding: 84px 48px 76px; position: relative; overflow: hidden; }
+.da-dots { position: absolute; inset: 0; opacity: .055; background-image: radial-gradient(circle, #C9A227 1px, transparent 1px); background-size: 26px 26px; }
+.da-hero-inner { position: relative; max-width: 680px; }
+.da-eyebrow { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #C9A227; font-weight: 600; margin-bottom: 22px; }
+.da-hero h1 { font-family: 'Playfair Display', serif; font-size: 3.6rem; line-height: 1.08; font-weight: 900; color: #E8DFC8; margin-bottom: 22px; text-wrap: balance; letter-spacing: -.02em; }
+.da-hero h1 em { color: #C9A227; font-style: normal; }
+.da-hero-sub { font-size: 1rem; line-height: 1.72; color: rgba(232,223,200,.6); max-width: 500px; margin-bottom: 38px; }
+.da-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.da-btn-g { background: #C9A227; color: #0B2318; padding: 13px 28px; border-radius: 3px; font-size: .9rem; font-weight: 700; text-decoration: none; letter-spacing: .02em; }
+.da-btn-o { border: 1.5px solid rgba(232,223,200,.3); color: rgba(232,223,200,.8); padding: 13px 28px; border-radius: 3px; font-size: .9rem; font-weight: 400; text-decoration: none; transition: border-color .2s; }
+.da-btn-o:hover { border-color: rgba(232,223,200,.7); }
+
+.da-stats { background: #081C10; display: flex; padding: 0 48px; }
+.da-stat { padding: 22px 40px 22px 0; display: flex; align-items: center; gap: 14px; }
+.da-stat + .da-stat { border-left: 1px solid rgba(232,223,200,.1); padding-left: 40px; }
+.da-stat-n { font-family: 'Playfair Display', serif; font-size: 1.9rem; font-weight: 700; color: #C9A227; }
+.da-stat-l { font-size: .75rem; color: rgba(232,223,200,.45); line-height: 1.4; letter-spacing: .03em; }
+
+.da-programs { padding: 72px 48px 64px; }
+.da-sec-eyebrow { font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: #C9A227; font-weight: 700; margin-bottom: 10px; }
+.da-programs h2 { font-family: 'Playfair Display', serif; font-size: 2.1rem; color: #0B2318; margin-bottom: 6px; text-wrap: balance; }
+.da-programs-lead { color: #6b7a73; font-size: .925rem; margin-bottom: 40px; max-width: 480px; line-height: 1.65; }
+.da-prog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.da-prog-card { background: #fff; border: 1px solid #e2ddd5; padding: 36px 36px 32px; position: relative; }
+.da-prog-card::after { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: #C9A227; }
+.da-prog-badge { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; color: #C9A227; font-weight: 700; margin-bottom: 12px; }
+.da-prog-title { font-family: 'Playfair Display', serif; font-size: 1.75rem; color: #0B2318; font-weight: 900; margin-bottom: 10px; }
+.da-prog-full { font-size: .8rem; color: #6b7a73; margin-bottom: 14px; font-style: italic; }
+.da-prog-desc { font-size: .88rem; color: #4a5a53; line-height: 1.7; margin-bottom: 22px; }
+.da-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.da-tag { background: #F0ECE3; color: #3a4a43; font-size: .75rem; padding: 4px 12px; border-radius: 2px; font-weight: 500; }
+
+.da-feats { background: #EDE8DE; padding: 64px 48px; }
+.da-feats h2 { font-family: 'Playfair Display', serif; font-size: 2rem; color: #0B2318; margin-bottom: 36px; }
+.da-feat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.da-feat { background: #fff; padding: 32px 28px; border-top: 3px solid #C9A227; }
+.da-feat-num { font-family: 'Playfair Display', serif; font-size: .75rem; color: #C9A227; letter-spacing: .06em; margin-bottom: 14px; }
+.da-feat h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #0B2318; margin-bottom: 8px; }
+.da-feat p { font-size: .85rem; color: #6b7a73; line-height: 1.68; }
+
+.da-cta { background: #C9A227; padding: 52px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.da-cta h2 { font-family: 'Playfair Display', serif; font-size: 1.85rem; color: #0B2318; max-width: 500px; text-wrap: balance; line-height: 1.25; }
+.da-cta-btn { background: #0B2318; color: #C9A227; padding: 14px 32px; font-size: .9rem; font-weight: 700; text-decoration: none; border-radius: 3px; white-space: nowrap; letter-spacing: .02em; flex-shrink: 0; }
+
+.da-footer { background: #081C10; padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
+.da-footer p { color: rgba(232,223,200,.3); font-size: .78rem; }
+.da-footer-links { display: flex; gap: 20px; }
+.da-footer-links a { color: rgba(232,223,200,.3); font-size: .78rem; text-decoration: none; }
+.da-footer-links a:hover { color: rgba(232,223,200,.6); }
+</style>
+
+<nav class="da-nav">
+  <div class="da-brand">Green<span>valey</span></div>
+  <div class="da-nav-links">
+    <a href="#">About</a><a href="#">Programs</a><a href="#">Admissions</a>
+    <a href="#">Results</a><a href="#">Scholarship</a>
+    <a href="#" class="da-nav-cta">Enquire Now</a>
+  </div>
+</nav>
+<section class="da-hero">
+  <div class="da-dots"></div>
+  <div class="da-hero-inner">
+    <p class="da-eyebrow">TSBIE Affiliated &nbsp;·&nbsp; MPC &amp; BiPC &nbsp;·&nbsp; Warangal, Telangana</p>
+    <h1>Where <em>Science</em><br>Shapes Futures</h1>
+    <p class="da-hero-sub">A junior college built for students who are serious about cracking EAMCET, NEET, and JEE — with guided academics, real labs, and a clear path to admission.</p>
+    <div class="da-actions">
+      <a href="#" class="da-btn-g">Apply for 2026–27</a>
+      <a href="#" class="da-btn-o">Explore Programs</a>
+    </div>
+  </div>
+</section>
+<div class="da-stats">
+  <div class="da-stat"><span class="da-stat-n">MPC</span><span class="da-stat-l">Math · Physics<br>Chemistry</span></div>
+  <div class="da-stat"><span class="da-stat-n">BiPC</span><span class="da-stat-l">Biology · Physics<br>Chemistry</span></div>
+  <div class="da-stat"><span class="da-stat-n">TSBIE</span><span class="da-stat-l">Board<br>Affiliated</span></div>
+  <div class="da-stat"><span class="da-stat-n">2024</span><span class="da-stat-l">Year<br>Established</span></div>
+</div>
+<section class="da-programs">
+  <p class="da-sec-eyebrow">Academic Programs</p>
+  <h2>Two Streams, One Goal</h2>
+  <p class="da-programs-lead">Every course is built around what you need to crack competitive entrance exams — with subject-specialist faculty and rigorous practice.</p>
+  <div class="da-prog-grid">
+    <div class="da-prog-card">
+      <div class="da-prog-badge">Stream 01</div>
+      <div class="da-prog-title">MPC</div>
+      <div class="da-prog-full">Mathematics · Physics · Chemistry</div>
+      <p class="da-prog-desc">For students targeting Engineering through EAMCET and JEE. Intensive coverage of calculus, mechanics, and organic chemistry from day one.</p>
+      <div class="da-tags"><span class="da-tag">Mathematics</span><span class="da-tag">Physics</span><span class="da-tag">Chemistry</span><span class="da-tag">English</span><span class="da-tag">Second Language</span></div>
+    </div>
+    <div class="da-prog-card">
+      <div class="da-prog-badge">Stream 02</div>
+      <div class="da-prog-title">BiPC</div>
+      <div class="da-prog-full">Biology · Physics · Chemistry</div>
+      <p class="da-prog-desc">For students targeting Medicine and Allied Health Sciences through NEET and EAMCET. Deep focus on Botany, Zoology, and Biochemistry.</p>
+      <div class="da-tags"><span class="da-tag">Botany</span><span class="da-tag">Zoology</span><span class="da-tag">Physics</span><span class="da-tag">Chemistry</span><span class="da-tag">English</span></div>
+    </div>
+  </div>
+</section>
+<section class="da-feats">
+  <h2>Everything You Need, Online</h2>
+  <div class="da-feat-row">
+    <div class="da-feat"><div class="da-feat-num">01 / Scholarship</div><h3>Scholarship Portal</h3><p>Apply for SC/ST, BC, EBC, and NTR Vidyonnathi scholarships online. Track application status anytime with your application ID.</p></div>
+    <div class="da-feat"><div class="da-feat-num">02 / Results</div><h3>Results Online</h3><p>IPE, model exam, quarterly, and half-yearly results — enter your roll number and get marks instantly without visiting the college.</p></div>
+    <div class="da-feat"><div class="da-feat-num">03 / Study</div><h3>Question Papers</h3><p>Previous-year papers for all subjects going back to 2018. Filter by program, subject, and exam type and download as PDF.</p></div>
+  </div>
+</section>
+<div class="da-cta">
+  <h2>Admissions open for 2026–27. Seats are limited — enquire today.</h2>
+  <a href="#" class="da-cta-btn">Apply Now →</a>
+</div>
+<footer class="da-footer">
+  <p>© 2026 Greenvaley Junior College &nbsp;·&nbsp; TSBIE Affiliated &nbsp;·&nbsp; Warangal, Telangana</p>
+  <div class="da-footer-links"><a href="#">Mandatory Disclosure</a><a href="#">Contact</a><a href="#">Admin Login</a></div>
+</footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     DESIGN B — Saffron Forward (chosen → now using brand colors #4d7034 / #b78d49)
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="db" class="design">
+<style>
+#db { font-family: 'Outfit', sans-serif; background: #F6F5F2; color: #1C1C1E; padding-top: 44px; }
+
+.db-nav { background: #fff; height: 64px; display: flex; align-items: center; padding: 0 48px; border-bottom: 1px solid #EBEBEB; }
+.db-brand { font-size: 1.3rem; font-weight: 800; color: #1C1C1E; margin-right: auto; letter-spacing: -.03em; }
+.db-brand span { color: #F27B0A; }
+.db-nav-links { display: flex; gap: 24px; align-items: center; }
+.db-nav-links a { color: #5a5a5a; font-size: .875rem; font-weight: 500; text-decoration: none; transition: color .15s; }
+.db-nav-links a:hover { color: #1C1C1E; }
+.db-nav-cta { background: #F27B0A !important; color: #fff !important; padding: 9px 22px; border-radius: 6px; font-weight: 700 !important; margin-left: 8px; }
+
+.db-hero { background: #fff; display: grid; grid-template-columns: 1fr 420px; min-height: 520px; }
+.db-hero-left { padding: 72px 48px 64px; display: flex; flex-direction: column; justify-content: center; }
+.db-hero-tag { display: inline-flex; align-items: center; gap: 8px; background: #FFF4EA; color: #F27B0A; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 6px 14px; border-radius: 4px; margin-bottom: 28px; width: fit-content; }
+.db-hero-tag::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #F27B0A; }
+.db-hero h1 { font-size: 3.4rem; font-weight: 900; line-height: 1.05; letter-spacing: -.04em; margin-bottom: 20px; text-wrap: balance; color: #1C1C1E; }
+.db-hero h1 .db-accent { color: #F27B0A; }
+.db-hero-sub { font-size: 1rem; line-height: 1.7; color: #6a6a6a; margin-bottom: 36px; max-width: 480px; font-weight: 400; }
+.db-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.db-btn-saf { background: #F27B0A; color: #fff; padding: 14px 30px; border-radius: 8px; font-size: .95rem; font-weight: 700; text-decoration: none; }
+.db-btn-ghost { background: transparent; color: #1C1C1E; border: 2px solid #D8D6D2; padding: 12px 26px; border-radius: 8px; font-size: .95rem; font-weight: 600; text-decoration: none; }
+.db-hero-right { background: #F27B0A; display: flex; flex-direction: column; justify-content: center; padding: 48px 40px; gap: 16px; }
+.db-hero-right h3 { font-size: 1rem; font-weight: 700; color: rgba(255,255,255,.7); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 4px; }
+.db-stream { background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.25); border-radius: 10px; padding: 22px 24px; }
+.db-stream-title { font-size: 2rem; font-weight: 900; color: #fff; letter-spacing: -.03em; margin-bottom: 4px; }
+.db-stream-full { font-size: .85rem; color: rgba(255,255,255,.75); margin-bottom: 14px; font-weight: 400; }
+.db-stream-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+.db-pill { background: rgba(255,255,255,.2); color: rgba(255,255,255,.9); font-size: .75rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; }
+
+.db-bento { padding: 56px 48px; }
+.db-bento-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; }
+.db-bento-head h2 { font-size: 1.8rem; font-weight: 800; letter-spacing: -.03em; color: #1C1C1E; }
+.db-bento-head a { font-size: .875rem; color: #F27B0A; font-weight: 600; text-decoration: none; }
+.db-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.db-card { background: #fff; border-radius: 14px; padding: 28px; border: 1px solid #EBEBEB; }
+.db-card-wide { grid-column: span 2; display: flex; gap: 32px; align-items: center; }
+.db-card-icon { width: 52px; height: 52px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+.db-card-icon.saf { background: #FFF4EA; }
+.db-card-icon.dark { background: #1C1C1E; }
+.db-card h3 { font-size: 1.05rem; font-weight: 700; color: #1C1C1E; margin-bottom: 6px; letter-spacing: -.02em; }
+.db-card p { font-size: .85rem; color: #7a7a7a; line-height: 1.65; font-weight: 400; }
+.db-card-num { font-size: 2.8rem; font-weight: 900; color: #F27B0A; letter-spacing: -.04em; margin-bottom: 4px; }
+.db-card-num-label { font-size: .8rem; color: #aaa; font-weight: 500; }
+
+.db-schol { margin: 0 48px 56px; background: #1C1C1E; border-radius: 16px; padding: 44px 48px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+.db-schol-left h2 { font-size: 1.7rem; font-weight: 800; color: #fff; letter-spacing: -.03em; margin-bottom: 8px; text-wrap: balance; }
+.db-schol-left p { font-size: .9rem; color: rgba(255,255,255,.5); max-width: 420px; line-height: 1.6; }
+.db-schol-actions { display: flex; gap: 12px; flex-shrink: 0; }
+.db-btn-w { background: #fff; color: #1C1C1E; padding: 13px 26px; border-radius: 8px; font-size: .9rem; font-weight: 700; text-decoration: none; }
+.db-btn-wout { border: 1.5px solid rgba(255,255,255,.25); color: rgba(255,255,255,.7); padding: 13px 26px; border-radius: 8px; font-size: .9rem; font-weight: 600; text-decoration: none; }
+
+.db-footer { background: #1C1C1E; padding: 28px 48px; display: flex; justify-content: space-between; align-items: center; }
+.db-footer p { color: rgba(255,255,255,.25); font-size: .8rem; }
+.db-footer-links { display: flex; gap: 20px; }
+.db-footer-links a { color: rgba(255,255,255,.25); font-size: .8rem; text-decoration: none; }
+</style>
+
+<nav class="db-nav">
+  <div class="db-brand">Green<span>valey</span></div>
+  <div class="db-nav-links">
+    <a href="#">About</a><a href="#">Programs</a><a href="#">Admissions</a>
+    <a href="#">Results</a><a href="#">Scholarship</a>
+    <a href="#" class="db-nav-cta">Apply Now</a>
+  </div>
+</nav>
+<section class="db-hero">
+  <div class="db-hero-left">
+    <div class="db-hero-tag">TSBIE Affiliated · Warangal, Telangana</div>
+    <h1>Your <span class="db-accent">Science<br>Career</span> Starts<br>Right Here</h1>
+    <p class="db-hero-sub">Greenvaley Junior College offers focused MPC and BiPC programs built for EAMCET, NEET, and JEE. Small batches. Dedicated faculty. Real results.</p>
+    <div class="db-hero-actions">
+      <a href="#" class="db-btn-saf">Apply for 2026–27</a>
+      <a href="#" class="db-btn-ghost">View Programs</a>
+    </div>
+  </div>
+  <div class="db-hero-right">
+    <h3>Our Programs</h3>
+    <div class="db-stream">
+      <div class="db-stream-title">MPC</div>
+      <div class="db-stream-full">Mathematics · Physics · Chemistry</div>
+      <div class="db-stream-pills"><span class="db-pill">EAMCET</span><span class="db-pill">JEE Main</span><span class="db-pill">Engineering</span></div>
+    </div>
+    <div class="db-stream">
+      <div class="db-stream-title">BiPC</div>
+      <div class="db-stream-full">Biology · Physics · Chemistry</div>
+      <div class="db-stream-pills"><span class="db-pill">NEET</span><span class="db-pill">EAMCET</span><span class="db-pill">Medicine</span></div>
+    </div>
+  </div>
+</section>
+<section class="db-bento">
+  <div class="db-bento-head"><h2>Everything students need</h2><a href="#">See all features →</a></div>
+  <div class="db-grid">
+    <div class="db-card db-card-wide"><div class="db-card-icon saf" style="font-size:1.6rem">📋</div><div><h3>Scholarship Portal</h3><p>Apply for SC/ST, BC, EBC, and NTR Vidyonnathi scholarships online. Track your application status in real time using your application ID and phone number.</p></div></div>
+    <div class="db-card"><div class="db-card-num">IPE</div><div class="db-card-num-label">Results Online</div><p style="margin-top:12px;font-size:.83rem;color:#7a7a7a;line-height:1.6">Enter your roll number to view marks for any exam — IPE, model, quarterly, or half-yearly.</p></div>
+    <div class="db-card"><div style="background:#EAF4EA;color:#2a7a2a;font-size:.75rem;font-weight:700;padding:6px 12px;border-radius:6px;margin-bottom:16px;display:inline-block">PDF</div><h3>Question Papers</h3><p>Previous-year papers for all subjects. Filter by program, year, and exam type.</p></div>
+    <div class="db-card"><div class="db-card-icon dark" style="font-size:1.3rem;margin-bottom:16px">📋</div><h3>Mandatory Disclosure</h3><p>Full TSBIE-required public disclosure — intake, fees, faculty, infrastructure — always up to date.</p></div>
+    <div class="db-card"><div class="db-card-num" style="color:#1C1C1E">2</div><div class="db-card-num-label">Focused programs</div><p style="margin-top:12px;font-size:.83rem;color:#7a7a7a;line-height:1.6">MPC for Engineering. BiPC for Medicine. No distractions, no unnecessary streams.</p></div>
+    <div class="db-card"><div class="db-card-icon saf" style="font-size:1.3rem;margin-bottom:16px">📬</div><h3>Contact &amp; Admissions</h3><p>Reach the admissions office directly. Get answers to your questions without the queue.</p></div>
+  </div>
+</section>
+<div class="db-schol">
+  <div class="db-schol-left"><h2>Don't let finances stop your education.</h2><p>Government scholarships are available for eligible students. Apply online in minutes — our office handles the rest.</p></div>
+  <div class="db-schol-actions"><a href="#" class="db-btn-w">Apply for Scholarship</a><a href="#" class="db-btn-wout">Check Status</a></div>
+</div>
+<footer class="db-footer">
+  <p>© 2026 Greenvaley Junior College · TSBIE Affiliated · Warangal, Telangana</p>
+  <div class="db-footer-links"><a href="#">Mandatory Disclosure</a><a href="#">Contact</a><a href="#">Admin Login</a></div>
+</footer>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     DESIGN C — Chalk & Science
+     Palette: #EEECE5 chalk · #0D4F42 deep teal · #1A1A1A near-black
+     Type:    DM Serif Display (headings) + DM Sans (body) + DM Mono (data)
+════════════════════════════════════════════════════════════════════════════ -->
+<div id="dc" class="design">
+<style>
+#dc { font-family: 'DM Sans', sans-serif; background: #EEECE5; color: #1A1A1A; padding-top: 44px; }
+
+.dc-nav { background: #EEECE5; height: 64px; display: flex; align-items: center; padding: 0 64px; border-bottom: 1px solid #D8D5CC; }
+.dc-brand { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: #0D4F42; margin-right: auto; }
+.dc-brand span { font-style: italic; }
+.dc-nav-links { display: flex; gap: 32px; align-items: center; }
+.dc-nav-links a { color: #555; font-size: .825rem; text-decoration: none; }
+.dc-nav-links a:hover { color: #1A1A1A; }
+.dc-nav-cta { color: #0D4F42 !important; font-weight: 600 !important; border-bottom: 1.5px solid #0D4F42; padding-bottom: 1px; }
+
+.dc-hero { padding: 80px 64px 72px; display: grid; grid-template-columns: 1fr 300px; gap: 64px; align-items: end; border-bottom: 1px solid #D8D5CC; }
+.dc-hero-kicker { font-family: 'DM Mono', monospace; font-size: .72rem; color: #0D4F42; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 24px; }
+.dc-hero h1 { font-family: 'DM Serif Display', serif; font-size: 3.8rem; line-height: 1.05; color: #1A1A1A; margin-bottom: 28px; text-wrap: balance; font-weight: 400; }
+.dc-hero h1 em { color: #0D4F42; font-style: italic; }
+.dc-hero-sub { font-size: .975rem; line-height: 1.78; color: #4a4a4a; max-width: 520px; margin-bottom: 36px; font-weight: 300; }
+.dc-rule { width: 48px; height: 2px; background: #0D4F42; margin-bottom: 28px; }
+.dc-actions { display: flex; gap: 16px; align-items: center; }
+.dc-btn-teal { background: #0D4F42; color: #EEECE5; padding: 13px 28px; font-size: .875rem; font-weight: 600; text-decoration: none; }
+.dc-btn-text { color: #0D4F42; font-size: .875rem; font-weight: 500; text-decoration: none; border-bottom: 1px solid rgba(13,79,66,.3); padding-bottom: 1px; }
+.dc-prog-block { border-left: 2px solid #D8D5CC; padding: 20px 24px; }
+.dc-prog-code { font-family: 'DM Mono', monospace; font-size: 2rem; font-weight: 500; color: #0D4F42; line-height: 1; margin-bottom: 6px; }
+.dc-prog-name { font-size: .78rem; color: #888; margin-bottom: 10px; line-height: 1.4; }
+.dc-prog-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+.dc-prog-pill { font-family: 'DM Mono', monospace; font-size: .68rem; color: #555; background: #E5E2DB; padding: 3px 9px; }
+
+.dc-body { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid #D8D5CC; }
+.dc-sidebar { padding: 48px 40px 48px 64px; border-right: 1px solid #D8D5CC; }
+.dc-sidebar-label { font-family: 'DM Mono', monospace; font-size: .68rem; text-transform: uppercase; letter-spacing: .1em; color: #888; margin-bottom: 16px; }
+.dc-sidebar-nav a { display: block; font-size: .85rem; color: #555; text-decoration: none; padding: 3px 0; }
+.dc-sidebar-nav a:hover { color: #0D4F42; }
+.dc-main { padding: 48px 64px 48px 48px; }
+.dc-feat-item { display: grid; grid-template-columns: 160px 1fr; gap: 32px; padding: 28px 0; border-bottom: 1px solid #D8D5CC; align-items: start; }
+.dc-feat-item:last-child { border-bottom: none; }
+.dc-feat-label { font-family: 'DM Mono', monospace; font-size: .75rem; color: #0D4F42; letter-spacing: .05em; padding-top: 3px; }
+.dc-feat-content h3 { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: #1A1A1A; margin-bottom: 8px; font-weight: 400; }
+.dc-feat-content p { font-size: .875rem; color: #555; line-height: 1.72; font-weight: 300; }
+
+.dc-data-row { background: #0D4F42; display: flex; }
+.dc-data-item { padding: 36px 48px; flex: 1; border-right: 1px solid rgba(255,255,255,.1); }
+.dc-data-item:last-child { border-right: none; }
+.dc-data-n { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: #fff; line-height: 1; margin-bottom: 6px; }
+.dc-data-l { font-family: 'DM Mono', monospace; font-size: .7rem; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.45); }
+
+.dc-cta { padding: 80px 64px; display: flex; align-items: center; justify-content: space-between; gap: 48px; border-bottom: 1px solid #D8D5CC; }
+.dc-cta h2 { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: #1A1A1A; max-width: 480px; line-height: 1.2; font-weight: 400; text-wrap: balance; }
+.dc-cta h2 em { color: #0D4F42; }
+.dc-cta-right { display: flex; flex-direction: column; gap: 14px; align-items: flex-end; flex-shrink: 0; }
+.dc-cta-right a { color: #0D4F42; font-size: .875rem; text-decoration: none; }
+
+.dc-footer { padding: 28px 64px; display: flex; justify-content: space-between; align-items: center; }
+.dc-footer p { color: #aaa; font-size: .78rem; font-family: 'DM Mono', monospace; }
+.dc-footer-links { display: flex; gap: 24px; }
+.dc-footer-links a { color: #aaa; font-size: .78rem; text-decoration: none; font-family: 'DM Mono', monospace; }
+</style>
+
+<nav class="dc-nav">
+  <div class="dc-brand">Green<span>valey</span></div>
+  <div class="dc-nav-links">
+    <a href="#">About</a><a href="#">Programs</a><a href="#">Admissions</a>
+    <a href="#">Results</a><a href="#">Scholarship</a><a href="#">Contact</a>
+    <a href="#" class="dc-nav-cta">Enquire →</a>
+  </div>
+</nav>
+<section class="dc-hero">
+  <div class="dc-hero-left">
+    <p class="dc-hero-kicker">TSBIE Affiliated / Est. 2024 / Warangal</p>
+    <h1>Serious Science.<br><em>Two Programs.</em><br>One Purpose.</h1>
+    <p class="dc-hero-sub">Greenvaley Junior College prepares students for EAMCET, NEET, and JEE through focused MPC and BiPC programs — with scholarship support, online results, and question paper access built in.</p>
+    <div class="dc-rule"></div>
+    <div class="dc-actions"><a href="#" class="dc-btn-teal">Apply for 2026–27</a><a href="#" class="dc-btn-text">Learn about programs</a></div>
+  </div>
+  <div class="dc-hero-right">
+    <div class="dc-prog-block"><div class="dc-prog-code">MPC</div><div class="dc-prog-name">Mathematics<br>Physics · Chemistry</div><div class="dc-prog-pills"><span class="dc-prog-pill">EAMCET</span><span class="dc-prog-pill">JEE</span><span class="dc-prog-pill">Engineering</span></div></div>
+    <div class="dc-prog-block" style="margin-top:8px"><div class="dc-prog-code">BiPC</div><div class="dc-prog-name">Biology<br>Physics · Chemistry</div><div class="dc-prog-pills"><span class="dc-prog-pill">NEET</span><span class="dc-prog-pill">EAMCET</span><span class="dc-prog-pill">Medicine</span></div></div>
+  </div>
+</section>
+<div class="dc-data-row">
+  <div class="dc-data-item"><div class="dc-data-n">MPC</div><div class="dc-data-l">Math · Physics · Chemistry</div></div>
+  <div class="dc-data-item"><div class="dc-data-n">BiPC</div><div class="dc-data-l">Biology · Physics · Chemistry</div></div>
+  <div class="dc-data-item"><div class="dc-data-n">TSBIE</div><div class="dc-data-l">Board Affiliated</div></div>
+  <div class="dc-data-item"><div class="dc-data-n">2024</div><div class="dc-data-l">Year Established</div></div>
+</div>
+<div class="dc-body">
+  <div class="dc-sidebar">
+    <div class="dc-sidebar-label">On this site</div>
+    <div class="dc-sidebar-nav">
+      <a href="#">About the college</a><a href="#">MPC program</a><a href="#">BiPC program</a>
+      <a href="#">Admissions</a><a href="#">Faculty</a><a href="#">Results</a>
+      <a href="#">Question papers</a><a href="#">Scholarship portal</a>
+      <a href="#">Mandatory disclosure</a><a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="dc-main">
+    <div class="dc-feat-item"><div class="dc-feat-label">Scholarship<br>Portal</div><div class="dc-feat-content"><h3>Apply for government scholarships online</h3><p>SC/ST, BC, EBC, and NTR Vidyonnathi schemes — fill in your details once, track your application status anytime using your application ID and phone number.</p></div></div>
+    <div class="dc-feat-item"><div class="dc-feat-label">Exam<br>Results</div><div class="dc-feat-content"><h3>Check IPE, model, and internal results instantly</h3><p>Enter your roll number and exam type — IPE March, IPE May, quarterly, half-yearly, or model exam — and view subject-wise marks immediately.</p></div></div>
+    <div class="dc-feat-item"><div class="dc-feat-label">Question<br>Papers</div><div class="dc-feat-content"><h3>Download previous-year papers as PDF</h3><p>A growing library of question papers for all subjects going back to 2018. Filter by program, subject, year, and exam type.</p></div></div>
+    <div class="dc-feat-item"><div class="dc-feat-label">Mandatory<br>Disclosure</div><div class="dc-feat-content"><h3>TSBIE-required public information</h3><p>Sanctioned intake, tuition fees, faculty count, lab facilities, and management details — all published as required by the Telangana Board of Intermediate Education.</p></div></div>
+  </div>
+</div>
+<section class="dc-cta">
+  <h2>Admissions open for<br><em>2026–27.</em> Limited seats.</h2>
+  <div class="dc-cta-right">
+    <a href="#" class="dc-btn-teal">Apply Now</a>
+    <a href="#">Check scholarship eligibility →</a>
+    <a href="#">Download admission form →</a>
+  </div>
+</section>
+<footer class="dc-footer">
+  <p>© 2026 Greenvaley Junior College · TSBIE Affiliated · Warangal, Telangana</p>
+  <div class="dc-footer-links"><a href="#">Mandatory Disclosure</a><a href="#">Contact</a><a href="#">Admin</a></div>
+</footer>
+</div>
+
+<script>
+function show(x) {
+  document.querySelectorAll('.design').forEach(d => d.classList.remove('visible'));
+  document.getElementById('d' + x).classList.add('visible');
+  document.querySelectorAll('.pick-btn').forEach((b, i) => {
+    b.classList.toggle('active', ['a','b','c'][i] === x);
+  });
+  window.scrollTo(0, 0);
+}
+</script>
+
+</body>
+</html>

@@ -8,7 +8,7 @@ module.exports = {
   phone:      '7207904044',
   phone2:     '7207904045',
   email:      'office@gvjc.in',
-  whatsapp:   '917207904044',
+  whatsapp:   '917207904045',
   website:    'https://greenvaleycollege.com',
   estYear:    2024,
 
