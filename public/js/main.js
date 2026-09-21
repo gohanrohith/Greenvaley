@@ -71,6 +71,57 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
   });
 })();
 
+// Toppers carousel
+(function () {
+  const track  = document.getElementById('topperTrack');
+  const dotsEl = document.getElementById('topperDots');
+  if (!track) return;
+
+  const cards      = Array.from(track.children);
+  const VISIBLE    = () => window.innerWidth < 600 ? 1 : window.innerWidth < 900 ? 2 : window.innerWidth < 1100 ? 3 : 4;
+  let current      = 0;
+  let autoTimer;
+
+  function maxIndex() { return Math.max(0, cards.length - VISIBLE()); }
+
+  function buildDots() {
+    if (!dotsEl) return;
+    dotsEl.innerHTML = '';
+    const n = maxIndex() + 1;
+    for (let i = 0; i < n; i++) {
+      const d = document.createElement('button');
+      d.className = 'tc-dot' + (i === current ? ' active' : '');
+      d.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(d);
+    }
+  }
+
+  function goTo(n) {
+    current = Math.max(0, Math.min(n, maxIndex()));
+    const cardW = cards[0].offsetWidth + 16; // gap 16px
+    track.style.transform = `translateX(-${current * cardW}px)`;
+    if (dotsEl) {
+      Array.from(dotsEl.children).forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+  }
+
+  function next() { goTo(current >= maxIndex() ? 0 : current + 1); }
+  function prev() { goTo(current <= 0 ? maxIndex() : current - 1); }
+
+  function startAuto() { autoTimer = setInterval(next, 3500); }
+  function stopAuto()  { clearInterval(autoTimer); }
+
+  const wrapper = track.closest('.tc-wrapper');
+  wrapper?.querySelector('.tc-prev')?.addEventListener('click', () => { stopAuto(); prev(); startAuto(); });
+  wrapper?.querySelector('.tc-next')?.addEventListener('click', () => { stopAuto(); next(); startAuto(); });
+  wrapper?.addEventListener('mouseenter', stopAuto);
+  wrapper?.addEventListener('mouseleave', startAuto);
+
+  buildDots();
+  startAuto();
+  window.addEventListener('resize', () => { buildDots(); goTo(0); });
+})();
+
 // Nav shrink on scroll
 (function () {
   const nav = document.querySelector('.site-nav');

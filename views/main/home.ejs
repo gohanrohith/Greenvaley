@@ -119,50 +119,67 @@
   </div>
 </section>
 
-<!-- Student Achievements -->
-<% if (toppers && toppers.length) { %>
-<section class="section">
+<!-- Student Achievements Carousel -->
+<section class="section achieve-section">
   <div class="container">
     <div class="section-head">
-      <h2>Student Achievements</h2>
-      <a href="/achievements">All achievements →</a>
+      <div>
+        <h2>Student Achievements</h2>
+        <p>Our students earning ranks in JEE, NEET, EAPCET and board exams</p>
+      </div>
+      <a href="/achievements" class="btn btn-outline btn-sm">View All →</a>
     </div>
+
+    <% if (toppers && toppers.length) { %>
     <%
-      const jeeCount   = toppers.filter(t => t.exam === 'JEE Main' || t.exam === 'JEE Advanced').length;
-      const neetCount  = toppers.filter(t => t.exam === 'NEET').length;
+      const jeeCount    = toppers.filter(t => t.exam === 'JEE Main' || t.exam === 'JEE Advanced').length;
+      const neetCount   = toppers.filter(t => t.exam === 'NEET').length;
       const eapcetCount = toppers.filter(t => t.exam === 'EAPCET').length;
     %>
     <div class="achieve-stats" data-reveal>
-      <% if (jeeCount > 0) { %>
-      <div class="achieve-stat"><span class="achieve-n"><%= jeeCount %>+</span><span class="achieve-l">JEE Qualifiers</span></div>
-      <% } %>
-      <% if (neetCount > 0) { %>
-      <div class="achieve-stat"><span class="achieve-n"><%= neetCount %>+</span><span class="achieve-l">NEET Qualifiers</span></div>
-      <% } %>
-      <% if (eapcetCount > 0) { %>
-      <div class="achieve-stat"><span class="achieve-n"><%= eapcetCount %>+</span><span class="achieve-l">EAPCET Qualifiers</span></div>
-      <% } %>
+      <% if (jeeCount > 0) { %><div class="achieve-stat"><span class="achieve-n"><%= jeeCount %>+</span><span class="achieve-l">JEE Qualifiers</span></div><% } %>
+      <% if (neetCount > 0) { %><div class="achieve-stat"><span class="achieve-n"><%= neetCount %>+</span><span class="achieve-l">NEET Qualifiers</span></div><% } %>
+      <% if (eapcetCount > 0) { %><div class="achieve-stat"><span class="achieve-n"><%= eapcetCount %>+</span><span class="achieve-l">EAPCET Qualifiers</span></div><% } %>
     </div>
-    <div class="toppers-scroll">
-      <% toppers.forEach(t => { %>
-      <div class="topper-card">
-        <div class="topper-exam topper-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></div>
-        <% if (t.photo) { %>
-          <img src="<%= t.photo %>" alt="<%= t.name %>" class="topper-photo"
-               onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-          <div class="topper-photo-placeholder" style="display:none"><%= t.name.charAt(0).toUpperCase() %></div>
-        <% } else { %>
-          <div class="topper-photo-placeholder"><%= t.name.charAt(0).toUpperCase() %></div>
-        <% } %>
-        <div class="topper-rank"><%= t.rank_label %></div>
-        <div class="topper-name"><%= t.name %></div>
-        <% if (t.highlight) { %><div class="topper-highlight"><%= t.highlight %></div><% } %>
+
+    <div class="tc-wrapper" data-reveal>
+      <button class="tc-arrow tc-prev" aria-label="Previous">&#8592;</button>
+      <div class="tc-track-outer">
+        <div class="tc-track" id="topperTrack">
+          <% toppers.forEach(t => { %>
+          <div class="topper-card">
+            <div class="topper-exam topper-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></div>
+            <% if (t.photo) { %>
+              <img src="<%= t.photo %>" alt="<%= t.name %>" class="topper-photo"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="topper-photo-placeholder" style="display:none"><%= t.name.charAt(0).toUpperCase() %></div>
+            <% } else { %>
+              <div class="topper-photo-placeholder"><%= t.name.charAt(0).toUpperCase() %></div>
+            <% } %>
+            <div class="topper-rank"><%= t.rank_label %></div>
+            <div class="topper-name"><%= t.name %></div>
+            <% if (t.score) { %><div class="topper-score"><%= t.score %></div><% } %>
+            <% if (t.highlight) { %><div class="topper-highlight"><%= t.highlight %></div><% } %>
+          </div>
+          <% }); %>
+        </div>
       </div>
-      <% }); %>
+      <button class="tc-arrow tc-next" aria-label="Next">&#8594;</button>
     </div>
+    <div class="tc-dots" id="topperDots"></div>
+
+    <% } else { %>
+    <!-- Empty state — first batch graduates 2026 -->
+    <div class="achieve-coming-soon" data-reveal>
+      <div class="acs-year">2026</div>
+      <h3>Results Coming Soon</h3>
+      <p>Our first batch completes their Intermediate in 2026. JEE, NEET, EAPCET and board toppers will appear here.</p>
+      <a href="/admissions" class="btn btn-primary mt-1">Be in the next batch →</a>
+    </div>
+    <% } %>
+
   </div>
 </section>
-<% } %>
 
 <!-- News -->
 <% if (news && news.length) { %>
