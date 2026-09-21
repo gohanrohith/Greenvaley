@@ -132,7 +132,7 @@ h4 { font-size: 1rem; font-weight: 600; }
 .hero-left h1 .accent { color: var(--green); }
 .hero-sub { font-size: 1rem; line-height: 1.72; color: var(--muted); margin-bottom: 36px; font-weight: 400; max-width: 480px; }
 .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-.hero-right { background: var(--green); display: flex; flex-direction: column; justify-content: center; padding: 48px 36px; gap: 16px; }
+.hero-right { background: var(--green-dark); display: flex; flex-direction: column; justify-content: stretch; padding: 24px; gap: 16px; }
 .hero-right-label { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.6); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
 .stream-card { background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.2); border-radius: 10px; padding: 22px 22px 18px; transition: background .2s; }
 .stream-card:hover { background: rgba(255,255,255,.16); }
@@ -539,9 +539,7 @@ a.cinfo-value:hover { color: var(--green); }
 .hero-left h1  { animation: fadeDown .5s .05s cubic-bezier(.22,.61,.36,1) both; }
 .hero-left .hero-sub { animation: fadeDown .5s .12s cubic-bezier(.22,.61,.36,1) both; }
 .hero-left .hero-actions { animation: fadeDown .5s .2s cubic-bezier(.22,.61,.36,1) both; }
-.hero-right .stream-card:nth-child(2) { animation: fadeDown .45s .1s cubic-bezier(.22,.61,.36,1) both; }
-.hero-right .stream-card:nth-child(3) { animation: fadeDown .45s .18s cubic-bezier(.22,.61,.36,1) both; }
-.hero-right .stream-card:nth-child(4) { animation: fadeDown .45s .26s cubic-bezier(.22,.61,.36,1) both; }
+.campus-frame { animation: fadeDown .5s .15s cubic-bezier(.22,.61,.36,1) both; }
 
 /* ── Stat counter animation ──────────────────────────────────────────────────── */
 @keyframes countUp {
@@ -591,15 +589,46 @@ html { scroll-behavior: smooth; }
 .scale-l { font-size: .9rem; font-weight: 600; color: var(--black); }
 .scale-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
 
-/* ── Our Story (item 1) ───────────────────────────────────────────────────────── */
-.story-section { background: var(--green-xlight); padding: 64px 0; overflow: hidden; }
-.story-inner { display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center; position: relative; }
-@media (max-width: 700px) { .story-inner { grid-template-columns: 1fr; gap: 20px; } }
-.story-year { font-size: 9rem; font-weight: 900; color: var(--green); opacity: .08; line-height: 1; letter-spacing: -.06em; user-select: none; flex-shrink: 0; }
-@media (max-width: 700px) { .story-year { font-size: 5rem; } }
-.story-badge { display: inline-block; background: var(--green); color: var(--white); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
-.story-content h2 { font-size: 1.6rem; margin-bottom: 12px; }
-.story-content p { color: var(--muted); font-size: .95rem; max-width: 560px; line-height: 1.7; }
+/* ── Hero Campus Photo (hero-right redesign) ──────────────────────────────────── */
+.campus-frame { position: relative; border-radius: 16px; overflow: hidden; height: 340px; background: var(--green-light); }
+@media (max-width: 900px) { .campus-frame { height: 240px; } }
+.campus-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.campus-img-fallback { display: none; width: 100%; height: 100%; background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%); align-items: center; justify-content: center; }
+.campus-fallback-inner { text-align: center; color: var(--white); }
+.campus-fallback-icon { font-size: 3rem; margin-bottom: 8px; }
+.campus-fallback-name { font-size: 1.1rem; font-weight: 700; }
+.campus-fallback-loc { font-size: .8rem; opacity: .75; margin-top: 4px; }
+.campus-location-badge { position: absolute; top: 14px; left: 14px; background: rgba(0,0,0,.55); backdrop-filter: blur(6px); color: #fff; font-size: .75rem; font-weight: 500; padding: 5px 12px; border-radius: 100px; }
+.campus-achieve-bar { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,.72) 0%, transparent 100%); padding: 32px 14px 14px; display: flex; flex-direction: column; gap: 7px; }
+.cab-pill { display: flex; align-items: center; gap: 8px; }
+.cab-exam { font-size: .65rem; font-weight: 800; letter-spacing: .06em; padding: 2px 8px; border-radius: 100px; background: rgba(255,255,255,.15); color: #fff; flex-shrink: 0; }
+.cab-exam-jee-main    { background: #1a56db; }
+.cab-exam-jee-advanced { background: #7c3aed; }
+.cab-exam-neet        { background: #c81e1e; }
+.cab-exam-eapcet      { background: #2e7d32; }
+.cab-rank { font-size: .82rem; font-weight: 700; color: #fff; }
+.cab-name { font-size: .75rem; color: rgba(255,255,255,.7); }
+.cab-pill-coming .cab-exam { background: var(--gold); color: #fff; }
+
+/* ── Our Journey Timeline (item 1) ───────────────────────────────────────────── */
+.timeline-section { background: var(--green-xlight); padding: 64px 0; }
+.tl-outer { position: relative; margin-top: 40px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: thin; }
+.tl-outer::-webkit-scrollbar { height: 4px; }
+.tl-outer::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.tl-line { position: absolute; top: 24px; left: 0; right: 0; height: 2px; background: var(--border); z-index: 0; }
+.tl-track { display: flex; gap: 0; position: relative; z-index: 1; min-width: 900px; }
+.tl-item { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0 8px; }
+.tl-year { font-size: .8rem; font-weight: 800; color: var(--green); background: var(--green-xlight); border: 2px solid var(--green-light); border-radius: 100px; padding: 3px 10px; margin-bottom: 10px; white-space: nowrap; }
+.tl-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--border); border: 3px solid var(--white); margin-bottom: 14px; flex-shrink: 0; }
+.tl-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; text-align: center; width: 100%; max-width: 170px; }
+.tl-inst { font-size: .82rem; font-weight: 700; color: var(--black); margin-bottom: 4px; line-height: 1.3; }
+.tl-loc { font-size: .7rem; color: var(--muted); margin-bottom: 3px; }
+.tl-type { font-size: .68rem; color: var(--muted-light); }
+/* Current / active milestone */
+.tl-current .tl-dot { background: var(--green); border-color: var(--green-xlight); width: 18px; height: 18px; box-shadow: 0 0 0 4px rgba(77,112,52,.2); }
+.tl-current .tl-year { background: var(--green); color: var(--white); border-color: var(--green); }
+.tl-current .tl-card { border-color: var(--green); background: var(--white); box-shadow: 0 4px 16px rgba(77,112,52,.15); }
+.tl-badge-current { display: inline-block; background: var(--green); color: var(--white); font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; margin-bottom: 6px; }
 
 /* ── Why Greenvaley (item 3) ──────────────────────────────────────────────────── */
 .why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }

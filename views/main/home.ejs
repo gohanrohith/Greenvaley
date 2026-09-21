@@ -13,31 +13,43 @@
     </div>
   </div>
   <div class="hero-right">
-    <div class="hero-right-label">Our Programmes</div>
-    <div class="stream-card">
-      <div class="stream-code">JEE</div>
-      <div class="stream-full">IIT-JEE Main &amp; Advanced</div>
-      <div class="stream-pills">
-        <span class="stream-pill">IITs</span>
-        <span class="stream-pill">NITs</span>
-        <span class="stream-pill gold">Class 11 &amp; 12</span>
+    <div class="campus-frame">
+      <img src="/images/campus.jpg" alt="Greenvaley Campus" class="campus-img"
+           onerror="this.style.display='none';document.getElementById('campusFallback').style.display='flex'">
+      <div class="campus-img-fallback" id="campusFallback">
+        <div class="campus-fallback-inner">
+          <div class="campus-fallback-icon">🏫</div>
+          <div class="campus-fallback-name">Greenvaley Junior College</div>
+          <div class="campus-fallback-loc">Yellapur, Hanamkonda</div>
+        </div>
       </div>
-    </div>
-    <div class="stream-card">
-      <div class="stream-code">NEET</div>
-      <div class="stream-full">NEET UG — Medical Entrance</div>
-      <div class="stream-pills">
-        <span class="stream-pill">MBBS</span>
-        <span class="stream-pill">BDS</span>
-        <span class="stream-pill gold">Class 11 &amp; 12</span>
-      </div>
-    </div>
-    <div class="stream-card">
-      <div class="stream-code">EAPCET</div>
-      <div class="stream-full">JEE Main &amp; EAPCET Combined</div>
-      <div class="stream-pills">
-        <span class="stream-pill">Engineering</span>
-        <span class="stream-pill gold">Telangana</span>
+      <div class="campus-location-badge">📍 Yellapur, Hanamkonda</div>
+      <div class="campus-achieve-bar">
+        <% if (toppers && toppers.length) { %>
+          <% toppers.slice(0,3).forEach(t => { %>
+          <div class="cab-pill">
+            <span class="cab-exam cab-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></span>
+            <span class="cab-rank"><%= t.rank_label %></span>
+            <span class="cab-name"><%= t.name %></span>
+          </div>
+          <% }); %>
+        <% } else { %>
+          <div class="cab-pill cab-pill-coming">
+            <span class="cab-exam">2026</span>
+            <span class="cab-rank">First Batch Results</span>
+            <span class="cab-name">JEE · NEET · EAPCET</span>
+          </div>
+          <div class="cab-pill">
+            <span class="cab-exam cab-exam-jee-main">MPC</span>
+            <span class="cab-rank">JEE Main &amp; Advanced</span>
+            <span class="cab-name">IITs · NITs</span>
+          </div>
+          <div class="cab-pill">
+            <span class="cab-exam cab-exam-neet">BiPC</span>
+            <span class="cab-rank">NEET UG</span>
+            <span class="cab-name">MBBS · BDS</span>
+          </div>
+        <% } %>
       </div>
     </div>
   </div>
@@ -71,16 +83,81 @@
   </div>
 </div>
 
-<!-- Our Story (item 1) -->
-<section class="story-section">
+<!-- Our Journey Timeline (item 1) -->
+<section class="timeline-section">
   <div class="container">
-    <div class="story-inner" data-reveal>
-      <div class="story-year">2024</div>
-      <div class="story-content">
-        <div class="story-badge">Our Story</div>
-        <h2>Founded in Hanamkonda, Telangana</h2>
-        <p>Greenvaley Junior College was established with a single conviction — that a student from Telangana deserves the same quality of foundation coaching as anyone in Kota or Hyderabad. We built our curriculum so that Class 11 &amp; 12 board preparation and JEE / NEET / EAPCET coaching move together, not against each other.</p>
-        <a href="/about" class="btn btn-outline btn-sm mt-1">Read more about us →</a>
+    <div class="section-head text-center-md" data-reveal>
+      <div>
+        <h2>Our Journey</h2>
+        <p>22 years of building educational institutions across Telangana &amp; Andhra Pradesh</p>
+      </div>
+      <a href="/about" class="btn btn-outline btn-sm">About us →</a>
+    </div>
+    <div class="tl-outer" data-reveal>
+      <div class="tl-line"></div>
+      <div class="tl-track">
+
+        <div class="tl-item">
+          <div class="tl-year">2003</div>
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-inst">Greenwood High School</div>
+            <div class="tl-loc">📍 Hanamkonda, Telangana</div>
+            <div class="tl-type">CBSE School · Nursery – X</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-year">2010</div>
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-inst">Greenwood Warangal</div>
+            <div class="tl-loc">📍 Warangal, Telangana</div>
+            <div class="tl-type">High School · Extended Campus</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-year">2012</div>
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-inst">Abhyaas The Global School</div>
+            <div class="tl-loc">📍 Bhimavaram, Andhra Pradesh</div>
+            <div class="tl-type">CBSE School · Nursery – X</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-year">2017</div>
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-inst">Pinegrove Junior College</div>
+            <div class="tl-loc">📍 Hyderabad, Telangana</div>
+            <div class="tl-type">Intermediate College</div>
+          </div>
+        </div>
+
+        <div class="tl-item">
+          <div class="tl-year">2022</div>
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-inst">Greenwood Mancherial</div>
+            <div class="tl-loc">📍 Mancherial, Telangana</div>
+            <div class="tl-type">High School · Campus</div>
+          </div>
+        </div>
+
+        <div class="tl-item tl-current">
+          <div class="tl-year">2025</div>
+          <div class="tl-dot"></div>
+          <div class="tl-card">
+            <div class="tl-badge-current">You are here</div>
+            <div class="tl-inst">Greenvaley Junior College</div>
+            <div class="tl-loc">📍 Hanamkonda, Telangana</div>
+            <div class="tl-type">Intermediate · JEE · NEET · EAPCET</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
