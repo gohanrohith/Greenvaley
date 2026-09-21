@@ -438,3 +438,140 @@ a.cinfo-value:hover { color: var(--green); }
   .elig-grid { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; }
 }
+
+/* ── Required / optional field markers ─────────────────────────────────────── */
+.req { color: #e53e3e; font-weight: 700; }
+.opt { color: var(--muted); font-weight: 400; font-size: .8em; }
+
+/* ── Footer 4-column variant ────────────────────────────────────────────────── */
+.footer-cols-4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1100px) { .footer-cols-4 { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .footer-cols-4 { grid-template-columns: 1fr; } }
+
+/* ── Programs page — tracks ─────────────────────────────────────────────────── */
+.program-block { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 40px; margin-bottom: 32px; }
+.program-block-bipc { border-top: 4px solid var(--gold); }
+.program-block:not(.program-block-bipc) { border-top: 4px solid var(--green); }
+.program-block-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+.program-code-lg { font-size: 3.5rem; font-weight: 900; color: var(--green); letter-spacing: -.05em; line-height: 1; }
+.program-code-lg.bipc { color: var(--gold); }
+.program-name-lg { font-size: .95rem; color: var(--muted); font-weight: 600; margin-top: 4px; letter-spacing: .01em; }
+.program-tag { display: inline-flex; align-items: center; background: var(--green-light); color: var(--green-dark); font-size: .78rem; font-weight: 700; padding: 6px 14px; border-radius: 20px; letter-spacing: .03em; white-space: nowrap; }
+.program-tag-girls { background: #fff0f3; color: #c0392b; }
+.program-intro { color: var(--muted); font-size: .95rem; line-height: 1.7; margin-bottom: 28px; max-width: 740px; }
+.tracks-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 28px; }
+@media (max-width: 900px) { .tracks-grid { grid-template-columns: 1fr; } }
+.track-card { background: var(--green-xlight); border: 1px solid var(--border); border-radius: 12px; padding: 26px 24px; display: flex; flex-direction: column; gap: 0; transition: box-shadow .2s, transform .2s; }
+.track-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.track-badge { display: inline-block; background: var(--green); color: var(--white); font-size: .7rem; font-weight: 800; padding: 3px 10px; border-radius: 20px; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 10px; width: fit-content; }
+.track-badge-bipc { background: var(--gold); }
+.track-card h3 { font-size: 1.05rem; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -.02em; }
+.track-aim { font-size: .8rem; color: var(--green); font-weight: 600; margin-bottom: 14px; }
+.track-list { list-style: none; display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; flex: 1; }
+.track-list li { font-size: .85rem; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; line-height: 1.4; }
+.track-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--green); flex-shrink: 0; margin-top: 6px; }
+.track-neet .track-aim, .track-neet-eap .track-aim, .track-inter-bipc .track-aim { color: var(--gold); }
+.track-neet .track-list li::before, .track-neet-eap .track-list li::before, .track-inter-bipc .track-list li::before { background: var(--gold); }
+.subject-strip { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+.subject-chip { background: var(--green-light); color: var(--green-dark); font-size: .78rem; font-weight: 600; padding: 5px 13px; border-radius: 20px; }
+.subject-chip.muted { background: #f3f4f6; color: var(--muted); font-weight: 400; }
+
+/* ── Leadership ─────────────────────────────────────────────────────────────── */
+.leadership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+.leader-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 32px; display: flex; gap: 24px; align-items: flex-start; transition: box-shadow .2s; }
+.leader-card:hover { box-shadow: var(--shadow-md); }
+@media (max-width: 600px) { .leader-card { flex-direction: column; align-items: center; text-align: center; } }
+.leader-photo-wrap { flex-shrink: 0; }
+.leader-photo { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; border: 3px solid var(--green-light); }
+.leader-photo-placeholder { width: 100px; height: 100px; border-radius: 50%; background: var(--green-light); color: var(--green); font-size: 1.8rem; font-weight: 900; display: flex; align-items: center; justify-content: center; letter-spacing: -.02em; }
+.leader-role { font-size: .72rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--green); margin-bottom: 4px; }
+.leader-name { font-size: 1.2rem; font-weight: 800; color: var(--black); margin-bottom: 4px; letter-spacing: -.02em; }
+.leader-designation { font-size: .82rem; color: var(--muted); margin-bottom: 12px; }
+.leader-bio { font-size: .88rem; color: #555; line-height: 1.7; }
+
+/* ── Sister branches ────────────────────────────────────────────────────────── */
+.sister-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.sister-card { display: flex; align-items: center; gap: 16px; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; text-decoration: none; transition: box-shadow .2s, transform .2s; color: inherit; }
+.sister-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); color: inherit; }
+.sister-icon { font-size: 2rem; flex-shrink: 0; }
+.sister-info { flex: 1; }
+.sister-name { font-size: .975rem; font-weight: 800; color: var(--black); margin-bottom: 3px; letter-spacing: -.01em; }
+.sister-type { font-size: .8rem; color: var(--green); font-weight: 600; margin-bottom: 4px; }
+.sister-loc { font-size: .78rem; color: var(--muted); }
+.sister-arrow { font-size: 1.2rem; color: var(--muted-light); flex-shrink: 0; transition: transform .2s; }
+.sister-card:hover .sister-arrow { transform: translateX(4px); color: var(--green); }
+
+/* ── Scholarship terms page ─────────────────────────────────────────────────── */
+.terms-layout { display: grid; grid-template-columns: 1fr 280px; gap: 48px; align-items: start; }
+@media (max-width: 900px) { .terms-layout { grid-template-columns: 1fr; } .terms-sidebar { order: -1; } }
+.terms-section { margin-bottom: 36px; }
+.terms-section h2 { font-size: 1.1rem; font-weight: 800; color: var(--black); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--green-light); }
+.terms-section ul { list-style: disc; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.terms-section li { font-size: .9rem; color: #333; line-height: 1.65; }
+.terms-section p { font-size: .9rem; color: #333; line-height: 1.65; margin-bottom: 8px; }
+.terms-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+.terms-table th, .terms-table td { padding: .6rem 1rem; border: 1px solid var(--border); font-size: .88rem; text-align: left; }
+.terms-table th { background: var(--green-xlight); font-weight: 700; }
+.terms-table tr:nth-child(even) td { background: #fafafa; }
+.terms-note { font-size: .82rem; color: var(--muted); font-style: italic; margin-top: 8px; }
+.terms-footer-note { background: var(--green-light); border-left: 3px solid var(--green); border-radius: var(--radius); padding: 16px 20px; margin-top: 8px; }
+.terms-footer-note p { font-size: .88rem; color: var(--green-dark); margin: 0; }
+.terms-cta-box { background: var(--black); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.terms-cta-box h4 { color: var(--white); margin-bottom: 8px; }
+.terms-cta-box p { color: rgba(255,255,255,.5); font-size: .85rem; line-height: 1.6; margin-bottom: 16px; }
+.terms-quick-links { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+.terms-quick-links h5 { font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin-bottom: 12px; }
+.terms-quick-links a { display: block; font-size: .875rem; color: var(--green); font-weight: 600; margin-bottom: 10px; }
+.terms-quick-links a:hover { color: var(--green-dark); }
+
+/* ── Scroll-reveal animation system ─────────────────────────────────────────── */
+[data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity .55s cubic-bezier(.22,.61,.36,1), transform .55s cubic-bezier(.22,.61,.36,1); transition-delay: var(--delay, 0ms); }
+[data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+/* ── Page entrance (hero) ────────────────────────────────────────────────────── */
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-hero .container { animation: fadeDown .5s cubic-bezier(.22,.61,.36,1) forwards; }
+.hero-left h1  { animation: fadeDown .5s .05s cubic-bezier(.22,.61,.36,1) both; }
+.hero-left .hero-sub { animation: fadeDown .5s .12s cubic-bezier(.22,.61,.36,1) both; }
+.hero-left .hero-actions { animation: fadeDown .5s .2s cubic-bezier(.22,.61,.36,1) both; }
+.hero-right .stream-card:nth-child(2) { animation: fadeDown .45s .1s cubic-bezier(.22,.61,.36,1) both; }
+.hero-right .stream-card:nth-child(3) { animation: fadeDown .45s .18s cubic-bezier(.22,.61,.36,1) both; }
+.hero-right .stream-card:nth-child(4) { animation: fadeDown .45s .26s cubic-bezier(.22,.61,.36,1) both; }
+
+/* ── Stat counter animation ──────────────────────────────────────────────────── */
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.stat-item { animation: countUp .5s cubic-bezier(.22,.61,.36,1) both; }
+.stat-item:nth-child(1) { animation-delay: .05s; }
+.stat-item:nth-child(2) { animation-delay: .12s; }
+.stat-item:nth-child(3) { animation-delay: .19s; }
+.stat-item:nth-child(4) { animation-delay: .26s; }
+
+/* ── Nav smooth underline hover ──────────────────────────────────────────────── */
+.nav-links a { position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: 2px; left: 12px; right: 12px; height: 2px; background: var(--green); border-radius: 2px; transform: scaleX(0); transition: transform .2s cubic-bezier(.22,.61,.36,1); }
+.nav-links a:hover::after, .nav-links a.active::after { transform: scaleX(1); }
+
+/* ── Card hover lift (global) ────────────────────────────────────────────────── */
+.b-card { transition: box-shadow .25s, transform .25s; }
+.b-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.portal-card { transition: box-shadow .25s, transform .25s; }
+.portal-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.news-card { transition: box-shadow .25s, transform .25s; }
+.news-card:hover { transform: translateY(-3px); }
+.faculty-card { transition: box-shadow .25s, transform .25s; }
+.faculty-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+/* ── Smooth scroll ───────────────────────────────────────────────────────────── */
+html { scroll-behavior: smooth; }
+
+/* ── Nav scrolled compact ────────────────────────────────────────────────────── */
+.site-nav { transition: box-shadow .3s, background .3s; }
+.nav-scrolled { box-shadow: 0 2px 20px rgba(0,0,0,.1); }
+.nav-inner { transition: height .25s; }
+.nav-scrolled .nav-inner { height: 58px; }

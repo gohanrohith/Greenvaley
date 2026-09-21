@@ -30,6 +30,7 @@ router.get('/question-papers', ctrl.questionPapers);
 
 // Scholarship portal
 router.get('/scholarship',             schCtrl.portal);
+router.get('/scholarship/terms',       ctrl.scholarshipTerms);
 router.get('/scholarship/apply',       schCtrl.applyForm);
 router.post('/scholarship/apply',      formLimiter, csrfProtect, schCtrl.applySubmit);
 router.get('/scholarship/status',      schCtrl.statusForm);

@@ -1,54 +1,151 @@
 <%- include('../partials/head') %>
 <%- include('../partials/nav') %>
 
-<div class="page-hero">
+<div class="page-hero" data-reveal>
   <div class="container">
     <h1>Our Programmes</h1>
-    <p>Two-year intermediate programmes affiliated with TSBIE — MPC and BiPC</p>
+    <p>Two-year TSBIE intermediate programmes — MPC and BiPC (Girls only)</p>
   </div>
 </div>
 
 <div class="container section">
-  <div class="grid-2">
 
-    <div class="program-card">
-      <div class="program-code">MPC</div>
-      <div class="program-name">Mathematics · Physics · Chemistry</div>
-      <p>For students aiming for IIT-JEE Main &amp; Advanced, JEE Main + EAPCET (Engineering), B.Sc. Mathematics, or Computer Science. Strong emphasis on problem-solving and analytical thinking.</p>
-      <ul class="subject-list">
-        <li>Mathematics</li>
-        <li>Physics</li>
-        <li>Chemistry</li>
-        <li>English (Compulsory)</li>
-        <li>Second Language (Telugu / Hindi)</li>
-      </ul>
-      <a href="/admissions" class="btn btn-primary">Apply for MPC</a>
+  <!-- MPC -->
+  <div class="program-block" data-reveal>
+    <div class="program-block-header">
+      <div>
+        <div class="program-code-lg">MPC</div>
+        <div class="program-name-lg">Mathematics · Physics · Chemistry</div>
+      </div>
+      <div class="program-tag">Co-ed · Open to all</div>
+    </div>
+    <p class="program-intro">For students targeting engineering and science. Choose the track that matches your entrance-exam goal — all tracks cover the full TSBIE intermediate syllabus.</p>
+
+    <div class="tracks-grid">
+
+      <div class="track-card track-jee-adv">
+        <div class="track-badge">Track 1</div>
+        <h3>JEE Main &amp; Advanced</h3>
+        <p class="track-aim">IITs · NITs · IIIT Hyderabad</p>
+        <ul class="track-list">
+          <li>Intensive JEE Main + Advanced coaching</li>
+          <li>Problem-solving labs &amp; weekly tests</li>
+          <li>Full TSBIE syllabus covered in parallel</li>
+          <li>Rank-based batch system</li>
+        </ul>
+        <a href="/admissions" class="btn btn-primary btn-sm">Apply for Track 1</a>
+      </div>
+
+      <div class="track-card track-jee-eap">
+        <div class="track-badge">Track 2</div>
+        <h3>JEE Main &amp; EAPCET</h3>
+        <p class="track-aim">Engineering colleges in Telangana &amp; AP · NITs</p>
+        <ul class="track-list">
+          <li>JEE Main coaching + EAPCET preparation</li>
+          <li>State rank &amp; national rank optimisation</li>
+          <li>Full TSBIE syllabus</li>
+          <li>Mock tests for both exams</li>
+        </ul>
+        <a href="/admissions" class="btn btn-primary btn-sm">Apply for Track 2</a>
+      </div>
+
+      <div class="track-card track-inter">
+        <div class="track-badge">Track 3</div>
+        <h3>Intermediate &amp; EAPCET</h3>
+        <p class="track-aim">TSBIE Board Exam · EAPCET State Rank</p>
+        <ul class="track-list">
+          <li>Strong board-exam focus</li>
+          <li>EAPCET preparation integrated</li>
+          <li>Regular tests &amp; doubt-clearing sessions</li>
+          <li>Ideal for consistent board performers</li>
+        </ul>
+        <a href="/admissions" class="btn btn-primary btn-sm">Apply for Track 3</a>
+      </div>
+
     </div>
 
-    <div class="program-card">
-      <div class="program-code">BiPC</div>
-      <div class="program-name">Biology · Physics · Chemistry</div>
-      <p>For students aiming for NEET UG (MBBS / BDS), EAPCET (Medical / Pharmacy), B.Sc. Biology, or Allied Health Sciences. Intensive coverage of Botany, Zoology, and Applied Sciences.</p>
-      <ul class="subject-list">
-        <li>Biology (Botany + Zoology)</li>
-        <li>Physics</li>
-        <li>Chemistry</li>
-        <li>English (Compulsory)</li>
-        <li>Second Language (Telugu / Hindi)</li>
-      </ul>
-      <a href="/admissions" class="btn btn-primary">Apply for BiPC</a>
+    <div class="subject-strip">
+      <span class="subject-chip">Mathematics</span>
+      <span class="subject-chip">Physics</span>
+      <span class="subject-chip">Chemistry</span>
+      <span class="subject-chip muted">English (Compulsory)</span>
+      <span class="subject-chip muted">Second Language (Telugu / Hindi)</span>
     </div>
-
   </div>
 
-  <div class="info-box mt-3">
+  <!-- BiPC -->
+  <div class="program-block program-block-bipc" data-reveal>
+    <div class="program-block-header">
+      <div>
+        <div class="program-code-lg bipc">BiPC</div>
+        <div class="program-name-lg">Biology · Physics · Chemistry</div>
+      </div>
+      <div class="program-tag program-tag-girls">Girls only ♀</div>
+    </div>
+    <p class="program-intro">For girls pursuing a career in medicine, pharmacy, or life sciences. All three tracks cover the full TSBIE intermediate BiPC syllabus.</p>
+
+    <div class="tracks-grid">
+
+      <div class="track-card track-neet">
+        <div class="track-badge track-badge-bipc">Track 1</div>
+        <h3>NEET UG</h3>
+        <p class="track-aim">MBBS · BDS · Veterinary · Allied Health</p>
+        <ul class="track-list">
+          <li>Intensive NEET Biology, Physics &amp; Chemistry coaching</li>
+          <li>Daily practice questions &amp; weekly tests</li>
+          <li>Full TSBIE syllabus covered in parallel</li>
+          <li>Rank-based batch system</li>
+        </ul>
+        <a href="/admissions" class="btn btn-gold btn-sm">Apply for Track 1</a>
+      </div>
+
+      <div class="track-card track-neet-eap">
+        <div class="track-badge track-badge-bipc">Track 2</div>
+        <h3>NEET &amp; EAPCET</h3>
+        <p class="track-aim">MBBS · Pharmacy · Medical colleges in TS &amp; AP</p>
+        <ul class="track-list">
+          <li>NEET coaching + EAPCET BiPC preparation</li>
+          <li>State rank &amp; national rank optimisation</li>
+          <li>Full TSBIE syllabus</li>
+          <li>Mock tests for both exams</li>
+        </ul>
+        <a href="/admissions" class="btn btn-gold btn-sm">Apply for Track 2</a>
+      </div>
+
+      <div class="track-card track-inter-bipc">
+        <div class="track-badge track-badge-bipc">Track 3</div>
+        <h3>Intermediate &amp; EAPCET</h3>
+        <p class="track-aim">TSBIE Board Exam · EAPCET State Rank</p>
+        <ul class="track-list">
+          <li>Strong board-exam focus</li>
+          <li>EAPCET BiPC preparation integrated</li>
+          <li>Regular tests &amp; doubt-clearing sessions</li>
+          <li>Ideal for consistent board performers</li>
+        </ul>
+        <a href="/admissions" class="btn btn-gold btn-sm">Apply for Track 3</a>
+      </div>
+
+    </div>
+
+    <div class="subject-strip">
+      <span class="subject-chip">Biology (Botany + Zoology)</span>
+      <span class="subject-chip">Physics</span>
+      <span class="subject-chip">Chemistry</span>
+      <span class="subject-chip muted">English (Compulsory)</span>
+      <span class="subject-chip muted">Second Language (Telugu / Hindi)</span>
+    </div>
+  </div>
+
+  <!-- Scholarship CTA -->
+  <div class="info-box mt-3" data-reveal>
     <h4>Scholarship on Admission</h4>
     <ul>
-      <li>Up to 90% tuition fee waiver based on our scholarship test score.</li>
+      <li>Up to 90% tuition fee waiver based on our scholarship test score. <a href="/scholarship/terms">Terms &amp; Conditions →</a></li>
       <li>Government scholarships (SC/ST, BC, EBC, NTR Vidyonnathi) are also facilitated through the college.</li>
       <li><a href="/scholarship/apply">Apply for scholarship →</a></li>
     </ul>
   </div>
+
 </div>
 
 <%- include('../partials/footer') %>

@@ -1,0 +1,117 @@
+<%- include('../partials/head') %>
+<%- include('../partials/nav') %>
+
+<div class="page-hero" data-reveal>
+  <div class="container">
+    <h1>Scholarship — Terms &amp; Conditions</h1>
+    <p>Please read these terms carefully before applying</p>
+  </div>
+</div>
+
+<div class="container section">
+  <div class="terms-layout" data-reveal>
+
+    <div class="terms-body">
+
+      <section class="terms-section">
+        <h2>1. Scholarship Test</h2>
+        <ul>
+          <li>The scholarship is awarded solely on the basis of performance in the Greenvaley Scholarship Test conducted by the college.</li>
+          <li>Eligibility: Students who have appeared in or passed Class 10 (SSC / CBSE / ICSE or equivalent) may apply.</li>
+          <li>The test will cover Mathematics, Science (Physics, Chemistry, Biology), and general aptitude at the Class 10 level.</li>
+          <li>The date, time, and venue of the test will be communicated to the applicant via the registered phone number.</li>
+          <li>Students must carry a valid photo ID and the admit card (issued by the college) on the day of the test.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h2>2. Scholarship Slabs</h2>
+        <table class="terms-table">
+          <thead>
+            <tr><th>Score Range</th><th>Fee Waiver</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>90% and above</td><td>Up to 90% tuition fee waiver</td></tr>
+            <tr><td>80% – 89%</td><td>Up to 75% tuition fee waiver</td></tr>
+            <tr><td>70% – 79%</td><td>Up to 50% tuition fee waiver</td></tr>
+            <tr><td>60% – 69%</td><td>Up to 25% tuition fee waiver</td></tr>
+            <tr><td>Below 60%</td><td>No merit scholarship (government schemes may apply)</td></tr>
+          </tbody>
+        </table>
+        <p class="terms-note">The college reserves the right to revise the slab percentages at its sole discretion. The final scholarship amount will be confirmed at the time of admission.</p>
+      </section>
+
+      <section class="terms-section">
+        <h2>3. Conditions of Award</h2>
+        <ul>
+          <li>The scholarship applies to tuition fees only. Examination fees, transportation, hostel, and other charges are not covered unless specified separately.</li>
+          <li>The scholarship is valid for both years (Class 11 and Class 12) subject to satisfactory academic performance as determined by the college each year.</li>
+          <li>A student must secure at least 75% attendance in each academic year to retain the scholarship.</li>
+          <li>Internal test scores will be reviewed annually; students who consistently underperform may have their scholarship revised at the college's discretion.</li>
+          <li>The scholarship is non-transferable and non-encashable.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h2>4. Application &amp; Admission</h2>
+        <ul>
+          <li>Submission of an application does not guarantee admission or a scholarship.</li>
+          <li>All information provided in the application must be true and accurate. Misrepresentation will result in immediate disqualification and cancellation of any scholarship awarded.</li>
+          <li>Original documents must be submitted at the time of admission. Scholarships are confirmed only after document verification.</li>
+          <li>The scholarship is separate from government welfare schemes (SC/ST, BC, EBC, NTR Vidyonnathi). Students may be eligible for both.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h2>5. Government Scholarships</h2>
+        <ul>
+          <li>The college assists eligible students in applying for government scholarships — SC/ST Post-Matric, BC Welfare, EBC, and NTR Vidyonnathi schemes.</li>
+          <li>These are governed by respective government departments. The college is not responsible for delays or non-sanction by the government.</li>
+          <li>Students must provide correct caste certificates, income certificates, Aadhaar, and bank details for government scholarships.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h2>6. Revocation</h2>
+        <ul>
+          <li>The college reserves the right to revoke the scholarship at any time in case of misconduct, malpractice, wilful neglect of studies, or non-compliance with these terms.</li>
+          <li>Any dispute regarding the scholarship shall be subject to the exclusive jurisdiction of courts in Hanamkonda, Telangana.</li>
+        </ul>
+      </section>
+
+      <section class="terms-section">
+        <h2>7. Contact</h2>
+        <p>For queries related to scholarships, contact the college office:</p>
+        <ul>
+          <li>Phone: <a href="tel:+91<%= college.phone %>"><%= college.phone %></a></li>
+          <% if (college.phone2) { %><li>Phone: <a href="tel:+91<%= college.phone2 %>"><%= college.phone2 %></a></li><% } %>
+          <li>Email: <a href="mailto:<%= college.email %>"><%= college.email %></a></li>
+          <li>Address: <%= college.address %>, Telangana</li>
+        </ul>
+      </section>
+
+      <div class="terms-footer-note">
+        <p>These terms are effective from the academic year 2024–25 and are subject to revision. By applying for the scholarship you confirm that you have read, understood, and accepted these Terms &amp; Conditions.</p>
+      </div>
+
+    </div>
+
+    <div class="terms-sidebar">
+      <div class="terms-cta-box">
+        <h4>Ready to apply?</h4>
+        <p>Fill in the scholarship application to book your slot for the scholarship test.</p>
+        <a href="/scholarship/apply" class="btn btn-primary" style="width:100%;justify-content:center">Apply for Scholarship</a>
+        <a href="/scholarship/status" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:10px">Track Application</a>
+      </div>
+      <div class="terms-quick-links">
+        <h5>Quick links</h5>
+        <a href="/programs">View Programmes →</a>
+        <a href="/admissions">Admissions →</a>
+        <a href="/contact">Contact Us →</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<%- include('../partials/footer') %>

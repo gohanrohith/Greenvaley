@@ -82,6 +82,10 @@ exports.newsArticle = async (req, res) => {
   }
 };
 
+exports.scholarshipTerms = (req, res) => {
+  V.render(res, 'main/scholarship-terms', { title: `Scholarship Terms | ${college.shortName}` });
+};
+
 exports.contact = (req, res) => {
   V.render(res, 'main/contact', { title: `Contact | ${college.shortName}` });
 };

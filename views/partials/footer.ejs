@@ -7,12 +7,13 @@
         <div class="footer-board"><%= college.board %> &middot; <%= college.address %></div>
       </div>
     </div>
-    <div class="footer-cols">
+    <div class="footer-cols footer-cols-4">
       <div class="footer-col">
         <h4>Programmes</h4>
-        <a href="/programs">IIT-JEE Main &amp; Advanced</a>
-        <a href="/programs">IIT-JEE Main &amp; EAPCET</a>
-        <a href="/programs">NEET UG</a>
+        <a href="/programs">MPC — JEE Main &amp; Advanced</a>
+        <a href="/programs">MPC — JEE Main &amp; EAPCET</a>
+        <a href="/programs">MPC — Intermediate &amp; EAPCET</a>
+        <a href="/programs">BiPC — NEET (Girls only)</a>
         <a href="/admissions">Admissions 2025–26</a>
       </div>
       <div class="footer-col">
@@ -20,7 +21,14 @@
         <a href="/results">Exam Results</a>
         <a href="/question-papers">Question Papers</a>
         <a href="/scholarship">Scholarship Portal</a>
+        <a href="/scholarship/terms">Scholarship T&amp;C</a>
         <a href="/faculty">Faculty</a>
+      </div>
+      <div class="footer-col">
+        <h4>Sister Institutions</h4>
+        <% college.sisterBranches.forEach(b => { %>
+        <a href="<%= b.url %>" <% if(b.url==='#'){%>style="pointer-events:none"<%}%>><%= b.name %></a>
+        <% }); %>
       </div>
       <div class="footer-col">
         <h4>Reach Us</h4>

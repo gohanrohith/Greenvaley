@@ -1,10 +1,10 @@
 <%- include('../partials/head') %>
 <%- include('../partials/nav') %>
 
-<div class="page-hero">
+<div class="page-hero" data-reveal>
   <div class="container">
     <h1>Scholarship Application</h1>
-    <p>Fill in all details carefully — fields marked * are required</p>
+    <p>Fields marked <span style="color:#fbbf24;font-weight:700">*</span> are mandatory &nbsp;&middot;&nbsp; <a href="/scholarship/terms" style="color:rgba(255,255,255,.8);text-decoration:underline;font-size:.9rem">Terms &amp; Conditions</a></p>
   </div>
 </div>
 
@@ -12,39 +12,51 @@
 
   <%- include('../partials/flash') %>
 
-  <form method="POST" action="/scholarship/apply" class="form-card form-card-wide">
+  <form method="POST" action="/scholarship/apply" class="form-card form-card-wide" data-reveal>
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
     <fieldset>
       <legend>Personal Details</legend>
       <div class="form-row">
         <div class="form-group">
-          <label>Full Name *</label>
-          <input type="text" name="name" required>
+          <label>Full Name <span class="req">*</span></label>
+          <input type="text" name="name" required placeholder="As in class 10 certificate">
         </div>
         <div class="form-group">
-          <label>Date of Birth *</label>
+          <label>Date of Birth <span class="req">*</span></label>
           <input type="date" name="dob" required>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Program *</label>
+          <label>Programme <span class="req">*</span></label>
           <select name="program" required>
             <option value="">— Select —</option>
             <option value="MPC">MPC (Math, Physics, Chemistry)</option>
-            <option value="BiPC">BiPC (Biology, Physics, Chemistry)</option>
+            <option value="BiPC">BiPC (Biology, Physics, Chemistry) — Girls only</option>
           </select>
         </div>
         <div class="form-group">
-          <label>Roll Number</label>
-          <input type="text" name="roll_number" placeholder="If assigned">
+          <label>Preferred Track <span class="req">*</span></label>
+          <select name="track" required>
+            <option value="">— Select after choosing programme —</option>
+            <optgroup label="MPC Tracks">
+              <option value="MPC-JEE-ADV">MPC Track 1 — JEE Main &amp; Advanced</option>
+              <option value="MPC-JEE-EAP">MPC Track 2 — JEE Main &amp; EAPCET</option>
+              <option value="MPC-INTER">MPC Track 3 — Intermediate &amp; EAPCET</option>
+            </optgroup>
+            <optgroup label="BiPC Tracks (Girls only)">
+              <option value="BIPC-NEET">BiPC Track 1 — NEET UG</option>
+              <option value="BIPC-NEET-EAP">BiPC Track 2 — NEET &amp; EAPCET</option>
+              <option value="BIPC-INTER">BiPC Track 3 — Intermediate &amp; EAPCET</option>
+            </optgroup>
+          </select>
         </div>
       </div>
       <div class="form-row">
         <div class="form-group">
-          <label>Caste Category</label>
-          <select name="caste_category">
+          <label>Caste Category <span class="req">*</span></label>
+          <select name="caste_category" required>
             <option value="">— Select —</option>
             <option value="OC">OC (Open Category)</option>
             <option value="BC-A">BC-A</option>
@@ -58,9 +70,17 @@
           </select>
         </div>
         <div class="form-group">
-          <label>Annual Family Income (₹)</label>
-          <input type="number" name="annual_income" min="0" placeholder="e.g. 150000">
+          <label>Annual Family Income (₹) <span class="req">*</span></label>
+          <input type="number" name="annual_income" min="0" required placeholder="e.g. 150000">
         </div>
+      </div>
+      <div class="form-group">
+        <label>Class 10 / SSC Percentage <span class="req">*</span></label>
+        <input type="number" name="ssc_percent" min="0" max="100" step="0.01" required placeholder="e.g. 92.5">
+      </div>
+      <div class="form-group">
+        <label>Roll Number <span class="opt">(if already assigned)</span></label>
+        <input type="text" name="roll_number" placeholder="If assigned">
       </div>
     </fieldset>
 
@@ -68,13 +88,17 @@
       <legend>Guardian Details</legend>
       <div class="form-row">
         <div class="form-group">
-          <label>Father's Name *</label>
+          <label>Father's Name <span class="req">*</span></label>
           <input type="text" name="father_name" required>
         </div>
         <div class="form-group">
-          <label>Mother's Name</label>
-          <input type="text" name="mother_name">
+          <label>Mother's Name <span class="req">*</span></label>
+          <input type="text" name="mother_name" required>
         </div>
+      </div>
+      <div class="form-group">
+        <label>Guardian's Occupation <span class="req">*</span></label>
+        <input type="text" name="guardian_occupation" required placeholder="e.g. Farmer, Govt. Employee, Private Job">
       </div>
     </fieldset>
 
@@ -82,22 +106,26 @@
       <legend>Contact Details</legend>
       <div class="form-row">
         <div class="form-group">
-          <label>Phone Number *</label>
+          <label>Phone Number <span class="req">*</span></label>
           <input type="tel" name="phone" required pattern="[6-9][0-9]{9}" placeholder="10-digit mobile">
         </div>
         <div class="form-group">
-          <label>Email</label>
-          <input type="email" name="email">
+          <label>Alternate Phone <span class="opt">(optional)</span></label>
+          <input type="tel" name="phone2" pattern="[6-9][0-9]{9}" placeholder="10-digit mobile">
         </div>
       </div>
       <div class="form-group">
-        <label>Residential Address *</label>
-        <textarea name="address" rows="3" required></textarea>
+        <label>Email Address <span class="opt">(optional)</span></label>
+        <input type="email" name="email">
+      </div>
+      <div class="form-group">
+        <label>Residential Address <span class="req">*</span></label>
+        <textarea name="address" rows="3" required placeholder="Door no., Street, Village/Town, District, Pin code"></textarea>
       </div>
     </fieldset>
 
     <fieldset>
-      <legend>Bank Details (for disbursement)</legend>
+      <legend>Bank Details <span style="font-weight:400;color:var(--muted)">(for disbursement — optional but recommended)</span></legend>
       <div class="form-row">
         <div class="form-group">
           <label>Account Number</label>
@@ -109,7 +137,7 @@
         </div>
       </div>
       <div class="form-group">
-        <label>Bank Name & Branch</label>
+        <label>Bank Name &amp; Branch</label>
         <input type="text" name="bank_name" placeholder="e.g. State Bank of India, Warangal">
       </div>
     </fieldset>
@@ -117,12 +145,21 @@
     <div class="form-group">
       <label class="checkbox-label">
         <input type="checkbox" required>
-        I declare that all information provided is true and correct.
+        I have read and agree to the <a href="/scholarship/terms" target="_blank" style="color:var(--green);font-weight:600">Scholarship Terms &amp; Conditions <span class="req">*</span></a>
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="checkbox-label">
+        <input type="checkbox" required>
+        I declare that all information provided is true and correct to the best of my knowledge. <span class="req">*</span>
       </label>
     </div>
 
-    <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
-    <a href="/scholarship" class="btn btn-outline ml-1">Cancel</a>
+    <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:8px">
+      <button type="submit" class="btn btn-primary btn-lg">Submit Application</button>
+      <a href="/scholarship" class="btn btn-outline">Cancel</a>
+    </div>
+    <p style="font-size:.8rem;color:var(--muted);margin-top:12px">Fields marked <span class="req">*</span> are mandatory. Submitting false information will result in disqualification.</p>
   </form>
 </div>
 

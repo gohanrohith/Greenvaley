@@ -1,15 +1,16 @@
 <%- include('../partials/head') %>
 <%- include('../partials/nav') %>
 
-<div class="page-hero">
+<div class="page-hero" data-reveal>
   <div class="container">
     <h1>About <%= college.shortName %></h1>
     <p><%= college.board %> &nbsp;&middot;&nbsp; Established <%= college.estYear %></p>
   </div>
 </div>
 
+<!-- About intro -->
 <div class="container section">
-  <div class="grid-2">
+  <div class="grid-2" data-reveal>
     <div>
       <p style="font-size:1rem;line-height:1.8;color:#444;margin-bottom:24px"><%= college.name %> is a TSBIE-affiliated junior college in <%= college.address %>, offering MPC and BiPC programmes designed for students aiming for IIT-JEE, NEET, and EAPCET. We combine rigorous entrance-exam coaching with the full intermediate curriculum so students excel in both.</p>
       <h3 style="margin-bottom:8px">Our Vision</h3>
@@ -21,7 +22,7 @@
       <h3 style="margin-bottom:16px">Key Facts</h3>
       <ul class="fact-list">
         <li><strong>Affiliation</strong> &nbsp; <%= college.board %></li>
-        <li><strong>Programmes</strong> &nbsp; <%= college.programs.join(' &amp; ') %></li>
+        <li><strong>Programmes</strong> &nbsp; MPC (Co-ed) &amp; BiPC (Girls only)</li>
         <li><strong>Established</strong> &nbsp; <%= college.estYear %></li>
         <li><strong>Location</strong> &nbsp; <%= college.address %>, Telangana</li>
         <li><strong>Phone</strong> &nbsp; <%= college.phone %></li>
@@ -32,6 +33,58 @@
         <a href="/mandatory-disclosure" class="btn btn-ghost">Mandatory Disclosure</a>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Leadership -->
+<div class="bg-light">
+  <div class="container section">
+    <div class="section-head" data-reveal>
+      <h2>Our Leadership</h2>
+      <p>The vision and experience driving Greenvaley Junior College</p>
+    </div>
+    <div class="leadership-grid">
+      <% college.directors.forEach((d, i) => { %>
+      <div class="leader-card" data-reveal style="--delay:<%=i*80%>ms">
+        <div class="leader-photo-wrap">
+          <% if (d.photo) { %>
+            <img src="<%= d.photo %>" alt="<%= d.name %>" class="leader-photo"
+                 onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <% } %>
+          <div class="leader-photo-placeholder" <% if(d.photo){ %>style="display:none"<% } %>>
+            <%= d.name.split(' ').map(w=>w[0]).slice(0,2).join('') %>
+          </div>
+        </div>
+        <div class="leader-info">
+          <div class="leader-role"><%= d.role %></div>
+          <h3 class="leader-name"><%= d.name %></h3>
+          <div class="leader-designation"><%= d.designation %></div>
+          <p class="leader-bio"><%= d.bio %></p>
+        </div>
+      </div>
+      <% }); %>
+    </div>
+  </div>
+</div>
+
+<!-- Sister Branches -->
+<div class="container section">
+  <div class="section-head" data-reveal>
+    <h2>Our Sister Institutions</h2>
+    <p>Part of the Akarshmanasa Educational Society — quality education from nursery to intermediate</p>
+  </div>
+  <div class="sister-grid">
+    <% college.sisterBranches.forEach((b, i) => { %>
+    <a href="<%= b.url %>" class="sister-card" data-reveal style="--delay:<%=i*80%>ms" <% if(b.url==='#'){%>onclick="return false"<%}%>>
+      <div class="sister-icon">🏫</div>
+      <div class="sister-info">
+        <div class="sister-name"><%= b.name %></div>
+        <div class="sister-type"><%= b.type %></div>
+        <div class="sister-loc">📍 <%= b.location %></div>
+      </div>
+      <div class="sister-arrow">→</div>
+    </a>
+    <% }); %>
   </div>
 </div>
 
