@@ -1,55 +1,47 @@
 <%- include('../partials/head') %>
 <%- include('../partials/nav') %>
 
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-left">
-    <div class="hero-badge">TSBIE Affiliated &nbsp;·&nbsp; Yellapur, Hanamkonda</div>
-    <h1>Two years that decide <span class="accent">the next twenty.</span></h1>
-    <p class="hero-sub">Focused coaching for IIT-JEE and NEET, wrapped around a full intermediate curriculum — so the board exam and the entrance exam pull in the same direction.</p>
-    <div class="hero-actions">
-      <a href="/scholarship/apply" class="btn btn-primary btn-lg">Apply for up to 90% scholarship</a>
-      <a href="tel:+91<%= college.phone %>" class="btn btn-ghost btn-lg">Call <%= college.phone %></a>
+<!-- Hero — full campus background -->
+<section class="hero hero-fullbg">
+  <div class="container">
+    <div class="hero-left">
+      <div class="hero-badge">TSBIE Affiliated &nbsp;·&nbsp; Yellapur, Hanamkonda</div>
+      <h1>Two years that decide <span class="accent-light">the next twenty.</span></h1>
+      <p class="hero-sub">Focused coaching for IIT-JEE and NEET, wrapped around a full intermediate curriculum — so the board exam and the entrance exam pull in the same direction.</p>
+      <div class="hero-actions">
+        <a href="/scholarship/apply" class="btn btn-gold btn-lg">Apply for up to 90% scholarship</a>
+        <a href="tel:+91<%= college.phone %>" class="btn btn-ghost-white btn-lg">Call <%= college.phone %></a>
+      </div>
+      <div class="hero-prog-pills">
+        <span class="hero-prog-pill">🎯 JEE Main &amp; Advanced</span>
+        <span class="hero-prog-pill">🔬 NEET UG</span>
+        <span class="hero-prog-pill">📐 JEE + EAPCET</span>
+      </div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="campus-frame">
-      <img src="/images/campus.jpg" alt="Greenvaley Campus" class="campus-img"
-           onerror="this.style.display='none';document.getElementById('campusFallback').style.display='flex'">
-      <div class="campus-img-fallback" id="campusFallback">
-        <div class="campus-fallback-inner">
-          <div class="campus-fallback-icon">🏫</div>
-          <div class="campus-fallback-name">Greenvaley Junior College</div>
-          <div class="campus-fallback-loc">Yellapur, Hanamkonda</div>
+  <!-- Stream cards — floated at bottom of hero -->
+  <div class="hero-stream-bar">
+    <div class="container">
+      <div class="hero-stream-row">
+        <div class="hero-sc">
+          <div class="hero-sc-code">JEE</div>
+          <div class="hero-sc-full">IIT-JEE Main &amp; Advanced</div>
+          <div class="hero-sc-pills"><span>IITs</span><span>NITs</span><span class="gold">Class 11 &amp; 12</span></div>
         </div>
-      </div>
-      <div class="campus-location-badge">📍 Yellapur, Hanamkonda</div>
-      <div class="campus-achieve-bar">
-        <% if (toppers && toppers.length) { %>
-          <% toppers.slice(0,3).forEach(t => { %>
-          <div class="cab-pill">
-            <span class="cab-exam cab-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></span>
-            <span class="cab-rank"><%= t.rank_label %></span>
-            <span class="cab-name"><%= t.name %></span>
-          </div>
-          <% }); %>
-        <% } else { %>
-          <div class="cab-pill cab-pill-coming">
-            <span class="cab-exam">2026</span>
-            <span class="cab-rank">First Batch Results</span>
-            <span class="cab-name">JEE · NEET · EAPCET</span>
-          </div>
-          <div class="cab-pill">
-            <span class="cab-exam cab-exam-jee-main">MPC</span>
-            <span class="cab-rank">JEE Main &amp; Advanced</span>
-            <span class="cab-name">IITs · NITs</span>
-          </div>
-          <div class="cab-pill">
-            <span class="cab-exam cab-exam-neet">BiPC</span>
-            <span class="cab-rank">NEET UG</span>
-            <span class="cab-name">MBBS · BDS</span>
-          </div>
-        <% } %>
+        <div class="hero-sc">
+          <div class="hero-sc-code">NEET</div>
+          <div class="hero-sc-full">NEET UG — Medical Entrance</div>
+          <div class="hero-sc-pills"><span>MBBS</span><span>BDS</span><span class="gold">Girls only</span></div>
+        </div>
+        <div class="hero-sc">
+          <div class="hero-sc-code">EAPCET</div>
+          <div class="hero-sc-full">JEE Main &amp; EAPCET Combined</div>
+          <div class="hero-sc-pills"><span>Engineering</span><span class="gold">Telangana</span></div>
+        </div>
+        <a href="/programs" class="hero-sc hero-sc-cta">
+          <div class="hero-sc-cta-text">All Programmes →</div>
+          <div class="hero-sc-cta-sub">View tracks &amp; details</div>
+        </a>
       </div>
     </div>
   </div>
@@ -248,66 +240,86 @@
   </div>
 </section>
 
-<!-- Student Achievements Carousel -->
-<section class="section achieve-section">
+<!-- Student Achievements — Linear Carousel -->
+<section class="lc-section">
   <div class="container">
-    <div class="section-head">
+    <div class="lc-head" data-reveal>
       <div>
-        <h2>Student Achievements</h2>
-        <p>Our students earning ranks in JEE, NEET, EAPCET and board exams</p>
+        <div class="lc-label">Student Achievements</div>
+        <h2 class="lc-title">Our students in JEE, NEET &amp; EAPCET</h2>
       </div>
-      <a href="/achievements" class="btn btn-outline btn-sm">View All →</a>
+      <a href="/achievements" class="btn btn-ghost-white btn-sm">View All →</a>
     </div>
-
-    <% if (toppers && toppers.length) { %>
-    <%
-      const jeeCount    = toppers.filter(t => t.exam === 'JEE Main' || t.exam === 'JEE Advanced').length;
-      const neetCount   = toppers.filter(t => t.exam === 'NEET').length;
-      const eapcetCount = toppers.filter(t => t.exam === 'EAPCET').length;
-    %>
-    <div class="achieve-stats" data-reveal>
-      <% if (jeeCount > 0) { %><div class="achieve-stat"><span class="achieve-n"><%= jeeCount %>+</span><span class="achieve-l">JEE Qualifiers</span></div><% } %>
-      <% if (neetCount > 0) { %><div class="achieve-stat"><span class="achieve-n"><%= neetCount %>+</span><span class="achieve-l">NEET Qualifiers</span></div><% } %>
-      <% if (eapcetCount > 0) { %><div class="achieve-stat"><span class="achieve-n"><%= eapcetCount %>+</span><span class="achieve-l">EAPCET Qualifiers</span></div><% } %>
-    </div>
-
-    <div class="tc-wrapper" data-reveal>
-      <button class="tc-arrow tc-prev" aria-label="Previous">&#8592;</button>
-      <div class="tc-track-outer">
-        <div class="tc-track" id="topperTrack">
-          <% toppers.forEach(t => { %>
-          <div class="topper-card">
-            <div class="topper-exam topper-exam-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>"><%= t.exam %></div>
-            <% if (t.photo) { %>
-              <img src="<%= t.photo %>" alt="<%= t.name %>" class="topper-photo"
-                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-              <div class="topper-photo-placeholder" style="display:none"><%= t.name.charAt(0).toUpperCase() %></div>
-            <% } else { %>
-              <div class="topper-photo-placeholder"><%= t.name.charAt(0).toUpperCase() %></div>
-            <% } %>
-            <div class="topper-rank"><%= t.rank_label %></div>
-            <div class="topper-name"><%= t.name %></div>
-            <% if (t.score) { %><div class="topper-score"><%= t.score %></div><% } %>
-            <% if (t.highlight) { %><div class="topper-highlight"><%= t.highlight %></div><% } %>
-          </div>
-          <% }); %>
-        </div>
-      </div>
-      <button class="tc-arrow tc-next" aria-label="Next">&#8594;</button>
-    </div>
-    <div class="tc-dots" id="topperDots"></div>
-
-    <% } else { %>
-    <!-- Empty state — first batch graduates 2026 -->
-    <div class="achieve-coming-soon" data-reveal>
-      <div class="acs-year">2026</div>
-      <h3>Results Coming Soon</h3>
-      <p>Our first batch completes their Intermediate in 2026. JEE, NEET, EAPCET and board toppers will appear here.</p>
-      <a href="/admissions" class="btn btn-primary mt-1">Be in the next batch →</a>
-    </div>
-    <% } %>
-
   </div>
+  <div class="lc-track-wrap">
+    <div class="lc-track" id="lcTrack">
+
+      <% if (toppers && toppers.length) { %>
+        <% toppers.forEach(t => { %>
+        <div class="lc-card lc-card-<%= t.exam.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z-]/g,'') %>">
+          <% if (t.photo) { %>
+            <img src="<%= t.photo %>" alt="<%= t.name %>" class="lc-card-bg-img">
+          <% } %>
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat"><%= t.exam %></div>
+            <div class="lc-card-rank"><%= t.rank_label %></div>
+            <div class="lc-card-name"><%= t.name %></div>
+            <% if (t.highlight) { %><div class="lc-card-highlight"><%= t.highlight %></div><% } %>
+          </div>
+        </div>
+        <% }); %>
+      <% } else { %>
+        <div class="lc-card lc-card-jee-main">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">MPC · JEE</div>
+            <div class="lc-card-rank">IIT-JEE Main &amp; Advanced</div>
+            <div class="lc-card-name">IITs &nbsp;·&nbsp; NITs &nbsp;·&nbsp; BITS</div>
+            <div class="lc-card-highlight">Admissions Open 2025–26</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-neet">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">BiPC · NEET</div>
+            <div class="lc-card-rank">NEET UG</div>
+            <div class="lc-card-name">MBBS &nbsp;·&nbsp; BDS &nbsp;·&nbsp; Veterinary</div>
+            <div class="lc-card-highlight">Girls only</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-eapcet">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">MPC · EAPCET</div>
+            <div class="lc-card-rank">JEE Main &amp; EAPCET</div>
+            <div class="lc-card-name">Engineering in Telangana</div>
+            <div class="lc-card-highlight">State quota advantage</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-board">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">Scholarship</div>
+            <div class="lc-card-rank">Up to 90%</div>
+            <div class="lc-card-name">Tuition fee waiver</div>
+            <div class="lc-card-highlight">Merit based · Apply now</div>
+          </div>
+        </div>
+        <div class="lc-card lc-card-coming">
+          <div class="lc-card-overlay"></div>
+          <div class="lc-card-body">
+            <div class="lc-card-cat">First Batch</div>
+            <div class="lc-card-rank">2026</div>
+            <div class="lc-card-name">Results coming soon</div>
+            <div class="lc-card-highlight">JEE · NEET · EAPCET · Board</div>
+          </div>
+        </div>
+      <% } %>
+
+    </div>
+  </div>
+  <div class="lc-drag-hint">← drag to explore →</div>
 </section>
 
 <!-- Leadership (item 5) -->

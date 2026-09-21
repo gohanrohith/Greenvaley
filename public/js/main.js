@@ -71,6 +71,30 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
   });
 })();
 
+// Linear drag carousel
+(function () {
+  const wrap = document.querySelector('.lc-track-wrap');
+  if (!wrap) return;
+  let isDragging = false, startX = 0, scrollLeft = 0;
+
+  wrap.addEventListener('mousedown', e => {
+    isDragging = true;
+    startX = e.pageX - wrap.offsetLeft;
+    scrollLeft = wrap.scrollLeft;
+    wrap.style.cursor = 'grabbing';
+  });
+  wrap.addEventListener('mouseleave', () => { isDragging = false; wrap.style.cursor = 'grab'; });
+  wrap.addEventListener('mouseup',    () => { isDragging = false; wrap.style.cursor = 'grab'; });
+  wrap.addEventListener('mousemove', e => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - wrap.offsetLeft;
+    wrap.scrollLeft = scrollLeft - (x - startX) * 1.4;
+  });
+  wrap.addEventListener('touchstart', e => { startX = e.touches[0].pageX; scrollLeft = wrap.scrollLeft; }, { passive: true });
+  wrap.addEventListener('touchmove',  e => { wrap.scrollLeft = scrollLeft - (e.touches[0].pageX - startX); }, { passive: true });
+})();
+
 // Toppers carousel
 (function () {
   const track  = document.getElementById('topperTrack');
