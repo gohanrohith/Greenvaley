@@ -31,28 +31,7 @@ document.querySelectorAll('.nav-drop-btn').forEach(btn => {
   });
 })();
 
-// Scroll-reveal via IntersectionObserver
-(function () {
-  if (!('IntersectionObserver' in window)) {
-    document.querySelectorAll('[data-reveal]').forEach(el => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-    });
-    return;
-  }
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        obs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-  document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
-})();
-
-// Staggered reveal for grids — assign --delay to children automatically
+// Staggered grid children — add data-reveal BEFORE the observer runs
 document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3, .bento-grid').forEach(grid => {
   Array.from(grid.children).forEach((child, i) => {
     if (!child.hasAttribute('data-reveal')) {
@@ -61,6 +40,36 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
     }
   });
 });
+
+// Scroll-reveal via IntersectionObserver
+(function () {
+  const els = Array.from(document.querySelectorAll('[data-reveal]'));
+
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    return;
+  }
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+  els.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    // Already in viewport on page load — reveal immediately (no transition delay)
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.style.transitionDelay = '0ms';
+      el.classList.add('revealed');
+    } else {
+      obs.observe(el);
+    }
+  });
+})();
 
 // Nav shrink on scroll
 (function () {
