@@ -578,6 +578,71 @@ html { scroll-behavior: smooth; }
 .nav-inner { transition: height .25s; }
 .nav-scrolled .nav-inner { height: 58px; }
 
+/* ── Scale Stats Strip (item 2) ───────────────────────────────────────────────── */
+.scale-strip { background: var(--white); border-bottom: 1px solid var(--border); padding: 0; }
+.scale-grid { display: grid; grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 768px) { .scale-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 400px) { .scale-grid { grid-template-columns: 1fr 1fr; } }
+.scale-card { padding: 32px 24px; border-right: 1px solid var(--border); }
+.scale-card:last-child { border-right: none; }
+@media (max-width: 768px) { .scale-card:nth-child(2) { border-right: none; } .scale-card:nth-child(3) { border-top: 1px solid var(--border); } }
+.scale-n { font-size: 2.5rem; font-weight: 900; line-height: 1; letter-spacing: -.04em; margin-bottom: 4px; }
+.scale-n.green { color: var(--green); }
+.scale-l { font-size: .9rem; font-weight: 600; color: var(--black); }
+.scale-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+
+/* ── Our Story (item 1) ───────────────────────────────────────────────────────── */
+.story-section { background: var(--green-xlight); padding: 64px 0; overflow: hidden; }
+.story-inner { display: grid; grid-template-columns: auto 1fr; gap: 48px; align-items: center; position: relative; }
+@media (max-width: 700px) { .story-inner { grid-template-columns: 1fr; gap: 20px; } }
+.story-year { font-size: 9rem; font-weight: 900; color: var(--green); opacity: .08; line-height: 1; letter-spacing: -.06em; user-select: none; flex-shrink: 0; }
+@media (max-width: 700px) { .story-year { font-size: 5rem; } }
+.story-badge { display: inline-block; background: var(--green); color: var(--white); font-size: .7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+.story-content h2 { font-size: 1.6rem; margin-bottom: 12px; }
+.story-content p { color: var(--muted); font-size: .95rem; max-width: 560px; line-height: 1.7; }
+
+/* ── Why Greenvaley (item 3) ──────────────────────────────────────────────────── */
+.why-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+@media (max-width: 1000px) { .why-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px)  { .why-grid { grid-template-columns: 1fr; } }
+.why-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 28px 22px; transition: box-shadow .25s, transform .25s; }
+.why-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); }
+.why-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
+.why-icon-green { background: var(--green-light); }
+.why-icon-gold  { background: var(--gold-light); }
+.why-icon-blue  { background: #e8f0fe; }
+.why-card h3 { font-size: 1rem; margin-bottom: 8px; }
+.why-card p { font-size: .87rem; color: var(--muted); line-height: 1.65; }
+
+/* ── Our Programs (item 6) ────────────────────────────────────────────────────── */
+.prog-home-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+@media (max-width: 700px) { .prog-home-grid { grid-template-columns: 1fr; } }
+.prog-home-card { border-radius: 16px; padding: 32px 28px; border: 2px solid transparent; transition: box-shadow .25s, transform .25s; }
+.prog-home-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.prog-home-mpc  { background: var(--green-xlight); border-color: var(--green-light); }
+.prog-home-bipc { background: var(--gold-light); border-color: #f0ddb6; }
+.prog-home-badge { display: inline-block; background: var(--green); color: var(--white); font-size: .75rem; font-weight: 800; letter-spacing: .08em; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
+.prog-home-badge-gold { background: var(--gold); }
+.prog-home-card h3 { font-size: 1.15rem; margin-bottom: 4px; }
+.prog-home-sub { font-size: .78rem; color: var(--muted); margin-bottom: 18px; }
+.prog-home-tracks { display: flex; flex-direction: column; gap: 10px; }
+.prog-home-tracks li { display: flex; align-items: flex-start; gap: 10px; font-size: .87rem; color: var(--black); line-height: 1.4; }
+.pht-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.pht-green { background: var(--green); }
+.pht-gold  { background: var(--gold); }
+
+/* ── Leadership Home (item 5) ─────────────────────────────────────────────────── */
+.leadership-home-section { background: var(--bg); }
+.lh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.lh-card { display: flex; align-items: center; gap: 20px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; text-decoration: none; color: inherit; transition: box-shadow .25s, transform .25s; }
+.lh-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
+.lh-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--border); }
+.lh-photo-placeholder { width: 72px; height: 72px; border-radius: 50%; background: var(--green); color: var(--white); font-size: 1.5rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.lh-role { font-size: .7rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--green); margin-bottom: 2px; }
+.lh-name { font-size: 1rem; font-weight: 700; color: var(--black); margin-bottom: 2px; }
+.lh-designation { font-size: .78rem; color: var(--muted); margin-bottom: 6px; }
+.lh-bio { font-size: .8rem; color: var(--muted); line-height: 1.5; margin: 0; }
+
 /* ── Achievements / Toppers ───────────────────────────────────────────────────── */
 
 /* Stats row on home page */
