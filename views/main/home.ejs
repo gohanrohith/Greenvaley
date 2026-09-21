@@ -1,47 +1,43 @@
 <%- include('../partials/head') %>
 <%- include('../partials/nav') %>
 
-<!-- Hero — full campus background -->
-<section class="hero hero-fullbg">
-  <div class="container">
-    <div class="hero-left">
-      <div class="hero-badge">TSBIE Affiliated &nbsp;·&nbsp; Yellapur, Hanamkonda</div>
-      <h1>Two years that decide <span class="accent-light">the next twenty.</span></h1>
-      <p class="hero-sub">Focused coaching for IIT-JEE and NEET, wrapped around a full intermediate curriculum — so the board exam and the entrance exam pull in the same direction.</p>
-      <div class="hero-actions">
-        <a href="/scholarship/apply" class="btn btn-gold btn-lg">Apply for up to 90% scholarship</a>
-        <a href="tel:+91<%= college.phone %>" class="btn btn-ghost-white btn-lg">Call <%= college.phone %></a>
-      </div>
-      <div class="hero-prog-pills">
-        <span class="hero-prog-pill">🎯 JEE Main &amp; Advanced</span>
-        <span class="hero-prog-pill">🔬 NEET UG</span>
-        <span class="hero-prog-pill">📐 JEE + EAPCET</span>
-      </div>
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-badge">TSBIE Affiliated &nbsp;·&nbsp; Yellapur, Hanamkonda</div>
+    <h1>Two years that decide <span class="accent-light">the next twenty.</span></h1>
+    <p class="hero-sub">Focused coaching for IIT-JEE and NEET, wrapped around a full intermediate curriculum — so the board exam and the entrance exam pull in the same direction.</p>
+    <div class="hero-actions">
+      <a href="/scholarship/apply" class="btn btn-gold btn-lg">Apply for up to 90% scholarship</a>
+      <a href="tel:+91<%= college.phone %>" class="btn btn-ghost-white btn-lg">Call <%= college.phone %></a>
     </div>
   </div>
-  <!-- Stream cards — floated at bottom of hero -->
-  <div class="hero-stream-bar">
-    <div class="container">
-      <div class="hero-stream-row">
-        <div class="hero-sc">
-          <div class="hero-sc-code">JEE</div>
-          <div class="hero-sc-full">IIT-JEE Main &amp; Advanced</div>
-          <div class="hero-sc-pills"><span>IITs</span><span>NITs</span><span class="gold">Class 11 &amp; 12</span></div>
-        </div>
-        <div class="hero-sc">
-          <div class="hero-sc-code">NEET</div>
-          <div class="hero-sc-full">NEET UG — Medical Entrance</div>
-          <div class="hero-sc-pills"><span>MBBS</span><span>BDS</span><span class="gold">Girls only</span></div>
-        </div>
-        <div class="hero-sc">
-          <div class="hero-sc-code">EAPCET</div>
-          <div class="hero-sc-full">JEE Main &amp; EAPCET Combined</div>
-          <div class="hero-sc-pills"><span>Engineering</span><span class="gold">Telangana</span></div>
-        </div>
-        <a href="/programs" class="hero-sc hero-sc-cta">
-          <div class="hero-sc-cta-text">All Programmes →</div>
-          <div class="hero-sc-cta-sub">View tracks &amp; details</div>
-        </a>
+  <div class="hero-right">
+    <div class="hero-right-label">Our Programmes</div>
+    <div class="stream-card">
+      <div class="stream-code">JEE</div>
+      <div class="stream-full">IIT-JEE Main &amp; Advanced</div>
+      <div class="stream-pills">
+        <span class="stream-pill">IITs</span>
+        <span class="stream-pill">NITs</span>
+        <span class="stream-pill gold">Class 11 &amp; 12</span>
+      </div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-code">NEET</div>
+      <div class="stream-full">NEET UG — Medical Entrance</div>
+      <div class="stream-pills">
+        <span class="stream-pill">MBBS</span>
+        <span class="stream-pill">BDS</span>
+        <span class="stream-pill gold">Girls only</span>
+      </div>
+    </div>
+    <div class="stream-card">
+      <div class="stream-code">EAPCET</div>
+      <div class="stream-full">JEE Main &amp; EAPCET Combined</div>
+      <div class="stream-pills">
+        <span class="stream-pill">Engineering</span>
+        <span class="stream-pill gold">Telangana</span>
       </div>
     </div>
   </div>
