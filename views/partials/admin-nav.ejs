@@ -38,8 +38,25 @@
     <a href="/admin/logout" class="logout-link">Logout</a>
   </nav>
 </aside>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
 <main class="admin-main">
 <header class="admin-header">
+  <button class="hamburger" id="sidebarToggle" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
   <span class="admin-user">👤 <%= adminName %></span>
 </header>
+<script>
+  (function(){
+    var btn = document.getElementById('sidebarToggle');
+    var overlay = document.getElementById('sidebarOverlay');
+    var sidebar = document.querySelector('.sidebar');
+    function close(){ sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+    btn.addEventListener('click', function(){
+      var open = sidebar.classList.toggle('open');
+      overlay.classList.toggle('open', open);
+    });
+    overlay.addEventListener('click', close);
+  })();
+</script>
 <div class="admin-content">
