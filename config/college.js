@@ -20,7 +20,7 @@ module.exports = {
       designation: 'Director, Greenvaley Junior College',
       email:       'aakarsh@gvjc.in',
       photo:       '/images/directors/aakarsh.jpg',
-      bio:         'G Aakarsh Naidu leads Greenvaley Junior College with a vision to make quality intermediate education accessible to students across Telangana. With a deep commitment to student success, he oversees academics, infrastructure, and student welfare at the college.',
+      bio:         'G Aakarsh Naidu holds a degree in Business from the University of Sussex, United Kingdom. Returning to India with a global perspective on education, he leads Greenvaley Junior College as Director — overseeing academics, infrastructure, and student welfare with a commitment to making quality intermediate education accessible across Telangana.',
     },
     {
       name:        'Dr. G Bharadwaja Naidu',
@@ -28,7 +28,7 @@ module.exports = {
       designation: 'Chairman, Greenvaley Junior College',
       email:       'gbn@gvjc.in',
       photo:       '/images/directors/bharadwaja.jpg',
-      bio:         'A Computer Science Engineer turned educationist, Dr. G Bharadwaja Naidu is the founder of Akarshahlad Educational Society. His academic rigour and technology-first approach underpin the curriculum and examination preparation strategies across all institutions under the Society.',
+      bio:         'Sri Dr. G. Bharadwaja Naidu is the visionary founder of the Greenwood Group of Schools and Colleges. Over three decades, he built a multi-campus network spanning CBSE schools and junior colleges across Telangana and Andhra Pradesh, with 600+ staff and thousands of alumni placed in IITs, NITs, and premier institutes. The recipient of an honorary doctorate for his service to Indian education, he established Greenvaley Junior College in 2025 as the latest step in his mission to make quality intermediate education accessible at scale.',
     },
   ],
 
