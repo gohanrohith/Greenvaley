@@ -657,7 +657,7 @@ html { scroll-behavior: smooth; }
 /* ── Our Journey Timeline v2 ──────────────────────────────────────────────────── */
 .tl2-section { background: var(--green-xlight); padding: 64px 0; }
 .tl2-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
-.tl2-sup { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+.tl2-sup { font-size: .72rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; white-space: nowrap; }
 .tl2-scroll { overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; padding-bottom: 20px; }
 .tl2-scroll::-webkit-scrollbar { height: 5px; }
 .tl2-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
@@ -853,6 +853,8 @@ html { scroll-behavior: smooth; }
   .tl2-node { width: 56px; height: 56px; }
   .tl2-yr { font-size: .7rem; }
   .tl2-card { padding: 12px 10px 10px; }
+  .tl2-sup { font-size: .68rem; letter-spacing: .06em; white-space: nowrap; }
+  .tl2-scroll { margin-left: -14px; margin-right: -14px; padding-left: 14px; padding-right: 14px; }
 
   /* Why Greenvaley */
   .why-section { padding: 48px 0; }
