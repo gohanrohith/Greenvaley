@@ -601,3 +601,16 @@ exports.deleteTopper = async (req, res) => {
   await db.query('DELETE FROM toppers WHERE id=?', [req.params.id]);
   res.redirect('/admin/toppers?success=1');
 };
+
+// ── Contact Enquiries ────────────────────────────────────────────────────────
+
+exports.enquiriesList = async (req, res) => {
+  const [rows] = await db.query('SELECT * FROM contact_enquiries ORDER BY created_at DESC');
+  await db.query('UPDATE contact_enquiries SET seen=1 WHERE seen=0');
+  res.render('admin/contact/list', { title: 'Contact Enquiries', enquiries: rows });
+};
+
+exports.deleteEnquiry = async (req, res) => {
+  await db.query('DELETE FROM contact_enquiries WHERE id=?', [req.params.id]);
+  res.redirect('/admin/enquiries?success=1');
+};

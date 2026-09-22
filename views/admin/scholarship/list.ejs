@@ -21,7 +21,7 @@
 </form>
 
 <table class="admin-table">
-  <thead><tr><th>#</th><th>Name</th><th>Program</th><th>Category</th><th>Phone</th><th>Status</th><th>Date</th><th>View</th></tr></thead>
+  <thead><tr><th>#</th><th>Name</th><th>Program</th><th>Category</th><th>Phone</th><th>Status</th><th>Date</th><th>Actions</th></tr></thead>
   <tbody>
     <% if (applications.length === 0) { %>
     <tr><td colspan="8" class="empty">No applications.</td></tr>
@@ -35,7 +35,13 @@
       <td><%= a.phone %></td>
       <td><span class="badge badge-<%= a.status %>"><%= a.status.replace('_',' ').toUpperCase() %></span></td>
       <td><%= new Date(a.created_at).toLocaleDateString('en-IN') %></td>
-      <td><a href="/admin/scholarship/<%= a.id %>" class="btn btn-sm btn-outline">View</a></td>
+      <td>
+        <a href="/admin/scholarship/<%= a.id %>" class="btn btn-sm btn-outline">View</a>
+        <form method="POST" action="/admin/scholarship/<%= a.id %>/delete" style="display:inline" onsubmit="return confirm('Delete this application permanently?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </td>
     </tr>
     <% }); %>
   </tbody>

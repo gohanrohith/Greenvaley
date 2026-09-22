@@ -80,6 +80,10 @@ router.post('/scholarship/:id/status',             schCtrl.updateStatus);
 router.post('/scholarship/:id/result',             schCtrl.saveResult);
 router.post('/scholarship/:id/delete',             schCtrl.deleteApplication);
 
+// Contact enquiries
+router.get('/enquiries',             ctrl.enquiriesList);
+router.post('/enquiries/:id/delete', ctrl.deleteEnquiry);
+
 // Mandatory disclosure
 router.get('/disclosure',  ctrl.disclosureForm);
 router.post('/disclosure', ctrl.saveDisclosure);

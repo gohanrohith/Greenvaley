@@ -1,0 +1,36 @@
+<%- include('../../partials/admin-nav') %>
+
+<div class="page-header">
+  <h2>Contact Enquiries</h2>
+</div>
+<%- include('../../partials/flash') %>
+
+<% if (!enquiries.length) { %>
+<p style="color:var(--muted-text);margin-top:16px">No enquiries yet.</p>
+<% } else { %>
+<p style="font-size:.85rem;color:var(--muted-text);margin-bottom:12px"><strong><%= enquiries.length %></strong> enquiry/enquiries</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<% enquiries.forEach(e => { %>
+<div class="form-card" style="border-left:3px solid var(--primary-color)">
+  <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+    <div>
+      <strong style="font-size:1rem"><%= e.name %></strong>
+      <% if (e.phone) { %><span style="margin-left:10px;color:var(--muted-text);font-size:.85rem">📞 <%= e.phone %></span><% } %>
+      <% if (e.email) { %><span style="margin-left:10px;color:var(--muted-text);font-size:.85rem">✉ <%= e.email %></span><% } %>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:.78rem;color:var(--muted-text)"><%= new Date(e.created_at).toLocaleString('en-IN') %></span>
+      <form method="POST" action="/admin/enquiries/<%= e.id %>/delete" style="display:inline" onsubmit="return confirm('Delete this enquiry?')">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button class="btn btn-sm btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
+  <% if (e.subject) { %><div style="font-size:.88rem;font-weight:600;margin-top:8px;color:var(--text-color)"><%= e.subject %></div><% } %>
+  <div style="margin-top:6px;font-size:.92rem;line-height:1.6;color:var(--text-color)"><%= e.message %></div>
+</div>
+<% }); %>
+</div>
+<% } %>
+
+<%- include('../../partials/admin-footer') %>
