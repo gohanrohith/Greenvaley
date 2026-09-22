@@ -254,11 +254,45 @@ body {
 .results-meta { font-size: .82rem; color: var(--muted); text-align: center; margin-bottom: 24px; }
 .results-notice { background: var(--green-pale); border: 1px solid #c6dfc8; border-radius: 10px; padding: 16px; font-size: .88rem; color: var(--text); line-height: 1.6; }
 
-/* Responsive */
-@media (max-width: 540px) {
-  .test-card { padding: 24px 20px; }
-  .form-row { grid-template-columns: 1fr; }
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Header */
+  .test-header { padding: 0 14px; height: auto; min-height: 56px; flex-wrap: wrap; gap: 6px; padding-top: 10px; padding-bottom: 10px; }
+  .test-header-logo { height: 34px; }
+  .test-header-title { font-size: .9rem; }
+  .test-timer { font-size: 1.05rem; padding: 4px 12px; }
+
+  /* Body */
+  .test-body { padding: 20px 14px 90px; }
+
+  /* Section tabs */
+  .sec-tab { padding: 8px 12px; font-size: .82rem; }
+
+  /* Question card */
+  .q-card { padding: 16px 14px; }
+  .q-opt label { padding: 8px 10px; font-size: .88rem; }
+
+  /* Nav */
+  .test-nav { padding: 10px 14px; gap: 8px; }
+  .test-nav-left, .test-nav-right { gap: 6px; }
+  .test-nav .btn { padding: 8px 14px; font-size: .84rem; }
+
+  /* Register / results card */
+  .test-card { padding: 24px 18px; }
+  .form-row { grid-template-columns: 1fr; gap: 0; }
+  .program-radios { grid-template-columns: 1fr 1fr; }
+
+  /* Results score grid */
   .score-grid { grid-template-columns: 1fr; }
-  .test-nav { flex-wrap: wrap; }
-  .test-timer { font-size: 1.1rem; }
+  .results-header .score-big { font-size: 2.8rem; }
+
+  /* Confirm overlay */
+  .confirm-box { padding: 24px 20px; }
+  .confirm-actions { flex-direction: column; }
+}
+
+@media (max-width: 380px) {
+  .test-header { flex-direction: column; align-items: flex-start; }
+  .program-radios { grid-template-columns: 1fr; }
+  .sec-tab .prog { display: none; }
 }
