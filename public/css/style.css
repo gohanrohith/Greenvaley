@@ -19,7 +19,7 @@
 }
 
 /* ── Base ──────────────────────────────────────────────────────────────────── */
-body { font-family: 'Outfit', system-ui, sans-serif; color: var(--black); background: var(--bg); line-height: 1.6; font-weight: 400; }
+body { font-family: 'Outfit', system-ui, sans-serif; color: var(--black); background: var(--bg); line-height: 1.6; font-weight: 400; overflow-x: hidden; }
 a { color: var(--green); text-decoration: none; }
 a:hover { color: var(--green-dark); }
 img { max-width: 100%; display: block; }
@@ -498,7 +498,7 @@ a.cinfo-value:hover { color: var(--green); }
 .subject-chip.muted { background: #f3f4f6; color: var(--muted); font-weight: 400; }
 
 /* ── Leadership ─────────────────────────────────────────────────────────────── */
-.leadership-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; }
+.leadership-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 700px; }
 .leader-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 32px; display: flex; gap: 24px; align-items: flex-start; transition: box-shadow .2s; }
 .leader-card:hover { box-shadow: var(--shadow-md); }
 @media (max-width: 600px) { .leader-card { flex-direction: column; align-items: center; text-align: center; } }
@@ -726,7 +726,7 @@ html { scroll-behavior: smooth; }
 
 /* ── Leadership Home (item 5) ─────────────────────────────────────────────────── */
 .leadership-home-section { background: var(--white); border-top: 1px solid var(--border); }
-.lh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.lh-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 680px; }
 .lh-card { display: flex; align-items: center; gap: 20px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; text-decoration: none; color: inherit; transition: box-shadow .25s, transform .25s; }
 .lh-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
 .lh-photo { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 2px solid var(--border); }
