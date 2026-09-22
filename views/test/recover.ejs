@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="/css/test.css">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+<div class="test-page-wrap">
+  <div class="test-card">
+    <div class="test-card-logo">
+      <img src="/images/logo.png" alt="Greenvaley">
+      <div class="test-card-logo-text">
+        <h2><%= college.name %></h2>
+        <p>Scholarship Test Portal</p>
+      </div>
+    </div>
+
+    <h3>Resume Your Test</h3>
+    <p>Enter the phone number you registered with to continue.</p>
+
+    <% if (error) { %>
+    <ul class="alert-list"><li><%= error %></li></ul>
+    <% } %>
+
+    <form method="POST" action="/test/recover">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <div class="form-group">
+        <label for="phone">Registered Mobile Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="10-digit number" required autofocus>
+      </div>
+      <button type="submit" class="btn btn-green" style="width:100%;justify-content:center">Resume →</button>
+    </form>
+
+    <p style="font-size:.8rem;color:var(--muted);text-align:center;margin-top:16px">
+      New student? <a href="/test/register" style="color:var(--green);font-weight:600">Register here</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>

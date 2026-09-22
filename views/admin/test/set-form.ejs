@@ -1,0 +1,142 @@
+<%- include('../../partials/admin-nav') %>
+
+<h2><%= set && set.id ? 'Edit Set' : 'Create Test Set' %></h2>
+<a href="/admin/test/sets" style="font-size:.85rem">← Back to Sets</a>
+
+<% if (errors && errors.length) { %>
+<ul class="alert alert-error mt-2">
+  <% errors.forEach(e => { %><li><%= e %></li><% }); %>
+</ul>
+<% } %>
+
+<form method="POST" action="<%= set && set.id ? '/admin/test/sets/'+set.id+'/edit' : '/admin/test/sets/new' %>" class="form-card mt-2" id="setForm">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <div class="form-row-2">
+    <div class="form-group">
+      <label>Set Name *</label>
+      <input type="text" name="name" value="<%= set?.name || '' %>" required class="form-control"
+             placeholder="A, B or C" style="text-transform:uppercase" maxlength="5">
+      <small style="color:var(--muted-text)">e.g. A, B, C</small>
+    </div>
+    <div class="form-group">
+      <label>Program *</label>
+      <select name="program" required class="form-control" id="programSel" onchange="updateSections()">
+        <option value="">Select…</option>
+        <option value="MPC"  <%= set?.program==='MPC'  ? 'selected':'' %>>MPC</option>
+        <option value="BiPC" <%= set?.program==='BiPC' ? 'selected':'' %>>BiPC</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-row-2">
+    <div class="form-group">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+        <input type="checkbox" name="timer_enabled" value="1" id="timerCb"
+               <%= set?.timer_enabled !== false && (set?.timer_enabled || !set) ? 'checked':'' %>
+               onchange="document.getElementById('durationGroup').style.display=this.checked?'':'none'">
+        Enable Timer
+      </label>
+    </div>
+    <div class="form-group" id="durationGroup">
+      <label>Duration (minutes) *</label>
+      <input type="number" name="duration_mins" value="<%= set?.duration_mins || 60 %>"
+             min="10" max="300" class="form-control" style="width:140px">
+    </div>
+  </div>
+
+  <% if (set && set.id) { %>
+  <div class="form-group">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+      <input type="checkbox" name="active" value="1" <%= set.active ? 'checked':'' %>>
+      Active (students can be assigned this set)
+    </label>
+  </div>
+  <% } %>
+
+  <hr style="margin:20px 0;border-color:var(--border-color)">
+  <h3 style="margin-bottom:16px">Section Rules</h3>
+  <p style="font-size:.85rem;color:var(--muted-text);margin-bottom:16px">
+    Hard + Medium + Easy must total 100% for each section.
+    The system randomly draws the specified count from each difficulty band.
+  </p>
+
+  <div id="rulesContainer">
+    <!-- Rows injected by JS based on program -->
+  </div>
+
+  <% if (set && set.id) { %>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="/admin/test/sets" class="btn btn-outline">Cancel</a>
+  </div>
+  <% } else { %>
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Create Set</button>
+    <a href="/admin/test/sets" class="btn btn-outline">Cancel</a>
+  </div>
+  <% } %>
+</form>
+
+<script>
+const EXISTING_RULES = <%- JSON.stringify(rules || []) %>;
+const SECTION_LABELS = { math:'Mathematics', physics:'Physics', chemistry:'Chemistry', biology:'Biology' };
+const MPC_SECTIONS   = ['math','physics','chemistry'];
+const BIPC_SECTIONS  = ['biology','physics','chemistry'];
+
+function updateSections() {
+  const prog = document.getElementById('programSel').value;
+  const secs = prog === 'BiPC' ? BIPC_SECTIONS : MPC_SECTIONS;
+  const container = document.getElementById('rulesContainer');
+  container.innerHTML = '';
+  secs.forEach(sec => {
+    const r = EXISTING_RULES.find(x => x.section === sec) || { total_qs:15, hard_pct:60, medium_pct:20, easy_pct:20 };
+    container.innerHTML += `
+      <div class="form-card" style="margin-bottom:12px;background:var(--bg-light)">
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <input type="hidden" name="rule_section[]" value="${sec}">
+          <strong style="min-width:110px">${SECTION_LABELS[sec]}</strong>
+          <div class="form-group" style="margin:0;min-width:80px">
+            <label style="font-size:.78rem">Questions</label>
+            <input type="number" name="total_qs[]" value="${r.total_qs}" min="1" max="30" class="form-control" style="width:70px">
+          </div>
+          <div class="form-group" style="margin:0;min-width:80px">
+            <label style="font-size:.78rem">Hard %</label>
+            <input type="number" name="hard_pct[]" value="${r.hard_pct}" min="0" max="100" class="form-control" style="width:70px" oninput="autoEasy(this)">
+          </div>
+          <div class="form-group" style="margin:0;min-width:80px">
+            <label style="font-size:.78rem">Medium %</label>
+            <input type="number" name="medium_pct[]" value="${r.medium_pct}" min="0" max="100" class="form-control" style="width:70px" oninput="autoEasy(this)">
+          </div>
+          <div class="form-group" style="margin:0;min-width:80px">
+            <label style="font-size:.78rem">Easy %</label>
+            <input type="number" name="easy_pct[]" value="${r.easy_pct}" min="0" max="100" class="form-control" style="width:70px" readonly style="background:#f3f4f6">
+          </div>
+        </div>
+      </div>`;
+  });
+}
+
+function autoEasy(inp) {
+  const row  = inp.closest('[class]');
+  const inputs = row.querySelectorAll('input[name="hard_pct[]"], input[name="medium_pct[]"], input[name="easy_pct[]"]');
+  const hard   = parseInt(inputs[0].value) || 0;
+  const medium = parseInt(inputs[1].value) || 0;
+  inputs[2].value = Math.max(0, 100 - hard - medium);
+}
+
+// Init
+const prog = document.getElementById('programSel').value;
+if (prog) updateSections();
+// If no program yet, show MPC as default in create mode
+if (!prog && !<%- JSON.stringify(!!(set && set.id)) %>) {
+  document.getElementById('programSel').value = 'MPC';
+  updateSections();
+}
+
+// Timer checkbox
+const timerCb = document.getElementById('timerCb');
+if (!timerCb.checked) document.getElementById('durationGroup').style.display = 'none';
+</script>
+
+<%- include('../../partials/admin-footer') %>

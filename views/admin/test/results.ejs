@@ -1,0 +1,76 @@
+<%- include('../../partials/admin-nav') %>
+
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <h2>Test Results</h2>
+  <a href="/admin/test/results/export<%= Object.keys(q).length ? '?'+new URLSearchParams(q).toString() : '' %>"
+     class="btn btn-outline">⬇ Export CSV</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<!-- Filters -->
+<form method="GET" style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0">
+  <select name="program" class="form-control" style="width:auto">
+    <option value="">All Programs</option>
+    <option value="MPC"  <%= q.program==='MPC'  ? 'selected':'' %>>MPC</option>
+    <option value="BiPC" <%= q.program==='BiPC' ? 'selected':'' %>>BiPC</option>
+  </select>
+  <select name="set_name" class="form-control" style="width:auto">
+    <option value="">All Sets</option>
+    <% setNames.forEach(s => { %>
+    <option value="<%= s.name %>" <%= q.set_name===s.name ? 'selected':'' %>>Set <%= s.name %></option>
+    <% }); %>
+  </select>
+  <input type="date" name="date" value="<%= q.date || '' %>" class="form-control" style="width:auto">
+  <button type="submit" class="btn btn-outline">Filter</button>
+  <a href="/admin/test/results" class="btn btn-outline">Clear</a>
+</form>
+
+<p style="font-size:.85rem;color:var(--muted-text)"><strong><%= results.length %></strong> result(s) found</p>
+
+<% if (!results.length) { %>
+<p style="color:var(--muted-text)">No results yet.</p>
+<% } else { %>
+<div style="overflow-x:auto">
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>School</th>
+      <th>Prog</th>
+      <th>Set</th>
+      <th>Sec 1</th>
+      <th>Sec 2</th>
+      <th>Sec 3</th>
+      <th>Total</th>
+      <th>Time</th>
+      <th>Submitted</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% results.forEach((r, i) => {
+       const sec1Label = r.program === 'MPC' ? 'Maths' : 'Biology';
+    %>
+    <tr>
+      <td><%= i + 1 %></td>
+      <td><strong><%= r.name %></strong></td>
+      <td><%= r.phone %></td>
+      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><%= r.school %></td>
+      <td><span class="badge"><%= r.program %></span></td>
+      <td>Set <%= r.set_name %></td>
+      <td><span title="<%= sec1Label %>"><%= r.sec1_score ?? '—' %></span></td>
+      <td><span title="Physics"><%= r.sec2_score ?? '—' %></span></td>
+      <td><span title="Chemistry"><%= r.sec3_score ?? '—' %></span></td>
+      <td><strong><%= r.total_score ?? '—' %></strong>/45</td>
+      <td><%= r.mins_taken != null ? r.mins_taken + ' min' : '—' %></td>
+      <td style="white-space:nowrap"><%= r.submitted_at ? new Date(r.submitted_at).toLocaleString('en-IN') : '—' %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+</div>
+<p style="font-size:.78rem;color:var(--muted-text);margin-top:8px">Sec 1 = Maths (MPC) / Biology (BiPC) &nbsp;·&nbsp; Sec 2 = Physics &nbsp;·&nbsp; Sec 3 = Chemistry. Sorted by total score (highest first).</p>
+<% } %>
+
+<%- include('../../partials/admin-footer') %>

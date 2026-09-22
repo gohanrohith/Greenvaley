@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="/css/test.css">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+<div class="test-page-wrap">
+  <div class="test-card">
+    <div class="test-card-logo">
+      <img src="/images/logo.png" alt="Greenvaley">
+      <div class="test-card-logo-text">
+        <h2><%= college.name %></h2>
+        <p>Scholarship Test Portal</p>
+      </div>
+    </div>
+
+    <h3>Register for Scholarship Test</h3>
+    <p>Fill in your details to begin. One registration per phone number.</p>
+
+    <% if (errors && errors.length) { %>
+    <ul class="alert-list">
+      <% errors.forEach(e => { %><li><%= e %></li><% }); %>
+    </ul>
+    <% } %>
+
+    <form method="POST" action="/test/register" autocomplete="off">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input type="text" id="name" name="name" value="<%= old.name || '' %>" required placeholder="As in SSC certificate">
+        </div>
+        <div class="form-group">
+          <label for="phone">Mobile Number *</label>
+          <input type="tel" id="phone" name="phone" value="<%= old.phone || '' %>" required placeholder="10-digit mobile">
+          <div class="hint">Used to resume if browser closes</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="school">SSC School / Previous College *</label>
+        <input type="text" id="school" name="school" value="<%= old.school || '' %>" required placeholder="Name of your last attended institution">
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email (optional)</label>
+        <input type="email" id="email" name="email" value="<%= old.email || '' %>" placeholder="Results will be communicated separately">
+      </div>
+
+      <div class="form-group">
+        <label>Program *</label>
+        <div class="program-radios">
+          <div class="prog-opt">
+            <input type="radio" name="program" id="prog-mpc" value="MPC" <%= old.program === 'MPC' ? 'checked' : '' %> required>
+            <label for="prog-mpc">
+              <span class="prog-name">MPC</span>
+              <span class="prog-sub">Maths · Physics · Chemistry</span>
+            </label>
+          </div>
+          <div class="prog-opt">
+            <input type="radio" name="program" id="prog-bipc" value="BiPC" <%= old.program === 'BiPC' ? 'checked' : '' %>>
+            <label for="prog-bipc">
+              <span class="prog-name">BiPC</span>
+              <span class="prog-sub">Biology · Physics · Chemistry</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-green" style="width:100%;justify-content:center;padding:12px">
+        Start Test →
+      </button>
+    </form>
+
+    <p style="font-size:.8rem;color:var(--muted);text-align:center;margin-top:16px">
+      Already registered? <a href="/test/recover" style="color:var(--green);font-weight:600">Resume your test</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>

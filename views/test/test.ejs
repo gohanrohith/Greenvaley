@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="/css/test.css">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+
+<!-- Header -->
+<header class="test-header">
+  <div class="test-header-brand">
+    <img src="/images/logo.png" alt="Greenvaley" class="test-header-logo">
+    <div>
+      <div class="test-header-title"><%= college.name %></div>
+      <div class="test-header-sub">Scholarship Test · Set <%= sess.set_name %> · <%= sess.student_program %></div>
+    </div>
+  </div>
+  <% if (sess.timer_enabled) { %>
+  <div class="test-timer" id="timer">60:00</div>
+  <% } %>
+</header>
+
+<!-- Offline warning -->
+<div class="offline-bar" id="offlineBar">⚠ Connection lost — answers saved locally. Reconnect before submitting.</div>
+
+<!-- Body -->
+<div class="test-body">
+
+  <!-- Section tabs -->
+  <div class="section-tabs" id="secTabs">
+    <% sectionOrder.forEach((sec, i) => { %>
+    <button type="button" class="sec-tab <%= i === 0 ? 'active' : '' %>"
+            data-sec="<%= sec %>" onclick="showSection('<%= sec %>')">
+      <%= SEC_LABELS[sec] %>
+      <span class="prog" id="prog-<%= sec %>">0/<%= sections[sec] ? sections[sec].length : 0 %></span>
+    </button>
+    <% }); %>
+  </div>
+
+  <!-- Section panels -->
+  <% sectionOrder.forEach((sec, si) => { %>
+  <div class="sec-panel <%= si === 0 ? 'active' : '' %>" id="panel-<%= sec %>">
+    <div class="sec-panel-head">
+      <h2><%= SEC_LABELS[sec] %></h2>
+      <div class="sec-progress">
+        <strong id="answered-<%= sec %>"><%= sections[sec] ? sections[sec].filter(q => q.saved_answer).length : 0 %></strong>
+        / <%= sections[sec] ? sections[sec].length : 0 %> answered
+      </div>
+    </div>
+
+    <% if (sections[sec] && sections[sec].length) { %>
+    <% sections[sec].forEach((q, qi) => { %>
+    <div class="q-card" id="qcard-<%= q.id %>">
+      <div class="q-num">Question <%= qi + 1 %></div>
+      <div class="q-text"><%- q.question.replace(/\n/g, '<br>') %></div>
+      <ul class="q-options">
+        <% ['A','B','C','D'].forEach(opt => { const val = q['option_' + opt.toLowerCase()]; %>
+        <li class="q-opt">
+          <label>
+            <input type="radio" name="q_<%= q.id %>" value="<%= opt %>"
+                   data-qid="<%= q.id %>"
+                   <%= q.saved_answer === opt ? 'checked' : '' %>>
+            <span><strong><%= opt %>.</strong> <%= val %></span>
+          </label>
+        </li>
+        <% }); %>
+      </ul>
+      <div class="q-saved" id="saved-<%= q.id %>">✓ Saved</div>
+      <div class="q-error" id="err-<%= q.id %>">⚠ Could not save — will retry</div>
+    </div>
+    <% }); %>
+    <% } else { %>
+    <p style="color:var(--muted);padding:20px 0">No questions in this section yet.</p>
+    <% } %>
+  </div>
+  <% }); %>
+
+</div><!-- /test-body -->
+
+<!-- Sticky nav -->
+<nav class="test-nav">
+  <div class="test-nav-left">
+    <button type="button" class="btn btn-ghost" id="prevBtn" onclick="navSection(-1)">← Previous</button>
+  </div>
+  <div class="test-nav-right">
+    <button type="button" class="btn btn-outline" id="nextBtn" onclick="navSection(1)">Next →</button>
+    <button type="button" class="btn btn-green" id="submitBtn" onclick="showConfirm()" style="display:none">Submit Test</button>
+  </div>
+</nav>
+
+<!-- Submit confirmation -->
+<div class="confirm-overlay" id="confirmOverlay">
+  <div class="confirm-box">
+    <h3>Submit your test?</h3>
+    <p id="confirmMsg">Make sure you've answered all questions. This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button type="button" class="btn btn-ghost" onclick="hideConfirm()">Review Answers</button>
+      <form method="POST" action="/test/submit" id="submitForm">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+        <button type="submit" class="btn btn-red" id="confirmSubmitBtn">Submit Now</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+const SECTIONS    = <%- JSON.stringify(sectionOrder) %>;
+const EXPIRES_AT  = <%= expiresAt %>;
+const TIMER_ON    = <%= sess.timer_enabled ? 'true' : 'false' %>;
+const CSRF        = '<%= csrfToken %>';
+
+let currentSec = SECTIONS[0];
+
+// ── Section navigation ──────────────────────────────────────────────────────
+function showSection(sec) {
+  document.querySelectorAll('.sec-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sec-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + sec).classList.add('active');
+  document.querySelector('[data-sec="' + sec + '"]').classList.add('active');
+  currentSec = sec;
+  updateNav();
+}
+
+function navSection(dir) {
+  const idx = SECTIONS.indexOf(currentSec) + dir;
+  if (idx >= 0 && idx < SECTIONS.length) showSection(SECTIONS[idx]);
+}
+
+function updateNav() {
+  const idx = SECTIONS.indexOf(currentSec);
+  document.getElementById('prevBtn').disabled = idx === 0;
+  document.getElementById('nextBtn').style.display   = idx < SECTIONS.length - 1 ? '' : 'none';
+  document.getElementById('submitBtn').style.display = idx === SECTIONS.length - 1 ? '' : 'none';
+}
+
+updateNav();
+
+// ── Auto-save ───────────────────────────────────────────────────────────────
+const localKey = 'test_answers_<%= sess.id %>';
+
+function localSave(qid, answer) {
+  try {
+    const saved = JSON.parse(localStorage.getItem(localKey) || '{}');
+    saved[qid] = answer;
+    localStorage.setItem(localKey, JSON.stringify(saved));
+  } catch(e) {}
+}
+
+async function serverSave(qid, answer) {
+  try {
+    const r = await fetch('/test/answer', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-CSRF-Token': CSRF },
+      body: JSON.stringify({ question_id: qid, answer })
+    });
+    const data = await r.json();
+    if (data.error === 'time_expired') { autoSubmit(); return; }
+    if (data.ok) {
+      showSaved(qid); hideOffline();
+    } else {
+      showErr(qid);
+    }
+  } catch(e) {
+    showOffline(); showErr(qid);
+    setTimeout(() => serverSave(qid, answer), 5000);
+  }
+}
+
+function showSaved(qid) {
+  const el = document.getElementById('saved-' + qid);
+  if (!el) return;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2000);
+}
+function showErr(qid) {
+  const el = document.getElementById('err-' + qid);
+  if (el) { el.classList.add('show'); setTimeout(() => el.classList.remove('show'), 4000); }
+}
+
+document.querySelectorAll('input[type=radio][data-qid]').forEach(radio => {
+  radio.addEventListener('change', function() {
+    const qid = this.dataset.qid;
+    const ans = this.value;
+    localSave(qid, ans);
+    serverSave(qid, ans);
+    updateProgress(this.closest('.sec-panel').id.replace('panel-', ''));
+  });
+});
+
+// ── Progress counters ───────────────────────────────────────────────────────
+function updateProgress(sec) {
+  const panel = document.getElementById('panel-' + sec);
+  if (!panel) return;
+  const total    = panel.querySelectorAll('.q-card').length;
+  const answered = panel.querySelectorAll('input[type=radio]:checked').length;
+  document.getElementById('answered-' + sec).textContent = answered;
+  document.getElementById('prog-' + sec).textContent = answered + '/' + total;
+}
+SECTIONS.forEach(s => updateProgress(s));
+
+// ── Timer ───────────────────────────────────────────────────────────────────
+if (TIMER_ON) {
+  function tick() {
+    const rem = EXPIRES_AT - Date.now();
+    if (rem <= 0) { autoSubmit(); return; }
+    const m = Math.floor(rem / 60000);
+    const s = Math.floor((rem % 60000) / 1000);
+    const el = document.getElementById('timer');
+    el.textContent = m + ':' + String(s).padStart(2, '0');
+    if (rem < 300000) el.classList.add('warning');
+    setTimeout(tick, 1000);
+  }
+  tick();
+}
+
+// ── Submit flow ─────────────────────────────────────────────────────────────
+function autoSubmit() {
+  document.getElementById('confirmMsg').textContent = 'Time is up! Submitting your saved answers now.';
+  document.querySelector('.btn-ghost[onclick="hideConfirm()"]').style.display = 'none';
+  showConfirm();
+  setTimeout(() => document.getElementById('submitForm').submit(), 2000);
+}
+
+function showConfirm() {
+  let unanswered = 0;
+  document.querySelectorAll('.q-card').forEach(card => {
+    if (!card.querySelector('input[type=radio]:checked')) unanswered++;
+  });
+  if (unanswered > 0) {
+    document.getElementById('confirmMsg').textContent =
+      unanswered + ' question(s) unanswered. You can still go back and answer them.';
+  }
+  document.getElementById('confirmOverlay').classList.add('show');
+}
+function hideConfirm() {
+  document.getElementById('confirmOverlay').classList.remove('show');
+}
+
+document.getElementById('submitForm').addEventListener('submit', () => {
+  document.getElementById('confirmSubmitBtn').disabled = true;
+  document.getElementById('confirmSubmitBtn').textContent = 'Submitting…';
+});
+
+// ── Offline detection ───────────────────────────────────────────────────────
+function showOffline() { document.getElementById('offlineBar').classList.add('show'); }
+function hideOffline() { document.getElementById('offlineBar').classList.remove('show'); }
+window.addEventListener('offline', showOffline);
+window.addEventListener('online',  hideOffline);
+</script>
+</body>
+</html>

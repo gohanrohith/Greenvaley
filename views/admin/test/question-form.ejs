@@ -1,0 +1,97 @@
+<%- include('../../partials/admin-nav') %>
+
+<h2><%= question && question.id ? 'Edit Question' : 'Add Question' %></h2>
+<a href="/admin/test/questions" style="font-size:.85rem">← Back to Question Bank</a>
+
+<% if (errors && errors.length) { %>
+<ul class="alert alert-error mt-2">
+  <% errors.forEach(e => { %><li><%= e %></li><% }); %>
+</ul>
+<% } %>
+
+<form method="POST" action="<%= question && question.id ? '/admin/test/questions/'+question.id+'/edit' : '/admin/test/questions/new' %>" class="form-card mt-2">
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+  <div class="form-row-3">
+    <div class="form-group">
+      <label>Program *</label>
+      <select name="program" required class="form-control">
+        <option value="">Select…</option>
+        <option value="MPC"  <%= (question?.program==='MPC')  ? 'selected':'' %>>MPC</option>
+        <option value="BiPC" <%= (question?.program==='BiPC') ? 'selected':'' %>>BiPC</option>
+        <option value="both" <%= (question?.program==='both') ? 'selected':'' %>>Both (shared)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Section *</label>
+      <select name="section" required class="form-control" id="sectionSel">
+        <option value="">Select…</option>
+        <option value="math"      <%= question?.section==='math'      ? 'selected':'' %>>Mathematics</option>
+        <option value="physics"   <%= question?.section==='physics'   ? 'selected':'' %>>Physics</option>
+        <option value="chemistry" <%= question?.section==='chemistry' ? 'selected':'' %>>Chemistry</option>
+        <option value="biology"   <%= question?.section==='biology'   ? 'selected':'' %>>Biology</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Difficulty *</label>
+      <select name="difficulty" required class="form-control">
+        <option value="">Select…</option>
+        <option value="hard"   <%= question?.difficulty==='hard'   ? 'selected':'' %>>Hard</option>
+        <option value="medium" <%= question?.difficulty==='medium' ? 'selected':'' %>>Medium</option>
+        <option value="easy"   <%= question?.difficulty==='easy'   ? 'selected':'' %>>Easy</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Question Text *</label>
+    <textarea name="question" rows="4" class="form-control" required placeholder="Write the question here. You can use plain text."><%= question?.question || '' %></textarea>
+  </div>
+
+  <div class="form-row-2">
+    <div class="form-group">
+      <label>Option A *</label>
+      <input type="text" name="option_a" value="<%= question?.option_a || '' %>" required class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Option B *</label>
+      <input type="text" name="option_b" value="<%= question?.option_b || '' %>" required class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Option C *</label>
+      <input type="text" name="option_c" value="<%= question?.option_c || '' %>" required class="form-control">
+    </div>
+    <div class="form-group">
+      <label>Option D *</label>
+      <input type="text" name="option_d" value="<%= question?.option_d || '' %>" required class="form-control">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Correct Answer *</label>
+    <div style="display:flex;gap:12px">
+      <% ['A','B','C','D'].forEach(opt => { %>
+      <label style="display:flex;align-items:center;gap:6px;font-weight:600;cursor:pointer">
+        <input type="radio" name="correct" value="<%= opt %>" <%= question?.correct===opt ? 'checked':'' %> required>
+        Option <%= opt %>
+      </label>
+      <% }); %>
+    </div>
+  </div>
+
+  <% if (question && question.id) { %>
+  <div class="form-group">
+    <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+      <input type="checkbox" name="active" value="1" <%= question.active ? 'checked':'' %>>
+      Active (visible to question pool)
+    </label>
+  </div>
+  <% } %>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary"><%= question?.id ? 'Save Changes' : 'Add Question' %></button>
+    <a href="/admin/test/questions" class="btn btn-outline">Cancel</a>
+  </div>
+</form>
+
+<%- include('../../partials/admin-footer') %>

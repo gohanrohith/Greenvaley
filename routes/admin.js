@@ -1,7 +1,8 @@
 const express = require('express');
 const router  = express.Router();
-const ctrl    = require('../controllers/adminController');
-const schCtrl = require('../controllers/scholarshipController');
+const ctrl      = require('../controllers/adminController');
+const schCtrl   = require('../controllers/scholarshipController');
+const testCtrl  = require('../controllers/adminTestController');
 const { requireAdmin, requireSuper } = require('../middleware/auth');
 const { csrfProtect } = require('../middleware/csrf');
 const multer  = require('multer');
@@ -90,6 +91,25 @@ router.post('/users/new',        requireSuper, ctrl.createUser);
 router.get('/users/:id/edit',    requireSuper, ctrl.editUserForm);
 router.post('/users/:id/edit',   requireSuper, ctrl.updateUser);
 router.post('/users/:id/delete', requireSuper, ctrl.deleteUser);
+
+// ── Scholarship Test management ──────────────────────────────────────────────
+router.get('/test',                          testCtrl.dashboard);
+router.get('/test/questions',                testCtrl.questionsList);
+router.get('/test/questions/new',            testCtrl.questionForm);
+router.post('/test/questions/new',           testCtrl.createQuestion);
+router.get('/test/questions/:id/edit',       testCtrl.editQuestionForm);
+router.post('/test/questions/:id/edit',      testCtrl.updateQuestion);
+router.post('/test/questions/:id/delete',    testCtrl.deleteQuestion);
+router.get('/test/sets',                     testCtrl.setsList);
+router.get('/test/sets/new',                 testCtrl.setForm);
+router.post('/test/sets/new',                testCtrl.createSet);
+router.get('/test/sets/:id/edit',            testCtrl.editSetForm);
+router.post('/test/sets/:id/edit',           testCtrl.updateSet);
+router.post('/test/sets/:id/toggle',         testCtrl.toggleSet);
+router.post('/test/sets/:id/delete',         testCtrl.deleteSet);
+router.get('/test/results',                  testCtrl.resultsList);
+router.get('/test/results/export',           testCtrl.exportCsv);
+router.get('/test/live',                     testCtrl.liveSessions);
 
 // Settings
 router.get('/settings',  ctrl.settings);

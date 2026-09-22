@@ -18,6 +18,7 @@ const { csrfMiddleware } = require('./middleware/csrf');
 const mainRoutes  = require('./routes/main');
 const adminRoutes = require('./routes/admin');
 const apiRoutes   = require('./routes/api');
+const testRoutes  = require('./routes/test');
 
 const app = express();
 
@@ -69,6 +70,7 @@ app.use(siteMiddleware);
 
 app.use('/api',   apiRoutes);
 app.use('/admin', adminRoutes);
+app.use('/test',  testRoutes);
 app.use('/',      mainRoutes);
 
 app.use((req, res) => res.status(404).render('404', { title: '404 | Greenvaley', college: require('./config/college') }));

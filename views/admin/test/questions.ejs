@@ -1,0 +1,77 @@
+<%- include('../../partials/admin-nav') %>
+
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <h2>Question Bank</h2>
+  <a href="/admin/test/questions/new" class="btn btn-primary">+ Add Question</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<!-- Filters -->
+<form method="GET" style="display:flex;gap:10px;flex-wrap:wrap;margin:16px 0">
+  <select name="program" class="form-control" style="width:auto">
+    <option value="">All Programs</option>
+    <option value="MPC"  <%= q.program==='MPC'  ? 'selected' : '' %>>MPC</option>
+    <option value="BiPC" <%= q.program==='BiPC' ? 'selected' : '' %>>BiPC</option>
+  </select>
+  <select name="section" class="form-control" style="width:auto">
+    <option value="">All Sections</option>
+    <option value="math"       <%= q.section==='math'       ? 'selected' : '' %>>Mathematics</option>
+    <option value="physics"    <%= q.section==='physics'    ? 'selected' : '' %>>Physics</option>
+    <option value="chemistry"  <%= q.section==='chemistry'  ? 'selected' : '' %>>Chemistry</option>
+    <option value="biology"    <%= q.section==='biology'    ? 'selected' : '' %>>Biology</option>
+  </select>
+  <select name="difficulty" class="form-control" style="width:auto">
+    <option value="">All Difficulties</option>
+    <option value="hard"   <%= q.difficulty==='hard'   ? 'selected' : '' %>>Hard</option>
+    <option value="medium" <%= q.difficulty==='medium' ? 'selected' : '' %>>Medium</option>
+    <option value="easy"   <%= q.difficulty==='easy'   ? 'selected' : '' %>>Easy</option>
+  </select>
+  <button type="submit" class="btn btn-outline">Filter</button>
+  <a href="/admin/test/questions" class="btn btn-outline">Clear</a>
+</form>
+
+<!-- Pool summary -->
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px">
+  <% counts.forEach(c => { %>
+  <span class="badge" style="font-size:.78rem">
+    <%= c.section %> · <%= c.difficulty %>: <strong><%= c.cnt %></strong>
+  </span>
+  <% }); %>
+</div>
+
+<% if (!questions.length) { %>
+<p style="color:var(--muted-text)">No questions found. <a href="/admin/test/questions/new">Add the first one →</a></p>
+<% } else { %>
+<table class="data-table">
+  <thead>
+    <tr><th>#</th><th>Question</th><th>Program</th><th>Section</th><th>Difficulty</th><th>Correct</th><th>Active</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    <% questions.forEach((q, i) => { %>
+    <tr>
+      <td><%= q.id %></td>
+      <td style="max-width:320px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><%= q.question %></td>
+      <td><span class="badge"><%= q.program %></span></td>
+      <td><%= q.section %></td>
+      <td>
+        <span class="badge <%= q.difficulty === 'hard' ? 'badge-red' : q.difficulty === 'medium' ? 'badge-yellow' : 'badge-green' %>">
+          <%= q.difficulty %>
+        </span>
+      </td>
+      <td><strong><%= q.correct %></strong></td>
+      <td><%= q.active ? '✓' : '—' %></td>
+      <td>
+        <a href="/admin/test/questions/<%= q.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+        <form method="POST" action="/admin/test/questions/<%= q.id %>/delete" style="display:inline"
+              onsubmit="return confirm('Delete this question?')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="btn btn-sm btn-danger">Del</button>
+        </form>
+      </td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<% } %>
+
+<%- include('../../partials/admin-footer') %>

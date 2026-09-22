@@ -1,0 +1,37 @@
+<%- include('../../partials/admin-nav') %>
+
+<div style="display:flex;justify-content:space-between;align-items:center">
+  <h2>Live Sessions</h2>
+  <a href="javascript:location.reload()" class="btn btn-outline">↻ Refresh</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<% if (!sessions.length) { %>
+<p class="mt-2" style="color:var(--muted-text)">No active test sessions right now.</p>
+<% } else { %>
+<p style="font-size:.85rem;color:var(--muted-text);margin:12px 0"><strong><%= sessions.length %></strong> student(s) currently taking the test</p>
+<table class="data-table">
+  <thead>
+    <tr><th>Name</th><th>Phone</th><th>Program</th><th>Set</th><th>Started</th><th>Expires</th><th>Saved Answers</th></tr>
+  </thead>
+  <tbody>
+    <% sessions.forEach(s => {
+       const now = Date.now();
+       const expires = new Date(s.expires_at).getTime();
+       const remMin = Math.max(0, Math.floor((expires - now) / 60000));
+    %>
+    <tr>
+      <td><strong><%= s.name %></strong></td>
+      <td><%= s.phone %></td>
+      <td><span class="badge"><%= s.program %></span></td>
+      <td>Set <%= s.set_name %></td>
+      <td><%= new Date(s.start_time).toLocaleTimeString('en-IN') %></td>
+      <td><%= remMin %> min left</td>
+      <td><%= s.answers_saved %> / 45</td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+<% } %>
+
+<%- include('../../partials/admin-footer') %>

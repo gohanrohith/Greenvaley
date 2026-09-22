@@ -1,0 +1,67 @@
+<%- include('../../partials/admin-nav') %>
+
+<h2>Scholarship Test</h2>
+<%- include('../../partials/flash') %>
+
+<div class="stat-grid">
+  <div class="stat-card">
+    <div class="stat-num"><%= stats.questions %></div>
+    <div class="stat-label">Active Questions</div>
+    <a href="/admin/test/questions" class="stat-link">Question Bank →</a>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num"><%= stats.sets %></div>
+    <div class="stat-label">Active Sets</div>
+    <a href="/admin/test/sets" class="stat-link">Manage Sets →</a>
+  </div>
+  <div class="stat-card">
+    <div class="stat-num"><%= stats.registered %></div>
+    <div class="stat-label">Registered Students</div>
+  </div>
+  <div class="stat-card highlight">
+    <div class="stat-num"><%= stats.active_sessions %></div>
+    <div class="stat-label">Currently In Test</div>
+    <a href="/admin/test/live" class="stat-link">Live View →</a>
+  </div>
+  <div class="stat-card highlight">
+    <div class="stat-num"><%= stats.submitted %></div>
+    <div class="stat-label">Submitted</div>
+    <a href="/admin/test/results" class="stat-link">View Results →</a>
+  </div>
+</div>
+
+<div class="quick-actions mt-3">
+  <h3>Quick Actions</h3>
+  <div class="action-row">
+    <a href="/admin/test/questions/new" class="btn btn-primary">+ Add Question</a>
+    <a href="/admin/test/sets/new"      class="btn btn-outline">+ Create Set</a>
+    <a href="/admin/test/results"       class="btn btn-outline">Results Table</a>
+    <a href="/admin/test/results/export" class="btn btn-outline">Export CSV</a>
+    <a href="/test/register" target="_blank" class="btn btn-outline">Test Page ↗</a>
+  </div>
+</div>
+
+<% if (recent.length) { %>
+<div class="mt-3">
+  <h3>Recent Submissions</h3>
+  <table class="data-table mt-1">
+    <thead>
+      <tr><th>Name</th><th>Phone</th><th>Program</th><th>Set</th><th>Score</th><th>Submitted</th></tr>
+    </thead>
+    <tbody>
+      <% recent.forEach(r => { %>
+      <tr>
+        <td><%= r.name %></td>
+        <td><%= r.phone %></td>
+        <td><span class="badge"><%= r.program %></span></td>
+        <td><%= r.set_name %></td>
+        <td><strong><%= r.total_score %></strong>/45</td>
+        <td><%= r.submitted_at ? new Date(r.submitted_at).toLocaleString('en-IN') : '—' %></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+<% } %>
+
+<%- include('../../partials/admin-footer') %>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="/css/test.css">
+  <link rel="icon" type="image/png" href="/images/logo.png">
+</head>
+<body>
+<div class="test-page-wrap">
+  <div class="test-card" style="max-width:560px">
+    <div class="test-card-logo">
+      <img src="/images/logo.png" alt="Greenvaley">
+      <div class="test-card-logo-text">
+        <h2><%= college.name %></h2>
+        <p>Scholarship Test Results</p>
+      </div>
+    </div>
+
+    <div class="results-header">
+      <div class="student-name"><%= sess.student_name %></div>
+      <div class="score-big"><%= sess.total_score ?? '—' %></div>
+      <div class="score-of">out of <%= sectionOrder.length * 15 %> marks &nbsp;·&nbsp; Set <%= sess.set_name %> &nbsp;·&nbsp; <%= sess.student_program %></div>
+    </div>
+
+    <div class="score-grid">
+      <% sectionOrder.forEach((sec, i) => { const score = i === 0 ? sess.sec1_score : i === 1 ? sess.sec2_score : sess.sec3_score; %>
+      <div class="score-chip">
+        <div class="chip-num"><%= score ?? 0 %><span style="font-size:1rem;font-weight:600;color:var(--muted)">/15</span></div>
+        <div class="chip-lbl"><%= SEC_LABELS[sec] %></div>
+      </div>
+      <% }); %>
+    </div>
+
+    <div class="results-meta">
+      Submitted: <%= sess.submitted_at ? new Date(sess.submitted_at).toLocaleString('en-IN') : '—' %>
+      &nbsp;·&nbsp;
+      Time taken: <%= sess.mins_taken ?? '—' %> min
+    </div>
+
+    <div class="results-notice">
+      <strong>What happens next?</strong><br>
+      The college management will review all test results and contact selected candidates regarding scholarship eligibility.
+      For queries, call <strong><%= college.phone %></strong> or WhatsApp <strong><%= college.phone2 %></strong>.
+    </div>
+
+    <div style="text-align:center;margin-top:24px">
+      <a href="/" class="btn btn-green">← Back to College Website</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

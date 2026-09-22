@@ -1,0 +1,62 @@
+<%- include('../../partials/admin-nav') %>
+
+<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+  <h2>Test Sets</h2>
+  <a href="/admin/test/sets/new" class="btn btn-primary">+ Create Set</a>
+</div>
+<%- include('../../partials/flash') %>
+
+<% if (!sets.length) { %>
+<p class="mt-2" style="color:var(--muted-text)">No sets yet. <a href="/admin/test/sets/new">Create the first set →</a></p>
+<% } else { %>
+<div class="mt-2" style="display:flex;flex-direction:column;gap:16px">
+  <% sets.forEach(s => { %>
+  <div class="form-card">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px">
+      <div>
+        <strong style="font-size:1.1rem">Set <%= s.name %></strong>
+        <span class="badge ml-1"><%= s.program %></span>
+        <span class="badge <%= s.active ? 'badge-green' : '' %> ml-1"><%= s.active ? 'Active' : 'Inactive' %></span>
+        <div style="font-size:.85rem;color:var(--muted-text);margin-top:4px">
+          Timer: <%= s.timer_enabled ? s.duration_mins + ' min' : 'Off' %>
+          &nbsp;·&nbsp; <%= s.session_count %> students
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <a href="/admin/test/sets/<%= s.id %>/edit" class="btn btn-sm btn-outline">Edit</a>
+        <form method="POST" action="/admin/test/sets/<%= s.id %>/toggle" style="display:inline">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="btn btn-sm btn-outline"><%= s.active ? 'Deactivate' : 'Activate' %></button>
+        </form>
+        <form method="POST" action="/admin/test/sets/<%= s.id %>/delete" style="display:inline"
+              onsubmit="return confirm('Delete Set <%= s.name %>? All sessions using it will be affected.')">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+
+    <% if (s.rules.length) { %>
+    <table class="data-table mt-2" style="font-size:.85rem">
+      <thead>
+        <tr><th>Section</th><th>Questions</th><th>Hard</th><th>Medium</th><th>Easy</th></tr>
+      </thead>
+      <tbody>
+        <% s.rules.forEach(r => { %>
+        <tr>
+          <td><%= r.section %></td>
+          <td><%= r.total_qs %></td>
+          <td><%= r.hard_pct %>%</td>
+          <td><%= r.medium_pct %>%</td>
+          <td><%= r.easy_pct %>%</td>
+        </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } %>
+  </div>
+  <% }); %>
+</div>
+<% } %>
+
+<%- include('../../partials/admin-footer') %>
