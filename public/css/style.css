@@ -724,7 +724,7 @@ html { scroll-behavior: smooth; }
 .pht-gold  { background: var(--gold); }
 
 /* ── Leadership Home (item 5) ─────────────────────────────────────────────────── */
-.leadership-home-section { background: var(--bg); }
+.leadership-home-section { background: var(--white); border-top: 1px solid var(--border); }
 .lh-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
 .lh-card { display: flex; align-items: center; gap: 20px; background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; text-decoration: none; color: inherit; transition: box-shadow .25s, transform .25s; }
 .lh-card:hover { box-shadow: var(--shadow-md); transform: translateY(-3px); }
