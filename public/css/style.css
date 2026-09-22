@@ -345,7 +345,7 @@ fieldset legend { font-weight: 700; padding: 0 8px; color: var(--green); font-si
 .site-footer { background: var(--black); padding: 56px 0 0; margin-top: 80px; }
 .footer-inner { max-width: 1180px; margin: 0 auto; padding: 0 24px 40px; display: grid; grid-template-columns: auto 1fr; gap: 64px; align-items: start; }
 .footer-brand { display: flex; align-items: center; gap: 12px; }
-.footer-logo { height: 64px; width: auto; }
+.footer-logo { height: 80px; width: auto; }
 .footer-name { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
 .footer-board { font-size: .75rem; color: rgba(255,255,255,.4); max-width: 200px; line-height: 1.4; }
 .footer-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
@@ -900,10 +900,8 @@ html { scroll-behavior: smooth; }
 .checkbox-label { gap: 12px; }
 .checkbox-label a { color: var(--green); }
 
-/* ── WhatsApp button ──────────────────────────────────────────────────────────── */
-.btn-whatsapp { background: #25d366; border-color: #25d366; color: #fff; }
-.btn-whatsapp:hover { background: #1da851; border-color: #1da851; color: #fff; }
-.wa-icon { display: inline-flex; align-items: center; gap: 6px; }
-.footer-wa { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,.6); font-size: .9rem; text-decoration: none; margin-top: 4px; }
-.footer-wa:hover { color: #25d366; }
-.footer-wa svg { width: 16px; height: 16px; fill: currentColor; flex-shrink: 0; }
+/* ── WhatsApp floating button ─────────────────────────────────────────────────── */
+.wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 999; width: 56px; height: 56px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,.45); transition: transform .2s, box-shadow .2s; }
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 22px rgba(37,211,102,.55); }
+.wa-float svg { width: 30px; height: 30px; fill: #fff; }
+@media (max-width: 480px) { .wa-float { bottom: 18px; right: 16px; width: 50px; height: 50px; } .wa-float svg { width: 26px; height: 26px; } }
