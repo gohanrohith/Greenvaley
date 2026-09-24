@@ -190,3 +190,13 @@ document.querySelectorAll('.tracks-grid, .leadership-grid, .sister-grid, .grid-3
     }
   });
 })();
+
+// Right-click image protection (deters casual save-as)
+(function() {
+  document.addEventListener('contextmenu', function(e) {
+    if (e.target.tagName === 'IMG') { e.preventDefault(); }
+  });
+  document.addEventListener('dragstart', function(e) {
+    if (e.target.tagName === 'IMG') { e.preventDefault(); }
+  });
+})();
