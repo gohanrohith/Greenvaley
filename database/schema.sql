@@ -36,13 +36,15 @@ CREATE TABLE IF NOT EXISTS news (
   slug        VARCHAR(255) NOT NULL UNIQUE,
   excerpt     VARCHAR(500),
   content     LONGTEXT,
+  content_hi  MEDIUMTEXT,
+  content_te  MEDIUMTEXT,
   image       VARCHAR(255),
   published   TINYINT(1) NOT NULL DEFAULT 0,
   created_at  DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at  DATETIME ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
--- Run if DB already exists: ALTER TABLE news ADD COLUMN excerpt VARCHAR(500) DEFAULT NULL AFTER slug;
--- Trilingual content migration:
+-- Run if DB already exists (pre-trilingual):
+-- ALTER TABLE news ADD COLUMN excerpt VARCHAR(500) DEFAULT NULL AFTER slug;
 -- ALTER TABLE news ADD COLUMN content_hi MEDIUMTEXT DEFAULT NULL AFTER content;
 -- ALTER TABLE news ADD COLUMN content_te MEDIUMTEXT DEFAULT NULL AFTER content_hi;
 CREATE INDEX news_slug ON news(slug);
