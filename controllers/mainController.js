@@ -78,7 +78,11 @@ exports.newsArticle = async (req, res) => {
   try {
     const [[article]] = await db.query('SELECT * FROM news WHERE slug=? AND published=1', [req.params.slug]);
     if (!article) return res.status(404).render('404', { title: '404 | Greenvaley' });
-    V.render(res, 'main/news-article', { title: `${article.title} | ${college.shortName}`, article });
+    const domain = college.website;
+    const ogImage = article.image
+      ? `${domain}${article.image}`
+      : `${domain}/images/logo.png`;
+    V.render(res, 'main/news-article', { title: `${article.title} | ${college.shortName}`, article, domain, ogImage });
   } catch (e) {
     res.status(500).render('500', { title: '500 | Greenvaley' });
   }
