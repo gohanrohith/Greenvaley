@@ -1,5 +1,13 @@
 <%- include('../../partials/admin-nav') %>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.snow.min.css">
+<style>
+.lang-tabs { display:flex; gap:0; border-bottom:2px solid #e2e8f0; margin-bottom:0; }
+.lang-tab  { padding:.5rem 1.1rem; font-size:.82rem; font-weight:600; border:none; background:none; cursor:pointer; color:#888; border-bottom:2px solid transparent; margin-bottom:-2px; transition:all .15s; }
+.lang-tab.active { color:#2d7a4f; border-bottom-color:#2d7a4f; }
+.lang-panel { display:none; }
+.lang-panel.active { display:block; }
+#wordCountBar { padding:.35rem .6rem; border-top:1px solid #e2e8f0; background:#f8fafc; font-size:.75rem; display:flex; align-items:center; gap:.6rem; border-radius:0 0 4px 4px; }
+</style>
 
 <div class="page-header">
   <h2><%= item ? 'Edit Article' : 'New Article' %></h2>
@@ -13,7 +21,8 @@
 
   <div class="form-group">
     <label>Title *</label>
-    <input type="text" name="title" value="<%= item?.title || '' %>" required>
+    <input type="text" name="title" id="titleInput" value="<%= item?.title || '' %>" required
+           oninput="autoSlug(this.value)">
   </div>
 
   <div class="form-group">
@@ -21,12 +30,39 @@
     <textarea name="excerpt" rows="2" maxlength="500" placeholder="One or two sentences summarising the article…" style="resize:vertical"><%= item?.excerpt || '' %></textarea>
   </div>
 
+  <!-- Trilingual content tabs -->
   <div class="form-group">
     <label>Content</label>
-    <div id="quill-editor" style="min-height:320px;background:#fff;border-radius:0 0 6px 6px"><%- item?.content || '' %></div>
-    <input type="hidden" name="content" id="content-hidden" value="<%= item?.content || '' %>">
+    <div style="border:1px solid #cbd5e1;border-radius:6px;overflow:hidden">
+      <div class="lang-tabs">
+        <button type="button" class="lang-tab active" data-target="tab-en">English</button>
+        <button type="button" class="lang-tab" data-target="tab-hi">हिंदी</button>
+        <button type="button" class="lang-tab" data-target="tab-te">తెలుగు</button>
+      </div>
+
+      <div id="tab-en" class="lang-panel active">
+        <div id="quillEn" style="min-height:280px;background:#fff"><%- item?.content || '' %></div>
+        <div id="wordCountBar">
+          <span style="color:#888">Words:</span>
+          <span id="wordCountNum" style="font-weight:700;color:#888">0</span>
+          <span id="wordCountMsg" style="margin-left:.25rem"></span>
+        </div>
+      </div>
+
+      <div id="tab-hi" class="lang-panel">
+        <div id="quillHi" style="min-height:280px;background:#fff"><%- item?.content_hi || '' %></div>
+      </div>
+
+      <div id="tab-te" class="lang-panel">
+        <div id="quillTe" style="min-height:280px;background:#fff"><%- item?.content_te || '' %></div>
+      </div>
+    </div>
+    <input type="hidden" name="content"    id="inputEn">
+    <input type="hidden" name="content_hi" id="inputHi">
+    <input type="hidden" name="content_te" id="inputTe">
   </div>
 
+  <!-- Cover image -->
   <div class="form-group">
     <label>Cover Image</label>
     <input type="file" name="image" accept="image/*" id="imageInput">
@@ -43,6 +79,19 @@
     </div>
   </div>
 
+  <!-- Custom slug -->
+  <div class="form-group">
+    <label>Custom URL slug <span style="font-weight:400;color:#888;font-size:.85em">(optional — letters, numbers, hyphens)</span></label>
+    <input type="text" name="custom_slug" id="slugInput"
+           value="<%= item?.slug || '' %>"
+           placeholder="e.g. annual-day-2025"
+           pattern="[a-z0-9\-]+"
+           style="text-transform:lowercase"
+           oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9-]/g,'-').replace(/-{2,}/g,'-')">
+    <small style="font-size:.75rem;color:#888">gvjc.in/news/<span id="slugPreview" style="color:#2d7a4f;font-weight:600"><%= item?.slug || '<auto>' %></span></small>
+  </div>
+
+  <!-- Published toggle -->
   <div class="form-group">
     <label class="checkbox-label">
       <input type="checkbox" name="published" value="1" <%= item?.published ? 'checked' : '' %>> Published
@@ -54,36 +103,91 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/quill/1.3.7/quill.min.js"></script>
 <script>
-var quill = new Quill('#quill-editor', {
-  theme: 'snow',
-  modules: {
-    toolbar: [
-      [{ header: [2, 3, false] }],
-      ['bold', 'italic', 'underline'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      ['blockquote', 'link'],
-      ['clean']
-    ]
+// Initialise Quill editors — pre-init hidden tabs so Quill can measure them
+['tab-hi','tab-te'].forEach(function(id){
+  var el=document.getElementById(id);
+  el.style.cssText='display:block;position:absolute;visibility:hidden;pointer-events:none';
+});
+
+var toolbarOptions=[
+  [{header:[2,3,false]}],
+  ['bold','italic','underline'],
+  [{list:'ordered'},{list:'bullet'}],
+  ['blockquote','link'],
+  ['clean']
+];
+
+var quillEn=new Quill('#quillEn',{theme:'snow',modules:{toolbar:toolbarOptions}});
+var quillHi=new Quill('#quillHi',{theme:'snow',modules:{toolbar:toolbarOptions}});
+var quillTe=new Quill('#quillTe',{theme:'snow',modules:{toolbar:toolbarOptions}});
+
+// Restore hidden state
+['tab-hi','tab-te'].forEach(function(id){
+  document.getElementById(id).style.cssText='display:none';
+});
+
+// Tab switching
+document.querySelectorAll('.lang-tab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.lang-tab').forEach(function(b){b.classList.remove('active');});
+    document.querySelectorAll('.lang-panel').forEach(function(p){p.style.display='none';});
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.target).style.display='block';
+  });
+});
+
+// Sync hidden inputs on submit
+document.getElementById('newsForm').addEventListener('submit',function(){
+  document.getElementById('inputEn').value=quillEn.root.innerHTML;
+  document.getElementById('inputHi').value=quillHi.root.innerHTML;
+  document.getElementById('inputTe').value=quillTe.root.innerHTML;
+});
+
+// Word counter (EN only, warn-only)
+var WORD_MAX=500;
+function countWords(text){return text.trim()===''?0:text.trim().split(/\s+/).length;}
+function updateWordCount(){
+  var text=quillEn.getText();
+  var count=countWords(text);
+  var numEl=document.getElementById('wordCountNum');
+  var msgEl=document.getElementById('wordCountMsg');
+  var bar  =document.getElementById('wordCountBar');
+  numEl.textContent=count;
+  if(count>=WORD_MAX){
+    numEl.style.color='#e63946';bar.style.borderTop='2px solid #e63946';
+    msgEl.textContent='Word limit reached — please trim the article.';msgEl.style.color='#e63946';
+  } else if(count>=400){
+    numEl.style.color='#e67e22';bar.style.borderTop='2px solid #e67e22';
+    msgEl.textContent='Getting long — ideal length is under 400 words.';msgEl.style.color='#e67e22';
+  } else if(count>=300){
+    numEl.style.color='#2d7a4f';bar.style.borderTop='2px solid #2d7a4f';
+    msgEl.textContent='Good length.';msgEl.style.color='#2d7a4f';
+  } else {
+    numEl.style.color='#888';bar.style.borderTop='1px solid #e2e8f0';msgEl.textContent='';
   }
-});
+}
+quillEn.on('text-change',updateWordCount);
+updateWordCount();
 
-// Pre-fill existing content
-var existing = document.getElementById('content-hidden').value;
-if (existing) quill.root.innerHTML = existing;
-
-// On submit, write Quill HTML into hidden input
-document.getElementById('newsForm').addEventListener('submit', function () {
-  document.getElementById('content-hidden').value = quill.root.innerHTML;
+// Auto-generate slug from title (only when slug field is empty)
+function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function autoSlug(val){
+  var si=document.getElementById('slugInput');
+  if(!si._manuallyEdited) { si.value=slugify(val); updateSlugPreview(si.value); }
+}
+document.getElementById('slugInput').addEventListener('input',function(){
+  this._manuallyEdited=!!this.value;
+  updateSlugPreview(this.value);
 });
+function updateSlugPreview(v){document.getElementById('slugPreview').textContent=v||'<auto>';}
 
 // Image preview
-document.getElementById('imageInput').addEventListener('change', function () {
-  var file = this.files[0];
-  if (!file) return;
-  var reader = new FileReader();
-  reader.onload = function (e) {
-    document.getElementById('imgPreviewSrc').src = e.target.result;
-    document.getElementById('imgPreview').style.display = '';
+document.getElementById('imageInput').addEventListener('change',function(){
+  var file=this.files[0]; if(!file) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    document.getElementById('imgPreviewSrc').src=e.target.result;
+    document.getElementById('imgPreview').style.display='';
   };
   reader.readAsDataURL(file);
 });

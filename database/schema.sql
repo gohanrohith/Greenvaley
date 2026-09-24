@@ -42,6 +42,9 @@ CREATE TABLE IF NOT EXISTS news (
   updated_at  DATETIME ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 -- Run if DB already exists: ALTER TABLE news ADD COLUMN excerpt VARCHAR(500) DEFAULT NULL AFTER slug;
+-- Trilingual content migration:
+-- ALTER TABLE news ADD COLUMN content_hi MEDIUMTEXT DEFAULT NULL AFTER content;
+-- ALTER TABLE news ADD COLUMN content_te MEDIUMTEXT DEFAULT NULL AFTER content_hi;
 CREATE INDEX news_slug ON news(slug);
 
 -- Events

@@ -106,13 +106,14 @@ exports.newsForm = (req, res) => {
 exports.createNews = [
   uploadNews.single('image'),
   async (req, res) => {
-    const { title, excerpt, content, published } = req.body;
-    const s = slug(title) + '-' + Date.now();
+    const { title, excerpt, content, content_hi, content_te, custom_slug, published } = req.body;
+    const s = (custom_slug || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-{2,}/g, '-').replace(/^-|-$/g, '')
+      || slug(title) + '-' + Date.now();
     const image = req.file ? `/uploads/news/${req.file.filename}` : null;
     try {
       await db.query(
-        'INSERT INTO news (title, slug, excerpt, content, image, published) VALUES (?,?,?,?,?,?)',
-        [title, s, excerpt?.trim() || null, content, image, published === '1' ? 1 : 0]
+        'INSERT INTO news (title, slug, excerpt, content, content_hi, content_te, image, published) VALUES (?,?,?,?,?,?,?,?)',
+        [title, s, excerpt?.trim() || null, content || null, content_hi || null, content_te || null, image, published === '1' ? 1 : 0]
       );
       res.redirect('/admin/news?success=1');
     } catch (e) {
@@ -132,10 +133,10 @@ exports.editNewsForm = async (req, res) => {
 exports.updateNews = [
   uploadNews.single('image'),
   async (req, res) => {
-    const { title, excerpt, content, published, remove_image } = req.body;
+    const { title, excerpt, content, content_hi, content_te, custom_slug, published, remove_image } = req.body;
     const newImage = req.file ? `/uploads/news/${req.file.filename}` : null;
     try {
-      const [[current]] = await db.query('SELECT image FROM news WHERE id=?', [req.params.id]);
+      const [[current]] = await db.query('SELECT image, slug FROM news WHERE id=?', [req.params.id]);
       let image;
       if (newImage) {
         image = newImage;
@@ -144,12 +145,16 @@ exports.updateNews = [
         image = null;
         if (current?.image) fs.unlink(path.join(__dirname, '../public', current.image), () => {});
       }
+      const newSlug = (custom_slug || '').trim().toLowerCase().replace(/[^a-z0-9-]/g, '-').replace(/-{2,}/g, '-').replace(/^-|-$/g, '')
+        || current?.slug || slug(title);
       if (image !== undefined) {
-        await db.query('UPDATE news SET title=?,excerpt=?,content=?,image=?,published=? WHERE id=?',
-          [title, excerpt?.trim() || null, content, image, published === '1' ? 1 : 0, req.params.id]);
+        await db.query(
+          'UPDATE news SET title=?,slug=?,excerpt=?,content=?,content_hi=?,content_te=?,image=?,published=? WHERE id=?',
+          [title, newSlug, excerpt?.trim() || null, content || null, content_hi || null, content_te || null, image, published === '1' ? 1 : 0, req.params.id]);
       } else {
-        await db.query('UPDATE news SET title=?,excerpt=?,content=?,published=? WHERE id=?',
-          [title, excerpt?.trim() || null, content, published === '1' ? 1 : 0, req.params.id]);
+        await db.query(
+          'UPDATE news SET title=?,slug=?,excerpt=?,content=?,content_hi=?,content_te=?,published=? WHERE id=?',
+          [title, newSlug, excerpt?.trim() || null, content || null, content_hi || null, content_te || null, published === '1' ? 1 : 0, req.params.id]);
       }
       res.redirect('/admin/news?success=1');
     } catch (e) {
