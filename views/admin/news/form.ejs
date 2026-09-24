@@ -23,7 +23,7 @@
 
   <div class="form-group">
     <label>Content</label>
-    <div id="quill-editor" style="min-height:320px;background:#fff;border-radius:0 0 6px 6px"><%= item?.content || '' %></div>
+    <div id="quill-editor" style="min-height:320px;background:#fff;border-radius:0 0 6px 6px"><%- item?.content || '' %></div>
     <input type="hidden" name="content" id="content-hidden" value="<%= item?.content || '' %>">
   </div>
 

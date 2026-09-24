@@ -38,7 +38,7 @@
   <div class="article-layout">
     <article class="article-body-card">
       <% if (article.image) { %>
-        <img src="<%= article.image %>" alt="<%= article.title %>" class="article-hero-img">
+        <img src="<%= article.image %>" alt="<%= article.title %>" class="article-hero-img" onerror="this.style.display='none'">
       <% } %>
       <div class="article-content"><%- article.content %></div>
     </article>

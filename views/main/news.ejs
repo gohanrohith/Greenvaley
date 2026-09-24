@@ -20,7 +20,8 @@
       <% news.forEach(n => { %>
       <article class="news-card">
         <% if (n.image) { %>
-          <img src="<%= n.image %>" alt="<%= n.title %>" class="news-card-img">
+          <img src="<%= n.image %>" alt="<%= n.title %>" class="news-card-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="news-card-img-placeholder" style="display:none">📰</div>
         <% } else { %>
           <div class="news-card-img-placeholder">📰</div>
         <% } %>

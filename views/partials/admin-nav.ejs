@@ -45,7 +45,39 @@
     <span></span><span></span><span></span>
   </button>
   <span class="admin-user">👤 <%= adminName %></span>
+  <span id="adminSessionTimer" style="font-size:.72rem;color:#aaa;margin-left:.75rem"></span>
 </header>
+<div id="adminLogoutWarning" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:#c0392b;color:#fff;text-align:center;padding:.75rem 1rem;font-size:.9rem;font-weight:600">
+  Session expiring in <span id="adminCountdown">60</span>s — <a href="#" onclick="adminResetTimer();return false;" style="color:#fff;text-decoration:underline">Stay logged in</a> &nbsp;|&nbsp; <a href="/admin/logout" style="color:#fff;text-decoration:underline">Logout now</a>
+</div>
+<script>
+(function(){
+  var TIMEOUT=15*60*1000, WARN_BEFORE=60*1000;
+  var timer, warnTimer, countdownInterval;
+  var warningEl=document.getElementById('adminLogoutWarning');
+  var countdownEl=document.getElementById('adminCountdown');
+  var timerLabel=document.getElementById('adminSessionTimer');
+  function fmt(ms){var m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000);return m+':'+(s<10?'0':'')+s;}
+  function showWarning(){
+    warningEl.style.display='block';
+    var secs=Math.floor(WARN_BEFORE/1000);
+    countdownEl.textContent=secs;
+    countdownInterval=setInterval(function(){secs--;countdownEl.textContent=secs;if(secs<=0){clearInterval(countdownInterval);window.location.href='/admin/logout';}},1000);
+  }
+  function hideWarning(){warningEl.style.display='none';clearInterval(countdownInterval);}
+  window.adminResetTimer=function(){
+    clearTimeout(timer);clearTimeout(warnTimer);hideWarning();
+    fetch('/admin/keepalive').catch(function(){});
+    var remaining=TIMEOUT;
+    timerLabel.textContent=fmt(remaining);
+    var tick=setInterval(function(){remaining-=1000;if(remaining<=0){clearInterval(tick);}else{timerLabel.textContent=fmt(remaining);}},1000);
+    warnTimer=setTimeout(showWarning,TIMEOUT-WARN_BEFORE);
+    timer=setTimeout(function(){window.location.href='/admin/logout';},TIMEOUT);
+  };
+  ['mousemove','keydown','click','scroll','touchstart'].forEach(function(e){document.addEventListener(e,adminResetTimer,{passive:true});});
+  adminResetTimer();
+})();
+</script>
 <script>
   (function(){
     var btn = document.getElementById('sidebarToggle');

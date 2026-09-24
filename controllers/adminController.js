@@ -95,11 +95,12 @@ exports.dashboard = async (req, res) => {
 
 exports.newsList = async (req, res) => {
   const [news] = await db.query('SELECT * FROM news ORDER BY created_at DESC');
-  res.render('admin/news/list', { title: 'News | Admin', college, news });
+  res.render('admin/news/list', { title: 'News | Admin', college, news,
+    success: req.query.success === '1', error: req.query.error === '1' });
 };
 
 exports.newsForm = (req, res) => {
-  res.render('admin/news/form', { title: 'New Article | Admin', college, item: null });
+  res.render('admin/news/form', { title: 'New Article | Admin', college, item: null, error: false });
 };
 
 exports.createNews = [
@@ -115,7 +116,9 @@ exports.createNews = [
       );
       res.redirect('/admin/news?success=1');
     } catch (e) {
-      res.redirect('/admin/news/new?error=1');
+      if (image) fs.unlink(path.join(UPLOADS_BASE, 'news', req.file.filename), () => {});
+      res.render('admin/news/form', { title: 'New Article | Admin', college,
+        item: { ...req.body, image: null }, error: true });
     }
   },
 ];
@@ -123,7 +126,7 @@ exports.createNews = [
 exports.editNewsForm = async (req, res) => {
   const [[item]] = await db.query('SELECT * FROM news WHERE id=?', [req.params.id]);
   if (!item) return res.redirect('/admin/news');
-  res.render('admin/news/form', { title: 'Edit Article | Admin', college, item });
+  res.render('admin/news/form', { title: 'Edit Article | Admin', college, item, error: false });
 };
 
 exports.updateNews = [
@@ -132,11 +135,14 @@ exports.updateNews = [
     const { title, excerpt, content, published, remove_image } = req.body;
     const newImage = req.file ? `/uploads/news/${req.file.filename}` : null;
     try {
+      const [[current]] = await db.query('SELECT image FROM news WHERE id=?', [req.params.id]);
       let image;
       if (newImage) {
         image = newImage;
+        if (current?.image) fs.unlink(path.join(__dirname, '../public', current.image), () => {});
       } else if (remove_image === '1') {
         image = null;
+        if (current?.image) fs.unlink(path.join(__dirname, '../public', current.image), () => {});
       }
       if (image !== undefined) {
         await db.query('UPDATE news SET title=?,excerpt=?,content=?,image=?,published=? WHERE id=?',
@@ -147,13 +153,18 @@ exports.updateNews = [
       }
       res.redirect('/admin/news?success=1');
     } catch (e) {
-      res.redirect(`/admin/news/${req.params.id}/edit?error=1`);
+      if (newImage) fs.unlink(path.join(UPLOADS_BASE, 'news', req.file.filename), () => {});
+      const [[item]] = await db.query('SELECT * FROM news WHERE id=?', [req.params.id]).catch(() => [[null]]);
+      res.render('admin/news/form', { title: 'Edit Article | Admin', college,
+        item: item || req.body, error: true });
     }
   },
 ];
 
 exports.deleteNews = async (req, res) => {
+  const [[article]] = await db.query('SELECT image FROM news WHERE id=?', [req.params.id]);
   await db.query('DELETE FROM news WHERE id=?', [req.params.id]);
+  if (article?.image) fs.unlink(path.join(__dirname, '../public', article.image), () => {});
   res.redirect('/admin/news?success=1');
 };
 
