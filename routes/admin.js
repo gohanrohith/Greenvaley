@@ -40,6 +40,7 @@ router.post('/events/:id/edit',   ctrl.updateEvent);
 router.post('/events/:id/delete', ctrl.deleteEvent);
 
 // Gallery
+router.get('/gallery/albums-json',         ctrl.albumsJson);
 router.get('/gallery',                     ctrl.galleryList);
 router.get('/gallery/new',                 ctrl.albumForm);
 router.post('/gallery/new',                ctrl.createAlbum);

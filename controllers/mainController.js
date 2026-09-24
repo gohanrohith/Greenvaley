@@ -74,6 +74,69 @@ exports.news = async (req, res) => {
   }
 };
 
+// ── Inline gallery helpers ─────────────────────────────────
+async function dbq(sql, params = []) {
+  try { const [r] = await db.query(sql, params); return r; } catch { return []; }
+}
+async function dbq1(sql, params = []) {
+  const r = await dbq(sql, params); return r[0] || null;
+}
+
+function collectAllEmbeds(...rawContents) {
+  const all = rawContents.filter(Boolean).join('');
+  const seen = new Set();
+  return (all.match(/<(?:div|figure)\s[^>]*class="inline-gallery"[^>]*>[\s\S]*?<\/(?:div|figure)>/gi) || [])
+    .filter(embed => {
+      const m = embed.match(/data-album="(\d+)"/);
+      if (!m || seen.has(m[1])) return false;
+      seen.add(m[1]); return true;
+    });
+}
+
+function syncGalleries(content, allEmbeds) {
+  if (!content || !allEmbeds.length) return content;
+  let result = content;
+  for (const embed of allEmbeds) {
+    const m = embed.match(/data-album="(\d+)"/);
+    if (m && !new RegExp(`data-album="${m[1]}"`).test(result)) result += embed;
+  }
+  return result;
+}
+
+async function processInlineGalleries(content) {
+  if (!content) return content;
+  const regex = /<(?:div|figure) class="inline-gallery" data-album="(\d+)"[^>]*>[\s\S]*?<\/(?:div|figure)>/gi;
+  const matches = [...content.matchAll(/<(?:div|figure) class="inline-gallery" data-album="(\d+)"[^>]*>[\s\S]*?<\/(?:div|figure)>/gi)];
+  if (!matches.length) return content;
+  const albumIds = [...new Set(matches.map(m => parseInt(m[1])))];
+  const galleries = {};
+  await Promise.all(albumIds.map(async id => {
+    const [album, photos] = await Promise.all([
+      dbq1('SELECT * FROM gallery_albums WHERE id=?', [id]),
+      dbq('SELECT * FROM gallery_photos WHERE album_id=? ORDER BY sort_order ASC, id ASC', [id]),
+    ]);
+    if (album && photos.length) galleries[id] = { album, photos };
+  }));
+  return content.replace(regex, (match, id) => {
+    const g = galleries[parseInt(id)];
+    if (!g) return '';
+    const photos = g.photos, n = photos.length;
+    const SHOW_SQ = 4;
+    const squareCnt = Math.min(SHOW_SQ, n - 1);
+    const hiddenCnt = n - 1 - squareCnt;
+    const photosJson = JSON.stringify(
+      photos.map(p => ({ src: `/uploads/gallery/${p.filename}`, caption: p.caption || '' }))
+    ).replace(/"/g, '&quot;');
+    const p0 = photos[0];
+    let tiles = `<div class="gt-bento-big" data-lb-index="0"><img src="/uploads/gallery/${p0.filename}" alt="${(p0.caption||'').replace(/"/g,'&quot;')}" loading="lazy" onerror="this.closest('.gt-bento-big').style.display='none'"></div>`;
+    for (let i = 1; i <= squareCnt; i++) {
+      const p = photos[i], isLast = i === squareCnt && hiddenCnt > 0;
+      tiles += `<div class="gt-bento-sq gt-bento-sq-${i}" data-lb-index="${i}"><img src="/uploads/gallery/${p.filename}" alt="${(p.caption||'').replace(/"/g,'&quot;')}" loading="lazy" onerror="this.closest('.gt-bento-sq').style.display='none'">${isLast ? `<div class="gt-bento-more">+${hiddenCnt}</div>` : ''}</div>`;
+    }
+    return `<div class="gt-article-gallery"><div class="gt-article-gallery-header"><i class="fas fa-images"></i> ${g.album.title} <span style="font-weight:400;color:#888;margin-left:.4rem">${n} photo${n !== 1 ? 's' : ''}</span></div><div class="gt-bento-gallery" data-photos="${photosJson}"><div class="gt-bento-grid" data-sq="${squareCnt}">${tiles}</div></div></div>`;
+  });
+}
+
 exports.newsArticle = async (req, res) => {
   try {
     const [[article]] = await db.query('SELECT * FROM news WHERE slug=? AND published=1', [req.params.slug]);
@@ -82,6 +145,10 @@ exports.newsArticle = async (req, res) => {
     const ogImage = article.image
       ? `${domain}${article.image}`
       : `${domain}/images/logo.png`;
+    const allEmbeds = collectAllEmbeds(article.content, article.content_hi, article.content_te);
+    article.content    = await processInlineGalleries(syncGalleries(article.content,    allEmbeds));
+    article.content_hi = await processInlineGalleries(syncGalleries(article.content_hi, allEmbeds));
+    article.content_te = await processInlineGalleries(syncGalleries(article.content_te, allEmbeds));
     V.render(res, 'main/news-article', { title: `${article.title} | ${college.shortName}`, article, domain, ogImage });
   } catch (e) {
     res.status(500).render('500', { title: '500 | Greenvaley' });

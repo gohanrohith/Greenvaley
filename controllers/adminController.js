@@ -219,6 +219,20 @@ exports.deleteEvent = async (req, res) => {
 
 // ── Gallery ───────────────────────────────────────────────────────────────────
 
+exports.albumsJson = async (req, res) => {
+  const [albums] = await db.query(
+    `SELECT a.id, a.title, p.filename AS cover_filename
+     FROM gallery_albums a
+     LEFT JOIN gallery_photos p ON p.id = a.cover_photo
+     ORDER BY a.created_at DESC`
+  );
+  res.json(albums.map(a => ({
+    id:    a.id,
+    title: a.title,
+    cover: a.cover_filename ? `/uploads/gallery/${a.cover_filename}` : null,
+  })));
+};
+
 exports.galleryList = async (req, res) => {
   const [albums] = await db.query(
     `SELECT a.*, COUNT(p.id) AS photo_count

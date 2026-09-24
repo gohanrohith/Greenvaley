@@ -60,6 +60,9 @@
     <input type="hidden" name="content"    id="inputEn">
     <input type="hidden" name="content_hi" id="inputHi">
     <input type="hidden" name="content_te" id="inputTe">
+    <div style="padding:.5rem 1rem;background:#f8fafc;border-top:1px solid #e2e8f0">
+      <button type="button" onclick="openGalleryPicker()" style="font-size:.78rem;padding:.3rem .8rem;background:#2d7a4f;color:#fff;border:none;border-radius:4px;cursor:pointer"><i class="fas fa-images"></i> Insert Gallery Album</button>
+    </div>
   </div>
 
   <!-- Cover image -->
@@ -120,6 +123,15 @@ var toolbarOptions=[
 var quillEn=new Quill('#quillEn',{theme:'snow',modules:{toolbar:toolbarOptions}});
 var quillHi=new Quill('#quillHi',{theme:'snow',modules:{toolbar:toolbarOptions}});
 var quillTe=new Quill('#quillTe',{theme:'snow',modules:{toolbar:toolbarOptions}});
+
+// Track which editor is active
+var activeQuill=quillEn;
+document.querySelectorAll('.lang-tab').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var t=btn.dataset.target;
+    activeQuill= t==='tab-en'?quillEn: t==='tab-hi'?quillHi:quillTe;
+  });
+});
 
 // Restore hidden state
 ['tab-hi','tab-te'].forEach(function(id){
@@ -191,5 +203,51 @@ document.getElementById('imageInput').addEventListener('change',function(){
   };
   reader.readAsDataURL(file);
 });
+</script>
+<!-- Gallery picker modal -->
+<div id="galleryModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:2000;align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:10px;max-width:620px;width:92%;max-height:80vh;display:flex;flex-direction:column;box-shadow:0 16px 48px rgba(0,0,0,.25)">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:1rem 1.25rem;border-bottom:1px solid #e2e8f0">
+      <h3 style="font-size:.95rem;font-weight:700;margin:0">Select Gallery Album</h3>
+      <button id="galleryModalClose" type="button" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:#888">&times;</button>
+    </div>
+    <div id="galleryAlbumList" style="padding:1rem;overflow-y:auto;flex:1;display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.75rem">
+      <p style="color:#888;font-size:.85rem;grid-column:1/-1">Loading…</p>
+    </div>
+  </div>
+</div>
+<script>
+(function(){
+  var modal=document.getElementById('galleryModal');
+  document.getElementById('galleryModalClose').onclick=function(){modal.style.display='none';};
+  modal.onclick=function(e){if(e.target===modal)modal.style.display='none';};
+  var loaded=false;
+  window.openGalleryPicker=function(){
+    modal.style.display='flex';
+    if(loaded) return;
+    loaded=true;
+    fetch('/admin/gallery/albums-json')
+      .then(function(r){return r.json();})
+      .then(function(albums){
+        var list=document.getElementById('galleryAlbumList');
+        if(!albums.length){list.innerHTML='<p style="color:#888;font-size:.85rem;grid-column:1/-1">No albums yet. Create one in Gallery first.</p>';return;}
+        list.innerHTML='';
+        albums.forEach(function(a){
+          var el=document.createElement('div');
+          el.style.cssText='border:2px solid #e2e8f0;border-radius:6px;overflow:hidden;cursor:pointer';
+          el.innerHTML='<img src="'+(a.cover||'/images/logo.png')+'" style="width:100%;aspect-ratio:4/3;object-fit:cover;display:block" onerror="this.src=\'/images/logo.png\'">'
+            +'<div style="padding:.4rem .5rem;font-size:.76rem;font-weight:600">'+a.title+'</div>';
+          el.onclick=function(){
+            var range=activeQuill.getSelection(true);
+            activeQuill.clipboard.dangerouslyPasteHTML(range.index,'<figure class="inline-gallery" data-album="'+a.id+'"><span>Gallery: '+a.title+'</span></figure>');
+            activeQuill.setSelection(range.index+1);
+            modal.style.display='none';
+          };
+          list.appendChild(el);
+        });
+      })
+      .catch(function(){document.getElementById('galleryAlbumList').innerHTML='<p style="color:#888;font-size:.85rem">Error loading albums.</p>';});
+  };
+})();
 </script>
 <%- include('../../partials/admin-footer') %>
