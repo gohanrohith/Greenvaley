@@ -306,7 +306,7 @@ h4 { font-size: 1rem; font-weight: 600; }
 fieldset { border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 24px; }
 fieldset legend { font-weight: 700; padding: 0 8px; color: var(--green); font-size: .9rem; }
 .checkbox-label { display: flex; align-items: flex-start; gap: 10px; font-weight: 400; cursor: pointer; font-size: .9rem; line-height: 1.5; }
-.checkbox-label input { margin-top: 3px; flex-shrink: 0; accent-color: var(--green); width: auto; }
+.checkbox-label input:not(.checkbox-custom) { margin-top: 3px; flex-shrink: 0; accent-color: var(--green); width: auto; }
 
 /* ── Alerts ────────────────────────────────────────────────────────────────── */
 .alert { padding: 14px 18px; border-radius: var(--radius); margin-bottom: 20px; font-size: .9rem; line-height: 1.5; }
